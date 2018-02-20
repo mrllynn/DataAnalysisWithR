@@ -1,0 +1,155 @@
+
+% -----------------------------------------------------------------------------
+% IMPLEMENTING THE DOCUMENT AND ITS OPTIONS
+% -----------------------------------------------------------------------------
+
+\documentclass[11pt]{article}
+\usepackage[left=21mm, right=18mm, top=20mm, bottom=18mm]{geometry}
+\linespread{1.4}
+
+% *****************************************************************************
+% ADD HERE THE TOPIC OF THE LECTURE!
+\newcommand{\exercisetopic}{Day 1}
+% *****************************************************************************
+
+% Add information about the title section of the file
+\author{Sonja Hartnack, Terence Odoch \& Muriel Buri}
+\date{\today}
+\title{\vspace{-3ex}Practical Exercises for \textbf{\exercisetopic}}
+\date{October 2017}
+
+\usepackage[round,sectionbib]{natbib} \bibliographystyle{ims}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{url}
+\usepackage{color}
+\usepackage{amsmath, amssymb}
+\usepackage{colortbl, xcolor} % enable colored rows in table
+\usepackage{color} % enable colored rows in table
+\usepackage{bibentry} % Include Full BibTeX Entry Inside Slides
+\usepackage{nicefrac}
+\usepackage{soul}
+
+\graphicspath{{figures/}}
+
+% Adjusting font type
+\usepackage[sfdefault,lf]{carlito}
+\usepackage[T1]{fontenc}
+\renewcommand*\oldstylenums[1]{\carlitoOsF #1}
+
+% Add footer and header to the file
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+\renewcommand{\headrulewidth}{0.4pt}% Default \headrulewidth is 0.4pt
+\renewcommand{\footrulewidth}{0.4pt}% Default \footrulewidth is 0pt
+\pagestyle{fancy}
+\lhead{Data Analysis with R: Exercises} % left header
+\rhead{\exercisetopic} % right header
+\lfoot{Sonja Hartnack, Terence Odoch \& Muriel Buri} % left footer
+\rfoot{\thepage\ of \pageref{LastPage}} % right footer
+\cfoot{} % get rid of the centered page number
+
+% -----------------------------------------------------------------------------
+% BEGINNING OF ACTUAL DOCUMENT
+% -----------------------------------------------------------------------------
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\section*{Exercise 1}
+\begin{itemize}
+\item Open R Studio
+\item Open a new R-Script
+\item Load data set \texttt{chickwts}
+<<echo = TRUE, eval = FALSE>>=
+data(chickwts)
+head(chickwts)
+# ?chickwts
+@
+
+\item Do summary statistic (numerically and graphically)
+<<echo = TRUE, eval = FALSE>>=
+summary(chickwts)
+tapply(chickwts$weight, chickwts$feed, mean)
+tapply(chickwts$weight, chickwts$feed, median)
+tapply(chickwts$weight, chickwts$feed, sd)
+table(chickwts$feed)
+barplot(table(chickwts$feed))
+boxplot(chickwts$weight ~ chickwts$feed)
+# boxplot(weight ~ feed, data = chickwts)
+hist(chickwts$weight)
+boxplot(weight ~ feed, data = chickwts, col = "lightgray",
+        varwidth = TRUE, notch = TRUE, main = "chickwt data",
+        ylab = "Weight at six weeks (gm)")
+@
+% Anova, lm, which groups differ, Bonferroni, Tukey-Anscombe
+% Histogram with density line
+% Normally distributed weights
+\end{itemize}
+
+\section*{Exercise 2}
+\begin{itemize}
+\item Create a data frame with 3 columns.
+<<echo = TRUE, eval = FALSE>>=
+a <- c(1, 2, 3, 4)
+b <- c("d", "h", "h", "d")
+c <- factor(c("male", "female", "male", "female"),
+            levels = c("female", "male"))
+dat <- data.frame(a, b, c)
+dat
+@
+\end{itemize}
+
+\section*{Exercise 3}
+\begin{itemize}
+\item Install package \texttt{MASS}.
+<<echo = TRUE, eval = FALSE>>=
+# install.packages("MASS")
+library("MASS")
+@
+
+\item Load data set \texttt{bacteria}.
+<<echo = TRUE, eval = FALSE>>=
+data(bacteria)
+head(bacteria)
+# ?bacteria
+@
+
+\item Do summary statistic (numerically and graphically).
+<<echo = TRUE, eval = FALSE>>=
+summary(bacteria)
+table(bacteria$week)
+barplot(table(bacteria$week))
+barplot(table(bacteria$trt))
+table(bacteria$trt, bacteria$ap)
+table(bacteria$trt, bacteria$y)
+
+fisher.test(table(bacteria$trt, bacteria$y))
+
+prop.table(table(bacteria$trt, bacteria$y))
+prop.table(table(bacteria$trt, bacteria$y), margin = 1)
+prop.table(table(bacteria$trt, bacteria$y), margin = 2)
+
+plot(prop.table(table(bacteria$trt, bacteria$y)))
+mosaicplot(~trt + y, data = bacteria)
+barplot(prop.table(table(bacteria$y, bacteria$trt),margin=1), beside=TRUE)
+barplot(prop.table(table(bacteria$trt, bacteria$y),margin=1), beside=TRUE)
+barplot(prop.table(table(bacteria$y, bacteria$trt),margin=1), beside=FALSE)
+barplot(prop.table(table(bacteria$trt, bacteria$y),margin=1), beside=FALSE)
+?barplot
+@
+
+\item Select only observations collected during the second week.
+<<echo = TRUE, eval = FALSE>>=
+subset(bacteria, week == 2)
+ss <- subset(bacteria, week == 2)
+summary(ss)
+# Check if we only have observations of week 2.
+table(bacteria$week)
+table(ss$week)
+@
+\end{itemize}
+
+\end{document}

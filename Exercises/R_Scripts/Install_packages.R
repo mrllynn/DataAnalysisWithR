@@ -1,0 +1,7 @@
+getOption("repos") 
+install.packages("multcomp", repos = "https://cran.rstudio.com/")
+library("multcomp")
+install.packages("HSAUR3", repos = "https://cran.rstudio.com/")
+library("HSAUR3")
+install.packages("MASS", repos = "https://cran.rstudio.com/")
+library("MASS")

@@ -1,0 +1,62 @@
+location,town,mortality,hardness,smoker,num.of.cig
+South,Bath,1247,105,FALSE,none
+North,Birkenhead,1668,17,FALSE,more than 20
+South,Birmingham,1466,5,TRUE,5 to 20
+North,Blackburn,1800,14,FALSE,none
+North,Blackpool,1609,NA,TRUE,none
+N,Bolton,1558,10,FALSE,none
+North,Bootle,1807,15,FALSE,none
+South,Bournemouth,1299,78,TRUE,less than 5
+West,Bradford,1637,10,TRUE,more than 20
+South,Brighton,1359,,TRUE,none
+South,Bristol,1392,73,TRUE,5 to 20
+North,Burnley,1755,12,TRUE,more than 20
+South,Cardiff,1519,21,TRUE,less than 5
+South,Coventry,1307,78,FALSE,none
+South,Croydon,1254,96,TRUE,less than 5
+North,Darlington,1491,20,FALSE,none
+North,Derby,1555,-2,FALSE,none
+North,Doncaster,1428,39,TRUE,more than 20
+South,East Ham,1318,122,TRUE,5 to 20
+South,Exeter,1260,21,FALSE,none
+North,Gateshead,1723,44,FALSE,more than 20
+North,Grimsby,1379,94,FALSE,none
+North,Halifax,1742,8,FALSE,none
+North,Huddersfield,1574,9,TRUE,more than 20
+North,Hull,1569,91,TRUE,5 to 20
+South,Ipswich,1096,138,FALSE,none
+North,Leeds,1591,16,TRUE,5 to 20
+South,Leicester,1402,37,FALSE,none
+North,Liverpool,1772,15,FALSE,none
+North,LIVERPOOL,1828,8,TRUE,5 to 20
+North,Middlesbrough,1704,26,TRUE,more than 20
+North,Newcastle,1702,44,TRUE,5 to 20
+South,Newport,1581,14,TRUE,none
+South,Northampton,1309,59,FALSE,none
+South,Norwich,1259,133,FALSE,none
+North,Nottingham,1427,27,FALSE,none
+North,Oldham,1724,6,FALSE,none
+South,Oxford,1175,107,TRUE,less than 5
+South,Plymouth,1486,5,TRUE,less than 5
+South,Portsmouth,1456,90,TRUE,more than 20
+North,Preston,1696,6,TRUE,5 to 20
+South,Reading,1236,101,FALSE,none
+North,Rochdale,1711,13,FALSE,none
+North,Rotherham,1444,14,TRUE,more than 20
+North,St Helens,1591,49,TRUE,less than 5
+North,Salford,1987,8,TRUE,5 to 20
+North,Sheffield,1495,14,FALSE,none
+South,Southampton,1369,68,FALSE,none
+South,Southend,1257,50,TRUE,none
+North,Southport,1587,75,FALSE,zero
+North,South Shields,1713,71,FALSE,none
+North,Stockport,1557,13,TRUE,more than 20
+North,Stoke,1640,57,FALSE,none
+North,Sunderland,1709,71,FALSE,none
+South,Swansea,1625,13,TRUE,more than 20
+North,Wallasey,1625,20,FALSE,none
+South,Walsall,1527,60,TRUE,less than 5
+South,West Bromwich,1627,53,TRUE,5 to 20
+South,West Ham,1486,122,FALSE,none
+South,Wolverhampton,1485,81,TRUE,less than 5
+North,York,1378,71,TRUE,less than 5
