@@ -1,0 +1,20 @@
+# ~~~~~~~~~~~~~~~~~~~
+# File name convention
+# ~~~~~~~~~~~~~~~~~~~
+The files are named as in the "Exercise" folder. The order of the files (the numbering) is according to the "Exercise" files.
+xx_L_[...]
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# How to extract R Code from .Rnw file?
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+f <- 'somefile.Rnw'
+knitr::purl(f)
+Stangle(f)
+
+# ~~~~~
+# Hints:
+# ~~~~~
+- If you want to show R-Code in beamer slide then begin the slide with:
+\begin{frame}[fragile]
+- Veterinary epidemiology, Michael Thrusfield, 2005
+- Veterinary epidemiologic research, I. Dohoo; Wayne Martin; Henrik Stryhn, 2007

@@ -1,0 +1,501 @@
+\documentclass{beamer}
+
+% *****************************************************************************
+% ADD HERE THE TOPIC OF THE LECTURE!
+% \newcommand{\lecturetopic}{ALL LECTURE SLIDES}
+\newcommand{\lecturetopic}{Day 8}
+% *****************************************************************************
+
+<<echo = FALSE, eval = TRUE>>=
+# data_dir <- "~/Dropbox/201710_Makerere/02_Lectures/data/"
+data_dir <- "C:\\Users\\admin\\Dropbox\\201710_Makerere\\02_Lectures\\data\\"
+@
+
+% turn off navigation symbols
+\beamertemplatenavigationsymbolsempty
+
+\title{\textbf{Data Analysis with R:} \\ \lecturetopic}
+\author{Sonja Hartnack, Terence Odoch \& Muriel Buri}
+\vspace{0.3cm}
+\footnotesize
+\institute{October 2017}
+\date{ }
+
+\setbeamertemplate{footline}[text line]{%
+\parbox{\linewidth}{\vspace*{-1pt} \fontsize{3.5}{5}\selectfont Sonja Hartnack,
+Terence Odoch \& Muriel Buri \hfill \lecturetopic \hfill \insertpagenumber}}
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{animate}
+
+\usepackage{verbatim}
+\usepackage{url}
+\usepackage{lmodern}
+\usepackage{fancyhdr}
+\usepackage{color}
+\usepackage{amsmath, amssymb}
+\usepackage{longtable}
+\usepackage{lscape}
+\usepackage{xspace}
+\usepackage[normalem]{ulem}
+% Use Palatino (URW Palladio) for most of the text\ldots
+\usepackage[sc]{mathpazo}
+% And Arial for the rest
+\usepackage[scaled]{helvet}
+\usepackage[latin1]{inputenc}
+\usepackage{multicol} % A flexible tool to handle multicolumn documents
+\usepackage{colortbl, xcolor} % enable colored rows in table
+\usepackage{color} % enable colored rows in table
+\usepackage{bibentry} % Include Full BibTeX Entry Inside Slides
+\usepackage{nicefrac}
+\usepackage{soul}
+
+\setbeamertemplate{itemize items}[circle]
+
+\usepackage{array}
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\graphicspath{{figures/}}
+\usepackage[export]{adjustbox} % figure alignment
+\usepackage{wrapfig} % allow for wrapfigure
+\usepackage[margin=1cm]{caption}
+\captionsetup{font=scriptsize, labelfont=scriptsize}
+
+% change font family in footnote
+\usepackage{footmisc}
+\renewcommand*{\footnotelayout}{\tiny\sffamily}
+% \renewcommand*{\footnotelayout}{\fontsize{3.5}{5}\selectfont\sffamily}
+
+% change footer symbol
+\usepackage{perpage}
+\MakePerPage{footnote}
+\renewcommand*{\thefootnote}{$\star$}
+
+% change font sizes of frametitles
+\setbeamerfont{frametitle}{size=\normalsize, series=\bfseries}
+\setbeamerfont{framesubtitle}{size=\small, series=\bfseries}
+
+% Settings for the references
+\usepackage{natbib}
+\usepackage{bibentry} % Include Full BibTeX Entry Inside Slides
+
+% Writting the whole reference in ONE line.
+% \def\newblock{\hskip .5em plus .33em minus .07em}
+
+\setbeamerfont{title}{size=\LARGE}
+
+\makeatletter
+\def\mathcolor#1#{\@mathcolor{#1}}
+\def\@mathcolor#1#2#3{%
+\protect\leavevmode
+\begingroup\color#1{#2}#3\endgroup
+}
+\makeatother
+
+% *****************************************************************************
+
+% {\usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+{\usebackgroundtemplate{}}
+\begin{document}
+
+\bibliographystyle{plainnat}
+
+% *****************************************************************************
+% TITLE PAGE:
+% *****************************************************************************
+
+\begin{frame}[noframenumbering,plain]
+\begin{columns}
+\begin{column}{.3\linewidth}
+\begin{center}
+\includegraphics[height=.35\linewidth, width = 1.1\linewidth]{uzh_logo.pdf}
+\end{center}
+\end{column}
+\begin{column}{0.2\linewidth}
+\end{column}
+\begin{column}{.3\linewidth}
+\begin{center}
+\includegraphics[height=.45\linewidth, width = .65\linewidth]{makere_logo.jpg}
+\end{center}
+\end{column}
+\end{columns}
+\titlepage
+\end{frame}
+
+\section{Day 8}
+% \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+\usebackgroundtemplate{}
+\begin{frame}
+\frametitle{Acknowledgement}
+\LARGE
+We would like to thank \textbf{Beate Sick} for the inspiration given for these slides on \textit{missing values} and \textit{multiple imputation}.
+\end{frame}
+
+% \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+\usebackgroundtemplate{}
+\begin{frame}
+\frametitle{Missing Data\footnote{Thanks to \textbf{Beate Sick} for the
+inspiration given for these slides on \textit{missing values} and
+\textit{multiple imputation}.}}
+\small
+\begin{itemize}
+\item \textbf{Nonresponse} occurs when information on all variables is missing
+for a subset of the sample. Such non-responders may cause \textbf{selection bias},
+as they effectively modify the study population to include only respondents.
+\item \textbf{Item nonresponse} occurs when only some variables have missing
+responses for a given individual.
+\begin{itemize}
+\item If missing probabilities of a predictor do not depend on the outcome,
+then X is missing \textbf{nondifferentially}. Association between outcome
+and missingness of a predictor can be tested!
+\item \textbf{Differential missingness probabilities} depend on disease outcome.
+This mainly arise in retrospective (e. g. case-control) studies.
+If predictors (exposure) are measured prospectively before outcome
+such dependency cannot occur in a direct way.
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+% \usebackgroundtemplate{}
+\begin{frame}
+\frametitle{Example: A study of HIV-positive people in NYC}
+The \texttt{CHAIN} project was a longitudinal cohort study of people living with
+HIV in New York City, which was recruited in 1994. Here we study a data subset
+collected from $532$ subjects in the sixth round of interviews.
+\begin{itemize}
+\item \texttt{log\_virus}: Log of self reported viral load level (=0 if below detection limit).
+\item \texttt{age}: The respondent's age at time of interview.
+\item \texttt{income}: The respondent's family annual income.
+\item \texttt{healthy}: A continuous scale of physical health (0-100).
+\item \texttt{mental}: Measure of poor mental health: 0/1 = No/Yes.
+\item \texttt{damage}: Ordered interval ($0$ to $5$) for CD4 count.
+\item \texttt{treatment}: A three-level-ordered variable (0 = not currently
+taking HAART therapy, 1 = taking HAART nonadherent, 2 = taking HAART adherent)
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Reading in the \texttt{CHAIN} data set in R}
+<<echo = FALSE, eval = TRUE, warning = FALSE, message = FALSE>>=
+# install.packages("mi")
+library("mi")
+data("CHAIN")
+chain <- CHAIN # rename the data frame
+# chain$income <- factor(chain$income, levels = c(1:10),
+#                        labels = c("1", "2", "3", "4", "5",
+#                                   "6", "7","8", "9", "10"))
+chain$mental <- factor(chain$mental, levels = c(0, 1),
+                       labels = c("no", "yes"))
+# chain$damage <- factor(chain$damage, levels = c(1:5),
+#                        labels = c("1", "2", "3", "4", "5"))
+chain$treatment <- factor(chain$treatment, levels = c(0, 1, 2),
+                       labels = c("0", "1", "2"))
+@
+
+<<echo = TRUE, eval = FALSE>>=
+install.packages("mi")
+library("mi")
+data("CHAIN")
+chain <- CHAIN # rename the data frame
+names(chain)
+str(chain)
+summary(chain)
+@
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Descriptive Statistics of the \texttt{CHAIN} data set in R}
+<<echo = TRUE, eval = FALSE, size = "tiny">>=
+hist(chain$log_virus, ylim = c(0, 200), col = "darkgray")
+nrow(chain) # [1] 532
+apply(chain, 2, function(x) {sum(is.na(x))})
+# log_virus       age    income   healthy    mental    damage treatment 
+#       179        24        38        24        24        63        24
+summary(chain)
+@
+\end{frame}
+
+% \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+\usebackgroundtemplate{}
+\begin{frame}
+\frametitle{Reasons for Item Nonresponse}
+\begin{itemize}
+\item Individuals may not respond to specific questions on sensitive issues
+(e. g. questions on household income, drug abuse, ...).
+\item Medical or occupational records may be incomplete.
+Material might be spilled or reports might be lost in the mail.
+\item Certain variables may be very expensive to measure for all study
+participants.
+\end{itemize}
+\end{frame}
+
+% \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+\usebackgroundtemplate{}
+\begin{frame}
+\frametitle{Missingness Mechanisms}
+\begin{itemize}
+\item \textbf{MCAR}: The missing completely at random (MCAR) mechanism assumes, that the
+probability that a specific variable X is missing is does not depend on any
+other factors.
+\item \textbf{MAR}: The missing at random (MAR) mechanism assumes, that the probability that
+a specific variable X is missing does not depend on the missing value of X,
+but only on fully observed variables.
+\item \textbf{MNAR}: Otherwise data are not missing at random (MNAR).
+\end{itemize}
+\begin{center}
+\includegraphics[width=0.7\paperwidth]{missing_data.png}
+\end{center}
+\end{frame}
+
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+% \usebackgroundtemplate{}
+\begin{frame}[fragile]
+\frametitle{Fitting a linear regression model to the \texttt{chain} data set}
+<<echo = TRUE, eval = TRUE, size = "tiny">>=
+# R performs a complete case analysis using only rows with no NAs
+lm.mod.NA <- lm(log_virus ~ age + income + healthy + mental +
+                   damage + treatment, data = chain)
+summary(lm.mod.NA)
+@
+\end{frame}
+
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+% \usebackgroundtemplate{}
+\begin{frame}[fragile]
+\frametitle{Checking the model assumptions for the \texttt{chain} data set}
+<<echo = TRUE, eval = TRUE, size = "tiny", out.width = "70%", fig.align="center">>=
+# R performs a complete case analysis using only rows with no NAs
+par(mfrow=c(2,2))
+plot(lm.mod.NA)
+@
+\end{frame}
+
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+% \usebackgroundtemplate{}
+\begin{frame}
+\frametitle{Complete Data Analysis in linear regression}
+\begin{itemize}
+\item Complete case analysis uses only those records with complete observations
+\item If the predictor values are missing nondifferentially, i. e. the probability
+that a risk factor is missing does not depend on outcome y (disease status),
+then complete case analysis produces valid regression coefficient estimates
+\item If the predictor values are missing differentially the complete case
+analysis can result substantial biased estimates.
+\item There may also be a huge loss in precision (large CIs and $p$-values) if
+a substantial part of the observations are omitted due to missing values.
+\end{itemize}
+\end{frame}
+
+% \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+\usebackgroundtemplate{}
+\begin{frame}
+\frametitle{How are missing data treated?}
+Simple solutions that often cause bias or other problems:
+\begin{itemize}
+\item Complete data analysis = Listwise deletion
+\item Pairwise deletion
+\item Single imputation (not discussed)
+\item Last observation carried forward and baseline observation carried
+forward (not discussed)
+\end{itemize}
+Better (but also more complex) approaches are
+\begin{itemize}
+\item \textbf{Multiple imputation}: mainly used to handle item missings - only
+parts of the variables are missing
+\item Inverse probability weighting (not discussed)
+\end{itemize}
+\end{frame}
+
+% \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+\usebackgroundtemplate{}
+\begin{frame}
+\frametitle{Iterative methods to get an imputed data set}
+\small
+If we have missings in more than one variable:
+\begin{itemize}
+\item \textbf{Multivariate Imputation by Chained Equations (MICE, Van Buuren
+and Oudshoorn (1999))} \newline
+MICE imputes each variable stochastically using a regression model
+conditional on all the others, iteratively cycling through all the variables that
+contain missing data until convergence (''Gibbs sampling'').
+In R we can use the mice package. The mice function assumes in default
+settings linearity of associations among X variables and between X and Y in
+the default setting, but specific forms of imputation models can be specified by
+the user.
+\item \textbf{An iterative nonparametric missing value imputation for mixed-type data}
+can also be done by a method called missForest which is based on a random
+forest approach. It can can cope with high-dimensional data and may
+outperform MICE if complex interactions and nonlinear relations are
+suspected. In R we can use the missForest package.
+\end{itemize}
+\end{frame}
+
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+% \usebackgroundtemplate{}
+\begin{frame}[fragile]
+\frametitle{Iterative imputation based on \texttt{RandomForest}}
+In the R package missForest (2012) is an iterative imputation method.
+All imputation models are random forest models.
+<<echo = TRUE, eval = FALSE, size = "scriptsize", warning = FALSE, message = FALSE>>=
+# install.packages("missForest")
+library("missForest")
+# Nonparametric Missing Value Imputation using Random Forest
+chain.imp <- missForest(chain, variablewise = TRUE)
+chain.imp$OOBerror # estimated imputation error for each variable
+chain.final.rf <- chain.imp$ximp
+dim(chain.final.rf) # [1] 532   7
+apply(chain.final.rf, 2, function(x){sum(is.na(x))})
+# log_virus       age    income   healthy    mental    damage treatment 
+#         0         0         0         0         0         0         0 
+lm.mod.rf <- lm(log_virus ~ age + income + healthy +
+                   mental + damage + treatment,
+                data = chain.final.rf)
+@
+<<echo = FALSE, eval = TRUE, size = "scriptsize", warning = FALSE, message = FALSE>>=
+# install.packages("mi")
+library("missForest")
+chain.imp <- missForest(chain, variablewise = TRUE)
+chain.final.rf <- chain.imp$ximp
+lm.mod.rf <- lm(log_virus ~ age + income + healthy +
+                   mental + damage + treatment,
+                data = chain.final.rf)
+@
+\end{frame}
+
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+% \usebackgroundtemplate{}
+\begin{frame}
+\frametitle{Main steps used in multiple imputation with \texttt{mice} in R}
+\begin{figure}
+\includegraphics[scale=0.6]{mice_steps.png}
+\end{figure}
+\end{frame}
+
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+% \usebackgroundtemplate{}
+\begin{frame}[fragile]
+\frametitle{Multiple and iterative imputation with \texttt{mice} in R}
+<<echo = TRUE, eval = FALSE, size = "tiny", warning = FALSE, message = FALSE>>=
+# install.packages("mice")
+library("mice")
+# Multivariate Imputation by Chained Equations (MICE)
+# create 4 imputed data sets via mice
+# IMPUTE DATA
+chain.mice <- mice(chain, m = 4, print = FALSE, seed = 2017)
+# ANALYSE RESULTS WITH IMPUTED DATA
+# fit for each of the 4 data sets a linear regression
+fit.4.mice <- with(chain.mice, lm(log_virus ~ age + income + healthy +
+                                     mental + damage + treatment))
+# check out the regression coefficients of the 4 fits
+summary(fit.4.mice)
+# POOL ANALYSIS RESULTS
+# pool the results of the 4 models with Rubin's rule
+lm.mod.mice <- pool(fit.4.mice)
+# combined regression coefficients of the 4 fits
+summary(lm.mod.mice)
+@
+<<echo = FALSE, eval = TRUE, warning = FALSE, message = FALSE>>=
+library("mice")
+chain.mice <- mice(chain, m = 5, print = FALSE, seed = 2017)
+fit.4.mice <- with(chain.mice, lm(log_virus ~ age + income + healthy +
+                                     mental + damage + treatment))
+lm.mod.mice <- pool(fit.4.mice)
+@
+\end{frame}
+
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+% \usebackgroundtemplate{}
+\begin{frame}[fragile]
+\frametitle{Comparison of results: Complete case vs. \texttt{missForest}}
+<<echo = TRUE, eval = TRUE, size = "tiny", warning = FALSE, message = FALSE>>=
+round(summary(lm.mod.NA)$coef, 2)
+round(summary(lm.mod.rf)$coef, 2)
+@
+\end{frame}
+
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+% \usebackgroundtemplate{}
+\begin{frame}[fragile]
+\frametitle{Comparison of results: Complete case vs. \texttt{mice}}
+<<echo = TRUE, eval = TRUE, size = "tiny", warning = FALSE, message = FALSE>>=
+round(summary(lm.mod.NA)$coef, 2)
+round(summary(lm.mod.mice)[,c(1,2,3,5)], 2)
+@
+\end{frame}
+
+% \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+\usebackgroundtemplate{}
+\begin{frame}
+\frametitle{Multiple Imputation - the principle idea}
+\begin{itemize}
+\item $m$ imputed data sets are created instead of a single imputed data set
+(Rubin has shown that often $m = 5$ to $10$ is sufficient)
+\item To create the m imputed data sets take random draws from the predictive
+distribution from an imputation model, e.g. 5 times or do iterative imputation
+several times with different starting values and draw random draws.
+\item The variation among the m imputations reflects the uncertainty with which the
+missing values can be predicted from the observed data.
+\item With each completed data set the planned analysis is performed.
+\item The results from the different analyses are then combined using Rubin's rule properly taking into account the uncertainty in the imputed values.
+\end{itemize}
+\end{frame}
+
+% \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+\usebackgroundtemplate{}
+\begin{frame}
+\frametitle{Summary on imputation}
+Missing data lead to
+\begin{itemize}
+\item Inefficient analyses of research questions
+\item Difficulties in interpretation when analyses differ in numbers of subjects
+\item Possible bias in regression coefficients
+\end{itemize}
+\begin{itemize}
+\item \textbf{Imputation methods make the assumption of MAR}
+\item The MAR assumption is not testable, but becomes more reasonable with
+imputation models that include a wide range of variables.
+\end{itemize}
+\begin{itemize}
+\item \textbf{Multiple imputation is recommended and superior to complete data analysis.}
+\item Single imputation methods are also reasonable for prediction.
+\end{itemize}
+\end{frame}
+
+% \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+\usebackgroundtemplate{}
+\begin{frame}
+\frametitle{Summary for Anna Mary}
+\begin{itemize}
+\setlength\itemsep{1.5em}
+\item ONE continuous vs. ONE categorical variable (2 levels)
+\begin{itemize}
+\item \texttt{t.test(...)}
+\end{itemize}
+\item ONE continuous vs. ONE categorical variable ($\geq$ 2 levels)
+\begin{itemize}
+\item \texttt{aov(...)}
+\end{itemize}
+\item ONE categorical variable (2 levels) vs. ONE categorical variable (2 levels) $\rightarrow$ 2 x 2 table
+\begin{itemize}
+\item \texttt{chisq.test(...)}
+\item \texttt{fisher.test(...)}
+\end{itemize}
+\end{itemize}
+\vspace{0.3em}
+\LARGE $\rightarrow$ Regression:  \texttt{lm(...)} \& \texttt{glm(...)}
+\end{frame}
+
+% CONTRASTS
+% https://www.r-bloggers.com/using-and-interpreting-different-contrasts-in-linear-models-in-r/
+% https://rcompanion.org/rcompanion/h_01.html
+% http://www.stat.wisc.edu/courses/st850-lindstro/handouts/contrasts.pdf
+
+% *****************************************************************************
+
+\end{document}
+
+% as.numeric.factor <- function(x) {as.numeric(levels(x))[x]}

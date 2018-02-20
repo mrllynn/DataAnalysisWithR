@@ -1,0 +1,33 @@
+\frametitle{Comparison of results: Complete case vs. \texttt{mice}}
+\begin{knitrout}\tiny
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{round}\hlstd{(}\hlkwd{summary}\hlstd{(lm.mod.NA)}\hlopt{$}\hlstd{coef,} \hlnum{2}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+##             Estimate Std. Error t value Pr(>|t|)
+## (Intercept)    17.37       1.84    9.44     0.00
+## age            -0.11       0.03   -3.68     0.00
+## income         -0.37       0.11   -3.24     0.00
+## healthy        -0.04       0.02   -1.83     0.07
+## mentalyes       0.97       0.54    1.82     0.07
+## damage         -1.19       0.18   -6.61     0.00
+## treatment1     -2.06       0.60   -3.44     0.00
+## treatment2     -2.21       0.53   -4.15     0.00
+\end{verbatim}
+\begin{alltt}
+\hlkwd{round}\hlstd{(}\hlkwd{summary}\hlstd{(lm.mod.mice)[,}\hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,}\hlnum{2}\hlstd{,}\hlnum{3}\hlstd{,}\hlnum{5}\hlstd{)],} \hlnum{2}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+##               est   se     t Pr(>|t|)
+## (Intercept) 15.60 1.57  9.95     0.00
+## age         -0.09 0.03 -3.25     0.00
+## income      -0.35 0.11 -3.09     0.00
+## healthy     -0.03 0.02 -1.55     0.13
+## mental2      1.16 0.56  2.06     0.05
+## damage      -1.01 0.17 -5.76     0.00
+## treatment2  -2.27 0.56 -4.06     0.00
+## treatment3  -2.13 0.52 -4.10     0.00
+\end{verbatim}
+\end{kframe}
+\end{knitrout}

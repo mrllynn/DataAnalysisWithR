@@ -1,0 +1,308 @@
+\documentclass{beamer}
+
+% *****************************************************************************
+% ADD HERE THE TOPIC OF THE LECTURE!
+% \newcommand{\lecturetopic}{ALL LECTURE SLIDES}
+\newcommand{\lecturetopic}{Day 6}
+% *****************************************************************************
+
+<<echo = FALSE, eval = TRUE>>=
+# data_dir <- "~/Dropbox/201710_Makerere/02_Lectures/data/"
+data_dir <- "C:\\Users\\admin\\Dropbox\\201710_Makerere\\02_Lectures\\data\\"
+@
+
+% turn off navigation symbols
+\beamertemplatenavigationsymbolsempty
+
+\title{\textbf{Data Analysis with R:} \\ \lecturetopic}
+\author{Sonja Hartnack, Terence Odoch \& Muriel Buri}
+\vspace{0.3cm}
+\footnotesize
+\institute{October 2017}
+\date{ }
+
+\setbeamertemplate{footline}[text line]{%
+\parbox{\linewidth}{\vspace*{-1pt} \fontsize{3.5}{5}\selectfont Sonja Hartnack,
+Terence Odoch \& Muriel Buri \hfill \lecturetopic \hfill \insertpagenumber}}
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{animate}
+
+\usepackage{verbatim}
+\usepackage{url}
+\usepackage{lmodern}
+\usepackage{fancyhdr}
+\usepackage{color}
+\usepackage{amsmath, amssymb}
+\usepackage{longtable}
+\usepackage{lscape}
+\usepackage{xspace}
+\usepackage[normalem]{ulem}
+% Use Palatino (URW Palladio) for most of the text\ldots
+\usepackage[sc]{mathpazo}
+% And Arial for the rest
+\usepackage[scaled]{helvet}
+\usepackage[latin1]{inputenc}
+\usepackage{multicol} % A flexible tool to handle multicolumn documents
+\usepackage{colortbl, xcolor} % enable colored rows in table
+\usepackage{color} % enable colored rows in table
+\usepackage{bibentry} % Include Full BibTeX Entry Inside Slides
+\usepackage{nicefrac}
+\usepackage{soul}
+
+\setbeamertemplate{itemize items}[circle]
+
+\usepackage{array}
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\graphicspath{{figures/}}
+\usepackage[export]{adjustbox} % figure alignment
+\usepackage{wrapfig} % allow for wrapfigure
+\usepackage[margin=1cm]{caption}
+\captionsetup{font=scriptsize, labelfont=scriptsize}
+
+% change font family in footnote
+\usepackage{footmisc}
+\renewcommand*{\footnotelayout}{\tiny\sffamily}
+% \renewcommand*{\footnotelayout}{\fontsize{3.5}{5}\selectfont\sffamily}
+
+% change footer symbol
+\usepackage{perpage}
+\MakePerPage{footnote}
+\renewcommand*{\thefootnote}{$\star$}
+
+% change font sizes of frametitles
+\setbeamerfont{frametitle}{size=\normalsize, series=\bfseries}
+\setbeamerfont{framesubtitle}{size=\small, series=\bfseries}
+
+% Settings for the references
+\usepackage{natbib}
+\usepackage{bibentry} % Include Full BibTeX Entry Inside Slides
+
+% Writting the whole reference in ONE line.
+% \def\newblock{\hskip .5em plus .33em minus .07em}
+
+\setbeamerfont{title}{size=\LARGE}
+
+\makeatletter
+\def\mathcolor#1#{\@mathcolor{#1}}
+\def\@mathcolor#1#2#3{%
+\protect\leavevmode
+\begingroup\color#1{#2}#3\endgroup
+}
+\makeatother
+
+% *****************************************************************************
+
+% {\usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+{\usebackgroundtemplate{}}
+\begin{document}
+
+\bibliographystyle{plainnat}
+
+% *****************************************************************************
+% TITLE PAGE:
+% *****************************************************************************
+
+\begin{frame}[noframenumbering,plain]
+\begin{columns}
+\begin{column}{.3\linewidth}
+\begin{center}
+\includegraphics[height=.35\linewidth, width = 1.1\linewidth]{uzh_logo.pdf}
+\end{center}
+\end{column}
+\begin{column}{0.2\linewidth}
+\end{column}
+\begin{column}{.3\linewidth}
+\begin{center}
+\includegraphics[height=.45\linewidth, width = .65\linewidth]{makere_logo.jpg}
+\end{center}
+\end{column}
+\end{columns}
+\titlepage
+\end{frame}
+
+% *****************************************************************************
+
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+% \usebackgroundtemplate{}
+\begin{frame}[fragile]
+\frametitle{Exercise 17}
+\end{frame}
+
+% *****************************************************************************
+
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+% \usebackgroundtemplate{}
+\begin{frame}[fragile]
+\frametitle{Interactions}
+<<echo = TRUE, eval = TRUE, size="scriptsize", out.width = "70%", fig.align="center">>=
+interaction.plot(ToothGrowth$dose, ToothGrowth$supp, ToothGrowth$len,
+                 fixed = TRUE)
+@
+\end{frame}
+
+% *****************************************************************************
+
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+% \usebackgroundtemplate{}
+\begin{frame}[fragile]
+\frametitle{Two-way Interactions in R (1/3)}
+% https://www.zoology.ubc.ca/~schluter/R/fit-model/
+\vspace*{0.3cm}
+There are three different interactions:
+\begin{itemize}
+\item \textbf{Interaction between two categorical variables}
+\item Interaction between one continuous and one categorical variables
+\item Interaction between two continuous variables
+\end{itemize}
+\end{frame}
+
+% *****************************************************************************
+
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+% \usebackgroundtemplate{}
+\begin{frame}[fragile]
+\frametitle{Two-way Interactions in R (2/3)}
+Model specification in R: Be aware, an interaction is never tested without its
+corresponding main effects included in the model.
+<<echo = FALSE, eval = TRUE, size="tiny", out.width = "70%", fig.align="center">>=
+data(ToothGrowth)
+ToothGrowth$dose.fac <- factor(ToothGrowth$dose, levels = c(0.5, 1.0, 2.0),
+                          labels = c("low", "med", "high"))
+@
+
+<<echo = TRUE, eval = TRUE, size="tiny", out.width = "70%", fig.align="center">>=
+# Interaction between two categorical variables
+# mod.dose.supp.int <- lm(len ~ dose.fac + supp + dose.fac:supp,
+# data = ToothGrowth)
+mod.dose.supp.int <- lm(len ~ dose.fac * supp, data = ToothGrowth)
+# summary(mod.dose.supp.int)
+@
+\begin{align*}
+y & \sim \beta_{\text{baseline((dose==low) \& (supp==OJ))}} +
+\beta_\text{dose==med} + \\
+& \qquad \beta_\text{dose==high} + \beta_\text{supp==VC} \\
+& \qquad + \beta_\text{(dose==med) \& (supp==VC)} \\
+& \qquad + \beta_\text{(dose==high) \& (supp==VC)} \nonumber
+\end{align*}
+\end{frame}
+
+% *****************************************************************************
+
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+% \usebackgroundtemplate{}
+\begin{frame}[fragile]
+\frametitle{Two-way Interactions in R (3/3)}
+<<echo = FALSE, eval = TRUE, size="tiny", out.width = "70%", fig.align="center">>=
+data(ToothGrowth)
+ToothGrowth$dose.fac <- factor(ToothGrowth$dose, levels = c(0.5, 1.0, 2.0),
+                          labels = c("low", "med", "high"))
+@
+
+<<echo = TRUE, eval = TRUE, size="tiny", out.width = "70%", fig.align="center">>=
+# Interaction between two categorical variables
+# mod.dose.supp.int <- lm(len ~ dose.fac + supp + dose.fac:supp,
+# data = ToothGrowth)
+mod.dose.supp.int <- lm(len ~ dose.fac * supp, data = ToothGrowth)
+summary(mod.dose.supp.int)
+@
+\end{frame}
+
+% *****************************************************************************
+
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+% \usebackgroundtemplate{}
+\begin{frame}[fragile]
+\frametitle{Two-way Interactions in R: Interpretation of coefficients (1/2)}
+<<echo = TRUE, eval = TRUE, size="tiny", out.width = "70%", fig.align="center">>=
+coef(mod.dose.supp.int)
+@
+\begin{align*}
+y & \sim \beta_{\text{baseline((dose==low) \& (supp==OJ))}} +
+\beta_\text{dose==med} + \\
+& \qquad \beta_\text{dose==high} + \beta_\text{supp==VC} \\
+& \qquad + \beta_\text{(dose==med) \& (supp==VC)} \\
+& \qquad + \beta_\text{(dose==high) \& (supp==VC)} \nonumber
+\end{align*}
+\end{frame}
+
+% *****************************************************************************
+
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+% \usebackgroundtemplate{}
+\begin{frame}[fragile]
+\frametitle{Two-way Interactions in R: Interpretation of coefficients (2/2)}
+<<echo = TRUE, eval = TRUE, size="tiny", out.width = "70%", fig.align="center">>=
+coef(mod.dose.supp.int)
+@
+\begin{itemize}
+\small
+\item $\rightarrow$ \texttt{dose.facmed:suppVC} \newline
+change in the slope between the \texttt{low} and \texttt{med} \texttt{dose.fac}
+group under the supplement type (\texttt{supp}) \texttt{VC} in comparison to the
+intercept.
+In other words, by changing the dose from \texttt{low} to \texttt{med} within the
+supplement group \texttt{VC}, the slope \textbf{de}creases by approx. $-0.68$.
+\item $\rightarrow$ \texttt{dose.fachigh:suppVC}  \newline
+change in the slope between the \texttt{low} and \texttt{high} \texttt{dose.fac}
+group under the supplement type (\texttt{supp}) \texttt{VC} in comparison to the
+intercept.
+In other words, by changing the dose from \texttt{low} to \texttt{high} within the
+supplement group \texttt{VC}, the slope \textbf{in}creases by approx. $+5.33$.
+\end{itemize}
+\end{frame}
+
+% *****************************************************************************
+
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+% \usebackgroundtemplate{}
+\begin{frame}[fragile]
+\frametitle{Exercise 18}
+\end{frame}
+
+% *****************************************************************************
+
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+% \usebackgroundtemplate{}
+\begin{frame}[fragile]
+\frametitle{Confounding}
+\begin{itemize}
+\item {\bfseries Confounding variable} - is associated with the exposure and the outcome
+\item {\bfseries Confounding variable} - is not part of the causal path between exposure and the outcome
+\end{itemize}
+\begin{center}
+\includegraphics[scale=0.3]{confounding.png} 
+\end{center}
+\end{frame}
+
+% *****************************************************************************
+
+\begin{frame}
+\frametitle{Some things to remember}
+\begin{itemize}
+\item Not adjusting / controlling for a confounding variable may lead to bias
+results. It is good practice to present as well the crude (not adjusted ORs)
+and the adjusted ones. Adjustment is typically done if difference $>$ 10\%. 
+\item Check also for interaction (= effect modification) e. g. using logistic
+regression.
+\item Do not adjust for a variable C if it is a common effect of E and D
+(collider) or if it is in the causal pathway of E and D.
+\end{itemize}
+\end{frame}
+
+% *****************************************************************************
+
+% CONTRASTS
+% https://www.r-bloggers.com/using-and-interpreting-different-contrasts-in-linear-models-in-r/
+% https://rcompanion.org/rcompanion/h_01.html
+% http://www.stat.wisc.edu/courses/st850-lindstro/handouts/contrasts.pdf
+
+% *****************************************************************************
+
+\end{document}
+
+% as.numeric.factor <- function(x) {as.numeric(levels(x))[x]}

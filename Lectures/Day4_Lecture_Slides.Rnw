@@ -1,0 +1,512 @@
+
+% http://kbroman.org/minimal_make/
+
+\documentclass{beamer}
+
+% *****************************************************************************
+% ADD HERE THE TOPIC OF THE LECTURE!
+\newcommand{\lecturetopic}{Day 4}
+% *****************************************************************************
+
+<<eval=TRUE, echo = FALSE, results="hide">>=
+#data_dir <- "~/Dropbox/201710_Makerere/02_Lectures/data/"
+data_dir <- "C:\\Users\\admin\\Dropbox\\201710_Makerere\\02_Lectures\\data\\"
+@
+
+% turn off navigation symbols
+\beamertemplatenavigationsymbolsempty
+
+\title{\textbf{Data Analysis with R:} \\ \lecturetopic}
+\author{Sonja Hartnack, Terence Odoch \& Muriel Buri}
+\vspace{0.3cm}
+\footnotesize
+\institute{October 2017}
+\date{ }
+
+\setbeamertemplate{footline}[text line]{%
+\parbox{\linewidth}{\vspace*{-1pt} \fontsize{3.5}{5}\selectfont Sonja Hartnack,
+Terence Odoch \& Muriel Buri \hfill \lecturetopic \hfill \insertpagenumber}}
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{animate}
+
+\usepackage{verbatim}
+\usepackage{url}
+\usepackage{lmodern}
+\usepackage{fancyhdr}
+\usepackage{color}
+\usepackage{amsmath, amssymb}
+\usepackage{longtable}
+\usepackage{lscape}
+\usepackage{xspace}
+\usepackage[normalem]{ulem}
+% Use Palatino (URW Palladio) for most of the text\ldots
+\usepackage[sc]{mathpazo}
+% And Arial for the rest
+\usepackage[scaled]{helvet}
+\usepackage[latin1]{inputenc}
+\usepackage{multicol} % A flexible tool to handle multicolumn documents
+\usepackage{colortbl, xcolor} % enable colored rows in table
+\usepackage{color} % enable colored rows in table
+\usepackage{bibentry} % Include Full BibTeX Entry Inside Slides
+\usepackage{nicefrac}
+\usepackage{soul}
+
+\setbeamertemplate{itemize items}[circle]
+
+\usepackage{array}
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\graphicspath{{figures/}}
+\usepackage[export]{adjustbox} % figure alignment
+\usepackage{wrapfig} % allow for wrapfigure
+\usepackage[margin=1cm]{caption}
+\captionsetup{font=scriptsize, labelfont=scriptsize}
+
+% change font family in footnote
+\usepackage{footmisc}
+\renewcommand*{\footnotelayout}{\tiny\sffamily}
+% \renewcommand*{\footnotelayout}{\fontsize{3.5}{5}\selectfont\sffamily}
+
+% change footer symbol
+\usepackage{perpage}
+\MakePerPage{footnote}
+\renewcommand*{\thefootnote}{$\star$}
+
+% change font sizes of frametitles
+\setbeamerfont{frametitle}{size=\normalsize, series=\bfseries}
+\setbeamerfont{framesubtitle}{size=\small, series=\bfseries}
+
+% Settings for the references
+\usepackage{natbib}
+\usepackage{bibentry} % Include Full BibTeX Entry Inside Slides
+
+% Writting the whole reference in ONE line.
+% \def\newblock{\hskip .5em plus .33em minus .07em}
+
+\setbeamerfont{title}{size=\LARGE}
+
+\makeatletter
+\def\mathcolor#1#{\@mathcolor{#1}}
+\def\@mathcolor#1#2#3{%
+\protect\leavevmode
+\begingroup\color#1{#2}#3\endgroup
+}
+\makeatother
+
+% Define math commands
+\DeclareMathOperator{\Prob}{\mathbb{P}}
+\newcommand{\MSN}{\text{M}^{\text{N}}}
+\newcommand{\MSIII}{\text{M}^{\text{III}}}
+\newcommand{\msN}{\text{m}^{\text{N}}}
+\newcommand{\msIII}{\text{m}^{\text{III}}}
+\newcommand{\rY}{M}
+\newcommand{\ry}{m}
+\newcommand{\rX}{\mathbf{X}}
+\newcommand{\rx}{\mathbf{x}}
+
+% *****************************************************************************
+
+% {\usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+{\usebackgroundtemplate{}}
+\begin{document}
+
+\bibliographystyle{plainnat}
+
+% *****************************************************************************
+% TITLE PAGE:
+% *****************************************************************************
+
+\begin{frame}[noframenumbering,plain]
+\begin{columns}
+\begin{column}{.3\linewidth}
+\begin{center}
+\includegraphics[height=.35\linewidth, width = 1.1\linewidth]{uzh_logo.pdf}
+\end{center}
+\end{column}
+\begin{column}{0.2\linewidth}
+\end{column}
+\begin{column}{.3\linewidth}
+\begin{center}
+\includegraphics[height=.45\linewidth, width = .65\linewidth]{makere_logo.jpg}
+\end{center}
+\end{column}
+\end{columns}
+\titlepage
+\end{frame}
+
+% *****************************************************************************
+
+% \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+\usebackgroundtemplate{}
+\begin{frame}
+\frametitle{Basic Statistical Tests}
+Study data is collected for a purpose - to answer one or more specific 
+scientific questions. The classical way to perform a formal statistical 
+analyses of these data is to formulate these research questions into 
+statistical {\bfseries hypothesis tests}. \\
+\vspace{0.5cm}
+In this section we will go through a simple example in detail to highlight 
+some of the important concepts - the general approach for more complex 
+analyses is exactly same. \emph{Note: the precise technical details are 
+much less important than the concepts!}
+\end{frame}
+
+% *****************************************************************************
+
+\begin{frame}
+\frametitle{Simple Example - One Population}
+{\bfseries After six weeks will the mean weight of a chicken be more than 250 
+grams?}\\
+There are 71 observations in \texttt{chickwts} from which to answer this 
+question. This can be formulated into a statistical hypothesis test. A 
+hypothesis test has two parts, the null hypothesis and the alternative 
+hypothesis. This is typically written as follows: 
+\begin{eqnarray}
+H_0:\quad \mu &\le& 250 \nonumber\\
+H_A:\quad \mu &>& 250 \nonumber
+\end{eqnarray}
+where $\mu$ is the mean weight in the {\bfseries population} of 
+chickens from which the sample of 71 chickens was drawn. Remember - we know the
+mean weight in the sample of chickens is greater than 250 it is the 
+{\bfseries population} of chickens which we are interested in.
+\end{frame}
+
+% *****************************************************************************
+
+\begin{frame}
+\frametitle{Simple Example - One Population}
+{\bfseries After six weeks will the mean weight of a chicken be at least 250 grams?}
+\begin{eqnarray}
+H_0:\quad \mu &\le& 250 \nonumber\\
+H_A:\quad \mu &>& 250 \nonumber 
+\end{eqnarray}
+The null hypothesis ($H_0$) is the default situation, sometimes called the 
+``state of nature''. In a treatment-control trial, $H_0$ is typically that 
+the effect of the treatment is not different from the control. In this 
+example our default position is that the mean weight of chickens is 
+{\bfseries $\le{250}$}. This is called a single-sided hypothesis test.  
+\end{frame}
+
+% *****************************************************************************
+
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+% \usebackgroundtemplate{}
+\begin{frame}[fragile]
+\frametitle{Simple Example - One Population}
+We now analyse the 71 observations to see whether there is evidence to 
+{\bfseries REJECT} the null hypothesis $H_0$, and if the null hypothesis is 
+rejected then we can conclude that the available evidence supports the 
+alternative hypothesis.
+<<echo=TRUE, eval=FALSE>>=
+t.test(chickwts$weight, mu = 250)
+@
+Note that hypothesis testing is concerned with finding evidence in support 
+of the null hypothesis $H_0$ - the default situation -  rather than evidence 
+in favour of the alternative hypothesis. 
+\end{frame}
+
+% *****************************************************************************
+
+% \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+\usebackgroundtemplate{}
+\begin{frame}
+\frametitle{One Sample t-test}
+For the chicken weights data an appropriate formal analyses is to use a
+{\bfseries one-sample t-test}, why this test is appropriate will be discussed 
+later. This analysis involves calculating a simple summary statistic - called 
+a $t$-statistic - which we do entirely from the observed data.
+\begin{equation}
+T_{obs}=\frac{\bar{x}-\mu}{s/\sqrt{n}} \nonumber
+\end{equation}
+where $\bar{x}$ is the sample mean, $s$ the sample standard deviation and $\mu$ 
+is the population mean in the null hypothesis which we wish to test for. We then
+look up the value of $T_{obs}$ in a set of statistical tables/computer to see 
+what the answer is to our research question.
+\end{frame}
+
+% *****************************************************************************
+
+\begin{frame}
+\frametitle{Important concept - sampling }
+\begin{center}
+Why is $T_{obs}=\frac{\bar{x}-\mu}{s/\sqrt(n)}$ called a $t$-statistic?
+\end{center}
+\vspace{0.2cm}
+If another sample of 71 chickens from the same population were weighed then the 
+values for $\bar{x}$ and $s$ would be different, and hence the value for $T_{obs}$. 
+If this was repeated many times and a histogram/Q-Q/P-P plot produced of the 
+values for $T_{obs}$ then this would follow the shape of a known distribution 
+- {\bfseries student-$t$ probability distribution}. It is this piece of 
+mathematics - knowing what the sampling distribution of $T_{obs}$ is - 
+which allows us to infer information about the population of chickens from
+which our original 71 chickens were sampled - without actually having to 
+collect lots and lots of other samples of chickens! Mathematical theory is 
+used to fill this data gap.
+\end{frame}
+
+% *****************************************************************************
+
+\begin{frame}
+\frametitle{\texttt{chickwts}: t-test}
+\begin{equation}
+T_{obs}=\frac{261.31-250}{78.07/\sqrt{71}}=1.22 \nonumber
+\end{equation}
+Put the values for the sample mean and standard deviation into the t-statistic 
+formula along with the $\mu=250$. We now look up the value of this in a 
+t-distribution reference table. All this calculation will be done for you in 
+R but it is important to understand the general process as this is the same 
+for hypothesis testing in other more complex analyses.
+\end{frame}
+ 
+% *****************************************************************************
+
+\begin{frame}\frametitle{One Sample, one-sided, t-test}
+\includegraphics[angle=270,scale=0.35]{fig1.pdf}
+\end{frame}
+
+% *****************************************************************************
+
+\begin{frame}
+\frametitle{Important concept - $p$-values}
+\begin{itemize}
+\item The result of a hypothesis test is usually communicated in the form of a
+{\bfseries $p$-value}
+\item The interpretation of a $p$-value is of crucial importance - it is the
+\emph{probability that the test statistic takes values at least as extreme 
+as that observed {\bfseries assuming that $H_0$ is true}}
+\item Exactly what {\bfseries at least as extreme as} refers to depends on 
+the alternative hypothesis $H_A$.
+\item This may sound rather abstract but it is usually obvious in practice
+\end{itemize}
+\end{frame}
+
+% *****************************************************************************
+ 
+\begin{frame}
+\frametitle{Simple Example - One Population}
+ {\bfseries After six weeks will the mean weight of a chicken be at least 250 grams?}
+\begin{eqnarray}
+H_0:\quad \mu &\le& 250 \nonumber\\
+H_A:\quad \mu &>& 250 \nonumber
+\end{eqnarray}
+The alternative hypothesis is $\mu > 250$ so in this test
+{\bfseries at least as extreme as} in the definition of a $p$-value is the 
+probability of observing a t-statistic which is $>1.22$ 
+{\bfseries assuming that $H_0$ is true} - this is why 250 was used for $\mu$ when calculating $T_{obs}$.
+\\\vspace{0.2cm}
+\end{frame}
+
+% *****************************************************************************
+
+\begin{frame}\frametitle{One Sample, one-sided, t-test}
+\includegraphics[angle=270,scale=0.35]{fig2.pdf}
+\end{frame}
+
+% *****************************************************************************
+
+\begin{frame}
+\frametitle{Research Question}
+The purpose of this hypothesis test analysis is to answer a very specific
+scientific question:
+\begin{center}{\bfseries After six weeks will the mean weight of a chicken be
+more than 250 grams?}\end{center}
+So what is our answer?\\\vspace{0.3cm}
+The $p$-value for this hypothesis test is 0.113. Based on this value we can either
+{\bfseries \large reject} $H_0$ and conclude that the mean weight of chickens 
+in the population is likely to be greater than 250 grams or else we can 
+{\bfseries \large accept} $H_0$ where the mean chicken weight is less than 250 grams.  
+\\\vspace{0.3cm}
+\end{frame}
+
+% *****************************************************************************
+
+\begin{frame}
+\frametitle{Research Question - be pragmatic with $p$-values}
+\vspace{0.2cm}
+By convention a $p$-value of less than 0.05 is considered to provide reasonable 
+evidence for rejecting $H_0$. A $p$-value of between 0.05 and 0.1 might be 
+considered as weak evidence against $H_0$. Values of less that 0.01 are generally 
+considered as very strong evidence for rejecting $H_0$. It is {\bfseries always} 
+best to provide a $p$-value in any analyses to let the reviewer/client see the 
+strength of evidence rather than simply claiming statistically significant 
+findings!
+\vspace{0.2cm}
+\end{frame}
+
+% *****************************************************************************
+
+\begin{frame}
+\frametitle{Communicating Results of Hypothesis Tests}
+Transparency is essential - the devil can be in the detail - which at the very
+least should comprise:
+\begin{itemize}
+\item[i.] what hypothesis was being tested - be clear and precise
+\item[ii.] what statistical test was used
+\item[iii.] what the $p$-value is
+\item[iv.] what the treatment effect is (more later).
+\end{itemize}
+\vspace{0.2cm}
+This is particularly crucial if the analyses are to be given to someone
+\emph{else} to then make a judgment on the scientific significance.
+\end{frame}
+
+% *****************************************************************************
+
+\begin{frame}
+\frametitle{Two-sided Tests: One Population}
+{\bfseries After six weeks will the mean weight of a chicken {\bfseries be equal}
+to 250 grams?}\\
+This is now a two sided hypothesis test:
+\begin{eqnarray}
+H_0:\quad \mu &=& 250 \nonumber \\
+H_A:\quad \mu &\ne& 250 \nonumber
+\end{eqnarray}
+This time the hypothesis test is asking how much evidence is there in our sample
+data to conclude that in the population of all chickens the mean weight is not 
+equal to 250 grams. 
+\end{frame}
+
+% *****************************************************************************
+
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+% \usebackgroundtemplate{}
+\begin{frame}[fragile]
+\frametitle{Two-sided Tests: One Population}
+<<echo=FALSE, eval=TRUE>>=
+data(chickwts)
+@
+
+<<echo=TRUE, eval=TRUE>>=
+t.test(chickwts$weight, mu = 250)
+@
+\end{frame}
+
+% *****************************************************************************
+
+% \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+\usebackgroundtemplate{}
+\begin{frame}
+\frametitle{Two-sided Tests}
+\vspace{0.2cm}
+A two-sided test is similar to a one-sided test - the key difference is in what 
+is now defined as {\bfseries at least as extreme} in the definition of the $p$-value. 
+This time the alternative hypothesis refers to observing a value of 
+{\bfseries either} $\bar{x}>250$ or $\bar{x}< -250$ {\bfseries assuming that $H_0$ is true}, 
+which using the t-test approach is equivalent to the probability of observing 
+$T_{obs}>1.22$ or $T_{obs}<-1.22$ which we can again look up in reference tables.
+\vspace{0.2cm}
+\end{frame}
+
+% *****************************************************************************
+
+\begin{frame}
+\frametitle{One Sample, two-sided, t-test}
+\includegraphics[angle=270,scale=0.35]{fig3}
+\end{frame}
+
+% *****************************************************************************
+
+\begin{frame}
+\frametitle{Two-sided Tests}
+\begin{itemize}
+\item The two-sided t-test has a $p$-value which is exactly double the single 
+sided test
+\item Think! - intuitively the $p$-value should be less for a single sided test 
+as the research question you are asking is much narrower e.g. greater than 
+250 grams, as opposed to whether the mean chicken weight might be {\bfseries either} 
+less than 250 grams {\bfseries or greater} than 250 grams.\\
+\vspace{0.2cm}
+$\rightarrow$ You are using the same amount of information (71 observations) 
+to answer a narrower research question and so all else being equal you should 
+expect a ``more powerful'' analyses (e.g. a lower $p$-value all else being equal)
+\end{itemize}
+\end{frame}
+
+% *****************************************************************************
+
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+% \usebackgroundtemplate{}
+\begin{frame}
+\frametitle{Exercise 11}
+\end{frame}
+
+% *****************************************************************************
+
+% \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+\usebackgroundtemplate{}
+\begin{frame}
+\frametitle{Chisquare-Test}
+\begin{center}
+\includegraphics[width=0.7\paperwidth]{chi_square_test.png}
+\end{center}
+\end{frame}
+
+% *****************************************************************************
+
+% \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+\usebackgroundtemplate{}
+\begin{frame}
+\frametitle{The Chisquare Distribution}
+\begin{center}
+\includegraphics[width=0.7\paperwidth]{chi_square_distr.png}
+\end{center}
+\end{frame}
+
+% *****************************************************************************
+
+% \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+\usebackgroundtemplate{}
+\begin{frame}
+\frametitle{Exact Fisher Test: Permutation Test}
+\begin{center}
+\includegraphics[width=0.7\paperwidth]{fisher_test.png}
+\end{center}
+\end{frame}
+
+% *****************************************************************************
+
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+% \usebackgroundtemplate{}
+\begin{frame}
+\frametitle{Exercise 12}
+\end{frame}
+
+% *****************************************************************************
+
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+% \usebackgroundtemplate{}
+\begin{frame}[fragile]
+\frametitle{Plotting in R}
+\pause
+\begin{itemize}
+\setlength\itemsep{1.5em}
+\item Continuous data
+\begin{itemize}
+\item Histogram
+\item Boxplot
+\end{itemize}
+\item Nominal / Ordinal data
+\begin{itemize}
+\item Barplot
+\item Mosaicplot
+\item Scatterplots
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+% *****************************************************************************
+
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+% \usebackgroundtemplate{}
+\begin{frame}
+\frametitle{Exercise 13A and 13B}
+\end{frame}
+
+% *****************************************************************************
+
+\end{document}
+
