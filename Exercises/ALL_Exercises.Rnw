@@ -9,8 +9,7 @@
 
 % *****************************************************************************
 % ADD HERE THE TOPIC OF THE LECTURE!
-% \newcommand{\exercisetopic}{ALL EXERCISES}
-\newcommand{\exercisetopic}{Day 6}
+\newcommand{\exercisetopic}{ALL EXERCISES}
 % *****************************************************************************
 
 % Add information about the title section of the file
@@ -59,911 +58,911 @@
 \maketitle
 \thispagestyle{fancy}
 
-% \section*{Exercise 1}
-% \begin{itemize}
-% \item Open R Studio
-% \item Open a new R-Script
-% \item Load data set \texttt{chickwts}
-% <<echo = FALSE, eval = FALSE>>=
-% data(chickwts)
-% head(chickwts)
-% # ?chickwts
-% @
-% 
-% \item Do summary statistic (numerically and graphically)
-% <<echo = FALSE, eval = FALSE>>=
-% summary(chickwts)
-% tapply(chickwts$weight, chickwts$feed, mean)
-% tapply(chickwts$weight, chickwts$feed, median)
-% tapply(chickwts$weight, chickwts$feed, sd)
-% table(chickwts$feed)
-% barplot(table(chickwts$feed))
-% boxplot(chickwts$weight ~ chickwts$feed)
-% # boxplot(weight ~ feed, data = chickwts)
-% hist(chickwts$weight)
-% boxplot(weight ~ feed, data = chickwts, col = "lightgray",
-%         varwidth = TRUE, notch = TRUE, main = "chickwt data",
-%         ylab = "Weight at six weeks (gm)")
-% @
-% % Anova, lm, which groups differ, Bonferroni, Tukey-Anscombe
-% % Histogram with density line
-% % Normally distributed weights
-% \end{itemize}
-% 
-% \section*{Exercise 2}
-% \begin{itemize}
-% \item Create a data frame with 3 columns.
-% <<echo = FALSE, eval = FALSE>>=
-% a <- c(1, 2, 3, 4)
-% b <- c("d", "h", "h", "d")
-% c <- factor(c("male", "female", "male", "female"),
-%             levels = c("female", "male"))
-% dat <- data.frame(a, b, c)
-% dat
-% @
-% \end{itemize}
-% 
-% \section*{Exercise 3}
-% \begin{itemize}
-% \item Install package \texttt{MASS}.
-% <<echo = FALSE, eval = FALSE>>=
-% # install.packages("MASS")
-% library("MASS")
-% @
-% 
-% \item Load data set \texttt{bacteria}.
-% <<echo = FALSE, eval = FALSE>>=
-% data(bacteria)
-% head(bacteria)
-% # ?bacteria
-% @
-% 
-% \item Do summary statistic (numerically and graphically).
-% <<echo = FALSE, eval = FALSE>>=
-% summary(bacteria)
-% table(bacteria$week)
-% barplot(table(bacteria$week))
-% barplot(table(bacteria$trt))
-% table(bacteria$trt, bacteria$ap)
-% table(bacteria$trt, bacteria$y)
-% 
-% fisher.test(table(bacteria$trt, bacteria$y))
-% 
-% prop.table(table(bacteria$trt, bacteria$y))
-% prop.table(table(bacteria$trt, bacteria$y), margin = 1)
-% prop.table(table(bacteria$trt, bacteria$y), margin = 2)
-% 
-% plot(prop.table(table(bacteria$trt, bacteria$y)))
-% mosaicplot(~trt + y, data = bacteria)
-% barplot(prop.table(table(bacteria$y, bacteria$trt),margin=1), beside=TRUE)
-% barplot(prop.table(table(bacteria$trt, bacteria$y),margin=1), beside=TRUE)
-% barplot(prop.table(table(bacteria$y, bacteria$trt),margin=1), beside=FALSE)
-% barplot(prop.table(table(bacteria$trt, bacteria$y),margin=1), beside=FALSE)
-% ?barplot
-% @
-% 
-% \item Select only observations collected during the second week.
-% <<echo = FALSE, eval = FALSE>>=
-% subset(bacteria, week == 2)
-% ss <- subset(bacteria, week == 2)
-% summary(ss)
-% # Check if we only have observations of week 2.
-% table(bacteria$week)
-% table(ss$week)
-% @
-% \end{itemize}
-% 
-% \section*{Exercise 4}
-% What is conceptionally the difference between these bracket types ([...], (...))?
-% <<echo=TRUE, eval=FALSE, size="scriptsize", message=FALSE, warning=FALSE>>=
-% chickwts[, 2]
-% summary(aov(weight ~ feed, data = chickwts))
-% @
-% 
-% <<echo=FALSE, eval=FALSE, size="scriptsize", message=FALSE, warning=FALSE>>=
-% # SOLUTION: [...] the squared brackets we need to select rows and columns of a
-% # data frame.
-% # (...) the round brackets we need around function calls,
-% # e. g.:
-% subset(...) # to define a subset
-% c(...) # to define a vector
-% data.frame(...) # to define a data frame
-% @
-% 
-% \section*{Exercise 5}
-% \begin{itemize}
-% \item How many levels has the factor variable \texttt{trt} from \texttt{bacteria}?
-% <<echo = FALSE, eval = FALSE>>=
-% str(bacteria)
-% head(bacteria$trt)
-% table(bacteria$trt)
-% levels(bacteria$trt)
-% nlevels(bacteria$trt)
-% @
-% \item Define a new variable \texttt{trt.new} in which you combine the levels
-% \texttt{drug} and \texttt{drug+} into one single level and label it as \texttt{treated}.
-% The new variable \texttt{trt.new} should in the end have two levels: \texttt{placebo} and \texttt{treated}.
-% <<echo = FALSE, eval = FALSE>>=
-% table(bacteria$trt)
-% # OPTION 1:
-% # Test how many levels are in the variable "trt"?
-% levels(bacteria$trt)
-% bacteria$trt.new <- bacteria$trt
-% # Overwrite the levels "placebo", "drug", "drug+" with new
-% # levels called "placebo", "drug", "drug" --> combine "drug" and "drug+"
-% levels(bacteria$trt.new) <- c("placebo", "drug", "drug")
-% # Do table for variable "trt" and "trt.new" to see if you combined correctly
-% table(bacteria$trt)
-% table(bacteria$trt.new)
-% # Rename the levels from "placebo", "drug" to "placebo", "treated"
-% levels(bacteria$trt.new) <- c("placebo", "treated")
-% # Do another table to check if you did everything correctly:
-% table(bacteria$trt.new)
-% @
-% \item Do summary statistics for \texttt{placebo} and \texttt{treated} group.
-% <<echo = FALSE, eval = FALSE>>=
-% summary(bacteria)
-% table(bacteria$trt.new)
-% barplot(table(bacteria$trt.new))
-% table(bacteria$trt.new, bacteria$ap)
-% table(bacteria$trt.new, bacteria$y)
-% plot(table(bacteria$trt.new, bacteria$y))
-% @
-% \end{itemize}
-% 
-% \section*{Exercise 6}
-% \begin{itemize}
-% \item Load data set \texttt{ToothGrowth}.
-% <<echo = FALSE, eval = FALSE>>=
-% data(ToothGrowth)
-% str(ToothGrowth)
-% head(ToothGrowth)
-% @
-% \item Do summary statistic (numerically and graphically).
-% <<echo = FALSE, eval = FALSE>>=
-% table(ToothGrowth$supp)
-% tapply(ToothGrowth$len, ToothGrowth$supp, mean)
-% tapply(ToothGrowth$len, ToothGrowth$supp, median)
-% tapply(ToothGrowth$len, ToothGrowth$supp, sd)
-% 
-% tapply(ToothGrowth$len, ToothGrowth$dose, mean)
-% tapply(ToothGrowth$len, ToothGrowth$dose, median)
-% tapply(ToothGrowth$len, ToothGrowth$dose, sd)
-% 
-% barplot(table(ToothGrowth$supp))
-% hist(ToothGrowth$len)
-% # install.packages("graphics")
-% library("graphics")
-% coplot(len ~ dose | supp, data = ToothGrowth, panel = panel.smooth,
-%        xlab = "ToothGrowth data: length vs dose, given type of supplement")
-% @
-% \item Define additional column \texttt{dose.fac} by converting the numeric variable \texttt{dose} into a factor variable.
-% <<echo = FALSE, eval = FALSE>>=
-% table(ToothGrowth$dose)
-% class(ToothGrowth$dose)
-% ToothGrowth$dose.fac <- factor(ToothGrowth$dose, levels = c("0.5", "1", "2"))
-% class(ToothGrowth$dose.fac)
-% table(ToothGrowth$dose.fac)
-% @
-% 
-% \item Are the tooth length measurements normally distributed within the treatment
-% (\texttt{supp}: VC or OJ) and within in the different doses (\texttt{dose}: 0.5, 1, 2)?
-% <<echo = FALSE, eval = FALSE>>=
-% # supp: VC, OJ
-% sub.OJ <- subset(ToothGrowth, supp == "OJ")
-% sub.VC <- subset(ToothGrowth, supp == "VC")
-% # graphically
-% qqnorm(sub.OJ$len)
-% qqline(sub.OJ$len)
-% qqnorm(sub.VC$len)
-% qqline(sub.VC$len)
-% # with a statistical test
-% shapiro.test(sub.OJ$len)
-% shapiro.test(sub.VC$len)
-% # dose: 0.5, 1, 2
-% sub.0.5 <- subset(ToothGrowth, dose.fac == "0.5")
-% sub.1 <- subset(ToothGrowth, dose.fac == "1")
-% sub.2 <- subset(ToothGrowth, dose.fac == "2")
-% # graphically
-% qqnorm(sub.0.5$len)
-% qqline(sub.0.5$len)
-% qqnorm(sub.1$len)
-% qqline(sub.1$len)
-% qqnorm(sub.2$len)
-% qqline(sub.2$len)
-% # with a statistical test
-% shapiro.test(sub.0.5$len)
-% shapiro.test(sub.1$len)
-% shapiro.test(sub.2$len)
-% @
-% \end{itemize}
-% 
-% \section*{Exercise 7}
-% \begin{itemize}
-% \item Import the data set \texttt{perulung\_ems.csv} (taken from Kirkwood and
-% Sterne, 2nd edition) into R. \newline
-% Data from a study of lung function among children living in a deprived suburb of
-% Lima, Peru. \newline
-% Variables:
-% \begin{itemize}
-% \item \texttt{fev1}:  in liter, ''Forced Expiratory Volume in 1 second'' measured
-% by a spirometer. This is the maximum volume of air which the children could breath
-% out in 1 second
-% \item \texttt{age}: in years
-% \item \texttt{height}: in cm
-% \item \texttt{sex}: 0 = girl, 1 = boy
-% \item \texttt{respsymp}: respiratory symptoms experienced by the child over the
-% previous 12 months
-% \end{itemize}
-% \item What \textit{delimiter} do you need to choose?
-% <<echo = FALSE, eval = FALSE>>=
-% # OPTION 1:
-% # install.packages("readr")
-% library("readr")
-% lung <- read_delim("~/Dropbox/201710_Makerere/03_Exercises/data/perulung_ems.csv",
-%                    ";", escape_double = FALSE, trim_ws = TRUE)
-% lung <- data.frame(lung)
-% # OPTION 2:
-% # Import .csv file with the help of the read.csv function
-% # Be sure to add sep = ";" so that we separate the columns.
-% lung <- read.csv("C:\\Users\\Exercises\\data\\perulung_ems.csv", sep = ";")
-% head(lung)
-% str(lung)
-% @
-% \item Do all variables have the correct data type (numeric, integer, factor)?
-% If not, do correct and / or define them.
-% <<echo = FALSE, eval = FALSE>>=
-% head(lung)
-% str(lung)
-% lung$sex <- factor(lung$sex, levels = c("0", "1"))
-% # levels(lung$sex) <- c("female", "male")
-% # levels(lung$sex)[levels(lung$sex)=="0"] <- "female"
-% # levels(lung$sex)[levels(lung$sex)=="1"] <- "male"
-% # tapply(lung$fev1, lung$sex, mean)
-% lung$respsymptoms <- factor(lung$respsymptoms, levels = c("0", "1"))
-% @
-% \end{itemize}
-% 
-% <<echo = FALSE, eval = FALSE>>=
-% library(usdm)
-% # check for multicollinearity by using variance inflation factors
-% # cerate a dataframe just with the three continuous/numeric variables fevs, age and height
-% try.vif <- lung[,c("fev1","height","age")];
-% # perform scatterplots for these three variables
-% pairs(try.vif)
-% # get the three VIF, as a rule of thumb they should be < 3
-% vif(try.vif)
-% @
-% 
-% Check for heteroscedascity or homogeneity of variances
-% <<echo = FALSE, eval = FALSE>>=
-% ?bartlett.test
-% data("chickwts")
-% bartlett.test(weight ~ feed, data = chickwts)
-% @
-% 
-% \section*{Exercise 8}
-% Apply the summary statistics to the \texttt{perulung\_ems} and \texttt{ToothGrowth}
-% data set.
-% <<echo = FALSE, eval = FALSE>>=
-% # Read in .csv data
-% lung <- read.csv("C:\\Users\\Exercises\\data\\perulung_ems.csv", sep = ";")
-% head(lung)
-% str(lung)
-% summary(lung)
-% lung$sex <- factor(lung$sex, levels = c("0", "1"))
-% levels(lung$sex) <- c("female", "male")
-% lung$respsymptoms <- factor(lung$respsymptoms, levels = c("0", "1"))
-% # Continuous and factor
-% tapply(lung$height, lung$sex, mean)
-% tapply(lung$height, lung$respsymptoms, mean)
-% # Factor and factor
-% table(lung$respsymptoms, lung$sex)
-% prop.table(table(lung$respsymptoms, lung$sex))
-% # Continuous and factor
-% tapply(lung$age, lung$sex, mean)
-% tapply(lung$age, lung$respsymptoms, mean)
-% # Continuous and factor
-% tapply(lung$fev1, lung$sex, mean)
-% tapply(lung$fev1, lung$respsymptoms, mean)
-% # Continuous and continuous
-% pairs(lung)
-% cor.test(lung$fev1, lung$age, method = "pearson")
-% cor.test(lung$fev1, lung$height, method = "pearson")
-% # ToothGrowth
-% summary(ToothGrowth)
-% table(ToothGrowth$supp)
-% tapply(ToothGrowth$len, ToothGrowth$supp, mean)
-% tapply(ToothGrowth$len, ToothGrowth$supp, median)
-% tapply(ToothGrowth$len, ToothGrowth$supp, sd)
-% table(ToothGrowth$dose)
-% tapply(ToothGrowth$len, ToothGrowth$dose, mean)
-% tapply(ToothGrowth$len, ToothGrowth$dose, median)
-% tapply(ToothGrowth$len, ToothGrowth$dose, sd)
-% @
-% 
-% \section*{Exercise 9A: Plausibility Checks}
-% \begin{itemize}
-% \item What can go wrong?
-% \item Identify different strategies for spotting these potential errors.
-% \begin{itemize}
-% \item Logical errors
-% \item Spelling mistakes
-% \end{itemize}
-% \item Import the data set \texttt{bacteria\_plausibility\_check.csv} to R.
-% <<echo = FALSE, eval = FALSE>>=
-% # OPTION 1:
-% # install.packages("readr")
-% library("readr")
-% bac <- read_delim("~/Dropbox/201710_Makerere/03_Exercises/data/bacteria_plausibility_check.csv",
-%                   ";", escape_double = FALSE, trim_ws = TRUE)
-% bac <- data.frame(bac)
-% # OPTION 2:
-% # Import .csv file with the help of the read.csv function
-% # Be sure to add sep = ";" so that we separate the columns.
-% bac <- read.csv("~/Dropbox/201710_Makerere/03_Exercises/data/bacteria_plausibility_check.csv", sep = ",")
-% head(bac)
-% str(bac)
-% summary(bac)
-% @
-% \item Detect the \textbf{six} errors in the imported data set
-% \texttt{bacteria\_plausibility\_check.csv} in R.
-% <<echo = FALSE, eval = FALSE>>=
-% str(bac)
-% table(bac$y) # We have wrong factor levels: 0, 1
-% table(bac$ap)
-% table(bac$hilo) # We have a spelling mistake: Hi.
-% table(bac$week) # There's only ONE observation in week 20.
-% table(bac$ID)
-% table(bac$trt) # We have wrong factor levels: drug++, penicillin+
-% summary(bac$child_weight) # child weight of 302.8 kg is impossible --> comma
-% @
-% \item Find possible solutions in R how to handle these challenges.
-% <<echo = FALSE, eval = FALSE>>=
-% bac$y[which(bac$y == 0)] <- "n"
-% # bac$y[bac$y == 0] <- "n"
-% bac$y[which(bac$y == 1)] <- "y"
-% # Delete the unused levels with the function droplevels(...)
-% bac$y <- droplevels(bac$y)
-% bac$hilo[bac$hilo == "Hi"] <- "hi"
-% bac$hilo[which(bac$hilo == "Hi")] <- "hi"
-% levels(bac$hilo) <- c("hi", "hi", "lo")
-% summary(bac)
-% bac <- bac[-which(bac$week == 20), ] # dim(bac)
-% bac$trt[bac$trt == "drug++"] <- "drug+"
-% bac$trt[bac$trt == "penicillin+"] <- "drug+"
-% table(bac$trt) # We have wrong factor levels: drug++, penicillin+
-% bac$child_weight[bac$child_weight == 302.8] <- 30.28
-% summary(bac)
-% @
-% \item Do all variables have the correct data type (numeric, integer, factor)?
-% - If not, do correct / define them.
-% <<echo = FALSE, eval = FALSE>>=
-% bac$y <- factor(bac$y, levels = c("n", "y"))
-% bac$hilo[bac$hilo == "Hi"] <- "hi"
-% bac$ID <- factor(bac$ID)
-% bac$trt <- factor(bac$trt)
-% @
-% \end{itemize}
-% 
-% \section*{Exercise 9B: Missing Values}
-% \begin{itemize}
-% \item Check out the difference between the different missing values
-% <<echo = TRUE, eval = FALSE>>=
-% y1 <- c(2, 4, 3, NA, 6, 1)
-% y2 <- c("diseased", "healthy", NA, "NA")
-% y3 <- c(1, "NA", 0, 1, NaN)
-% 
-% is.na(y1)
-% which(is.na(y1))
-% is.na(y2)
-% which(is.na(y2))
-% is.na(y3)
-% which(is.na(y3))
-% is.nan(y3)
-% @
-% 
-% \item Create a vector with missing values and determine the mean and median
-% <<echo = TRUE, eval = FALSE>>=
-% myvector <- c(1:3,NA,NA,1:3)
-% mean(myvector)
-% mean(myvector,na.rm=TRUE) # calculates c(1, 2, 3, 1, 2, 3)
-% median(myvector,na.rm=TRUE)
-% @
-% 
-% \item If \texttt{x = c (22,3,7,NA,NA,67)} what will be the output for the R
-% statement \texttt{length(x)}?
-% <<echo = TRUE, eval = FALSE>>=
-% x <- c (22,3,7,NA,NA,67)
-% length(x)
-% @
-% 
-% \item If \texttt{x = c(NA,3,14,NA,33,17,NA,41)} which line of R code removes
-% all occurrences of NA in x.
-% <<echo = TRUE, eval = FALSE>>=
-% x <- c(NA,3,14,NA,33,17,NA,41)
-% x[!is.na(x)]
-% x[is.na(x)]
-% x[which(is.na(x))] <- 0
-% @
-% 
-% \item If \texttt{y = c(1,3,12,NA,33,7,NA,21)} what R statement will replace
-% all occurrences of NA with 11?
-% <<echo = TRUE, eval = FALSE>>=
-% y <- c(1,3,12,NA,33,7,NA,21)
-% y[y=="NA"] <- 11
-% y[is.na(y)] <- 11
-% y[y==11] <- NA
-% @
-% 
-% \item If \texttt{x = c(34,33,65,37,89,NA,43,NA,11,NA,23,NA)} then what will
-% count the number of occurrences of NA in \texttt{x}?
-% <<echo = TRUE, eval = FALSE>>=
-% x <- c(34,33,65,37,89,NA,43,NA,11,NA,23,NA)
-% sum(x=="NA")
-% sum(x == "NA", is.na(x))
-% sum(is.na(x))
-% @
-% 
-% \item Create a vector and find the number of missing values and their position
-% <<echo = TRUE, eval = FALSE>>=
-% x1 <- c(rnorm(10,5,2),NA,5:12,NA,6,7.5,NA)
-% is.na(x1)
-% summary(x1)
-% sum(is.na(x1))
-% which(is.na(x1))
-% @
-% 
-% \item Now, create the vector x2 and assess the difference to x1
-% <<echo = TRUE, eval = FALSE>>=
-% x2 <- c(rnorm(10,5,2),NA,5:12,NA,6,7.5,NA,log(-2))
-% x2
-% @
-% 
-% \item What is the meaning of "NA" versus "NaN"?
-% 
-% \item Replace the missing values in x1 with a 0, and check that no NAs are present
-% try two different commands to coerce the NAs into 0
-% <<echo = TRUE, eval = FALSE>>=
-% x1[is.na(x1)] <- 0
-% is.na(x1)
-% # or
-% ifelse(is.na(x1),0,x1)
-% @
-% \end{itemize}
-% 
-% \section*{Exercise 10}
-% \begin{itemize}
-% \item Import the data set \texttt{water\_errors.csv} to R:
-% A data frame with $61$ observations on the following $6$
-% variables.
-% \begin{itemize}
-% \item \textbf{location}: a factor with levels \texttt{North} and \texttt{South} indicating
-% whether the town is as north as Derby.
-% \item \textbf{town}: the name of the town.
-% \item \textbf{mortality}: averaged annual mortality per 100.000 male inhabitants.
-% \item \textbf{hardness}: calcium concentration (in parts per million).
-% \item \textbf{smoker}: If there are any smokers living in town.
-% \item \textbf{num.of.cig}: In case, smokers live in town, what number of
-% cigarettes do they smoke per day.
-% \end{itemize}
-% <<echo = FALSE, eval = FALSE>>=
-% # H2O_err <- read_csv("C:\\Users\\admin\\Dropbox\\201710_Makerere\\03_Exercises\\data\\water_errors.csv")
-% # str(H2O_err)
-% # H2O_err <- data.frame(H2O_err)
-% # str(H2O_err)
-% # BEST SOLUTION how to read it in:
-% # Try to use the "read.csv(...)" function to read data in!
-% # use the separator sep=";" or sep="," - which ever works better.
-% H2O_err <- read.csv("C:\\Users\\admin\\Dropbox\\201710_Makerere\\03_Exercises\\data\\water_errors.csv", sep=",")
-% str(H2O_err)
-% 
-% # H2O_err <- read_csv("~/Dropbox/201710_Makerere/03_Exercises/data/water_errors.csv")
-% H2O_err <- read.csv("~/Dropbox/201710_Makerere/03_Exercises/data/water_errors.csv", sep=",")
-% 
-% 
-% C:\Users\admin\Dropbox\201710_Makerere\03_Exercises\data
-% H2O_err <- data.frame(H2O_err)
-% str(H2O_err)
-% head(H2O_err)
-% @
-% 
-% 
-% 
-% 
-% 
-% \item Detect the errors in the imported data set \texttt{water\_errors.csv} in R.
-% <<echo = FALSE, eval = FALSE>>=
-% str(H2O_err)
-% table(H2O_err$location) # Only one N and only one West observation.
-% table(H2O_err$town) # LIVERPOOL is in capital letter.
-% summary(H2O_err$mortality)
-% summary(H2O_err$hardness) # hardness of -2 does not make sense, two NA's
-% table(H2O_err$num.of.cig) # only one "zero" observation (wrong coding / level)
-% table(H2O_err$smoker, H2O_err$num.of.cig) # non-smokers who smoke more than 20?
-% @
-% \item Find possible solutions in R how to handle these challenges.
-% <<echo = FALSE, eval = FALSE>>=
-% str(H2O_err)
-% which(H2O_err$location == "N") # 6th row
-% which(H2O_err$location == "West") # 9th row
-% H2O_err$location[H2O_err$location == "N"] <- "North"
-% H2O_err$location[H2O_err$location == "West"] <- NA # Option 1: Set to NA.
-% dim(H2O_err)
-% H2O_err <- H2O_err[-which(H2O_err$location == "West"), ] # Option 2: Remove from data.
-% dim(H2O_err)
-% # H2O_err$town[H2O_err$town == "LIVERPOOL"] <- "Liverpool"
-% # H2O_err <- H2O_err$town[-which(H2O_err$town == "LIVERPOOL"), ]
-% which(is.na(H2O_err$hardness))
-% H2O_err$hardness[which(is.na(H2O_err$hardness))] <- NA
-% H2O_err$hardness[which(H2O_err$hardness == -2)] <- NA
-% # H2O_err$hardness[which(H2O_err$hardness == -2)] <- 2
-% summary(H2O_err$hardness)
-% # Check levels of varibale num.of.cig
-% levels(H2O_err$num.of.cig)
-% table(H2O_err$num.of.cig)
-% # Change the zero level to none
-% H2O_err$num.of.cig[H2O_err$num.of.cig == "zero"] <- "none"
-% # Drop unused levels
-% H2O_err$num.of.cig <- droplevels(H2O_err$num.of.cig)
-% # levels(droplevels(H2O_err$num.of.cig))
-% table(H2O_err$num.of.cig)
-% 
-% which.F.morethan20 <- which(H2O_err$smoker == FALSE & H2O_err$num.of.cig == "more than 20")
-% H2O_err[which.F.morethan20, ]
-% # OPTION 1:
-% H2O_err$num.of.cig[which.F.morethan20] <- NA
-% # OPTION 2:
-% H2O_err$smoker[which.F.morethan20] <- TRUE
-% # check again, that we corrected it right
-% H2O_err[which.F.morethan20, ]
-% table(H2O_err$smoker, H2O_err$num.of.cig) # check again!
-% 
-% which(H2O_err$smoker == FALSE & H2O_err$num.of.cig == "more than 20")
-% which.T.none <- which(H2O_err$smoker == TRUE & H2O_err$num.of.cig == "none")
-% H2O_err[which.T.none, ]
-% H2O_err$smoker[which.T.none] <- FALSE
-% table(H2O_err$smoker, H2O_err$num.of.cig)
-% @
-% \item Do all variables have the correct data type (numeric, integer, factor)?
-% - If not, do correct / define them.
-% <<echo = FALSE, eval = FALSE>>=
-% str(H2O_err)
-% levels(H2O_err$location)
-% H2O_err$location <- factor(H2O_err$location, levels = c("North", "South", NA),
-%                            exclude = NULL)
-% levels(H2O_err$smoker)
-% H2O_err$smoker <- factor(H2O_err$smoker, levels = c("FALSE", "TRUE"))
-% table(H2O_err$num.of.cig)
-% H2O_err$num.of.cig <- factor(H2O_err$num.of.cig,
-%                              levels = c("none", "less than 5", "5 to 20", "more than 20"),
-%                              ordered = TRUE)
-% table(H2O_err$num.of.cig)
-% levels(H2O_err$num.of.cig)
-% levels(H2O_err$num.of.cig) <- c("none", "1 to less than 5", "5 to 20", "more than 20")
-% table(H2O_err$num.of.cig)
-% levels(H2O_err$num.of.cig)
-% @
-% \end{itemize}
-% 
-% \section*{Exercise 11}
-% \begin{itemize}
-% \item Apply the two-sided two sample t-test to suitable variables of the data set \texttt{ToothGrowth}.
-% <<echo = FALSE, eval = FALSE>>=
-% ?t.test
-% t.test(ToothGrowth$len ~ ToothGrowth$supp)
-% t.test(len ~ supp, data = ToothGrowth) 
-% # p-value = 0.06039 (borderline) significant, close to 0.05
-% # p-value says the difference is not (borderline) significant
-% # however, the boxplot do somehow look different
-% boxplot(ToothGrowth$len ~ ToothGrowth$supp)
-% # change the default setting of var.equal
-% t.test(ToothGrowth$len ~ ToothGrowth$supp, var.equal = TRUE)
-% t.test(ToothGrowth$len ~ ToothGrowth$supp, var.equal = FALSE) # DEFAULT!
-% 
-% # Define subset
-% sub.OJ <- subset(ToothGrowth, supp == "OJ")
-% sub.VC <- subset(ToothGrowth, supp == "VC")
-% # Drop (unused) levels for each subset
-% sub.VC$supp <- droplevels(sub.VC$supp)
-% levels(sub.VC$supp) # check that levels are dropped
-% sub.OJ$supp <- droplevels(sub.OJ$supp)
-% levels(sub.OJ$supp) # check that levels are dropped
-% # Additional option for comparing lengths between the two groups:
-% # Compare the two vectors of lengths
-% t.test(sub.VC$len, sub.OJ$len)
-% 
-% @
-% \item Interpret the results.
-% <<echo = FALSE, eval = FALSE>>=
-% # t = 1.9153
-% # df = 55.309
-% # p-value = 0.06063
-% # 95 percent confidence interval: -0.1710156  7.5710156
-% # sample mean in group OJ: 20.66333         
-% # sample mean in group VC: 16.96333
-% # Also with the lm(...) function  for "linear model" you get the same sample means:
-% lm.mod0 <- lm(ToothGrowth$len ~ ToothGrowth$supp - 1)
-% coef(lm.mod)
-% @
-% \item Apply the two-sided t-test to the \texttt{perulang\_ems} data set
-% <<echo = FALSE, eval = FALSE>>=
-% # two-sided t-test of fev1 vs respsymptoms
-% t.test(lung$fev1 ~ lung$respsymptoms)
-% t.test(fev1 ~ respsymptoms, data = lung)
-% # Define linear model
-% mod.fev.resp.0 <- lm(lung$fev1 ~ lung$respsymptoms)
-% summary(mod.fev.resp.0)
-% mod.fev.resp.1 <- lm(lung$fev1 ~ lung$respsymptoms - 1)
-% summary(mod.fev.resp.1)
-% # Coefficients of linear model
-% coef(mod.fev.resp.0)
-% coef(mod.fev.resp.1)
-% # Anova
-% anova(mod.fev.resp.0)
-% anova(mod.fev.resp.1)
-% # two-sided t-test of fev1 vs sex
-% t.test(lung$fev1 ~ lung$sex)
-% t.test(fev1 ~ sex, data = lung)
-% # Define linear model
-% mod.fev.sex.0 <- lm(lung$fev1 ~ lung$sex)
-% mod.fev.sex.1 <- lm(lung$fev1 ~ lung$sex - 1)
-% # Coefficients of linear model
-% coef(mod.fev.sex.0)
-% coef(mod.fev.sex.1)
-% # Anova
-% anova(mod.fev.sex.0)
-% anova(mod.fev.sex.1)
-% @
-% \end{itemize}
-% 
-% 
-% \section*{Exercise 12}
-% \begin{itemize}
-% \item Apply the Chi-square Test and the fisher exact test to the whole
-% \texttt{bacteria} data set.
-% <<echo = FALSE, eval = FALSE>>=
-% library("MASS")
-% data(bacteria)
-% summary(bacteria)
-% subbac <- subset(bacteria, week == 2)
-% bacteria$trt.new <- bacteria$trt
-% levels(bacteria$trt.new) <- c("placebo", "drug", "drug")
-% bacteria$trt.new <- droplevels(bacteria$trt.new)
-% # Ordering of the variables does not matter
-% chisq.test(table(bacteria$trt, bacteria$y))
-% chisq.test(table(bacteria$y, bacteria$trt))
-% chisq.test(bacteria$trt, bacteria$y)
-% my.table <- table(bacteria$trt, bacteria$y)
-% chisq.test(my.table) 
-% table(subbac$trt, subbac$y)
-% chisq.test(table(subbac$trt, subbac$y))
-% fisher.test(table(subbac$trt, subbac$y))
-% fisher.test(table(subbac$trt.new, subbac$y))
-% # Chi-squared test with trt and y
-% chisq.test(table(bacteria$trt, bacteria$y))
-% # Fisher test with trt and y
-% fisher.test(table(bacteria$trt, bacteria$y))
-% @
-% \item Apply the Chi-square Test and the fisher exact test to the subset of
-% \texttt{bacteria} containing only the observations taken in week 2.
-% Are there any issues?
-% <<echo = FALSE, eval = FALSE>>=
-% subbac <- subset(bacteria, week == 2)
-% # Chi-squared test with trt and y
-% chisq.test(table(subbac$trt, subbac$y))
-% # --> NOT RELIABLE RESULTS: at least 5 observations per group.
-% # Fisher test with trt and y
-% fisher.test(table(subbac$trt, subbac$y))
-% @
-% \item Repeat this exercise by using the (previously defined) combined
-% \texttt{trt.new} variable with the two levels \texttt{treated} and \texttt{drug}.
-% <<echo = FALSE, eval = FALSE>>=
-% # WHOLE DATA SET
-% # Chi-squared test with trt.new and y
-% chisq.test(table(bacteria$trt.new, bacteria$y))
-% # Fisher test with trt.new and y
-% fisher.test(table(bacteria$trt.new, bacteria$y))
-% # SUB DATA SET only observations from week 2
-% # Chi-squared test with trt.new and y
-% chisq.test(table(subbac$trt.new, subbac$y))
-% # --> NOT RELIABLE RESULTS: at least 5 observations per group.
-% # Fisher test with trt.new and y
-% fisher.test(table(subbac$trt.new, subbac$y))
-% @
-% \item Could you also obtain the odds ratios?
-% <<echo = FALSE, eval = FALSE>>=
-% fisher.test(table(subbac$trt.new, subbac$y))
-% fisher.test(bacteria$y, bacteria$ap)
-% my.logreg <- glm(y ~ ap, data = bacteria, family = "binomial")
-% summary(my.logreg)
-% exp(0.8473 )
-% coef(my.logreg)
-% exp(coef(my.logreg))
-% @
-% \item Try also a logistic regression in R. Ask Google for help!
-% <<echo = FALSE, eval = FALSE>>=
-% model.logreg <- glm(bacteria$y ~ bacteria$trt.new, family = "binomial")
-% model.logreg <- glm(y ~ trt.new, data = bacteria, family = "binomial")
-% summary(model.logreg)
-% anova(model.logreg)
-% coef(model.logreg)
-% exp(coef(model.logreg))
-% @
-% \end{itemize}
-% 
-% \section*{Exercise 13A: Outside plot frame}
-% \begin{itemize}
-% \item Type \texttt{demo(graphics)} in your console and press enter.
-% This command shows you a nice demonstration of possible R graphics.
-% <<echo = TRUE, eval = FALSE>>=
-% # After the demonstration us the following commands:
-% dev.off()
-% par(mfrow=c(1,1))
-% @
-% \item Change the x-axis and y-axis labelling of a boxplot plotting the
-% \texttt{len} variable of the \texttt{ToothGrowth} data set.
-% <<echo = FALSE, eval = FALSE>>=
-% boxplot(ToothGrowth$len, xlab = "Length of Teeth",
-%         ylab = "Length in mm")
-% @
-% \item How do you set a main title for your above plot?
-% <<echo = FALSE, eval = FALSE>>=
-% # OPTION 1:
-% boxplot(ToothGrowth$len, xlab = "Length of Teeth",
-%         ylab = "Length in mm",
-%         main = "Boxplot of Tooth Length")
-% # OPTION 2:
-% boxplot(ToothGrowth$len, xlab = "Length of Teeth",
-%         ylab = "Length in mm")
-% title("Boxplot of Tooth Length")
-% @
-% \item What does the following command do?
-% <<echo = TRUE, eval = FALSE>>=
-% par(mfrow=c(2,2))
-% @
-% <<echo = FALSE, eval = FALSE>>=
-% # With the par(...) function, you can include the option
-% # mfrow=c(nrows, ncols) to create a matrix of nrows x ncols plots
-% # that are filled in by row.
-% par(mfrow=c(2,2)) # 2 rows, 2 columns
-% par(mfrow=c(4,3)) # 4 rows, 3 columns
-% # DO NOT FORGET TO CHANGE IT BACK TO:
-% par(mfrow=c(1, 1)) # the default
-% @
-% 
-% \item We have six different feed types in \texttt{chickwts}. Try to plot two
-% separate boxplots for \texttt{casein} and \texttt{horsebean} and set the same
-% minimum and maximum for the y-axis. Use the function \texttt{subset} for doing so.
-% <<echo = TRUE, eval = FALSE>>=
-% sub.casein <- subset(chickwts, feed == "casein")
-% sub.casein <- droplevels(sub.casein)
-% sub.horsebean <- subset(chickwts, feed == "horsebean")
-% sub.horsebean <- droplevels(sub.horsebean)
-% @
-% <<echo = FALSE, eval = FALSE>>=
-% sub.casein <- subset(chickwts, feed == "casein")
-% sub.casein <- droplevels(sub.casein)
-% sub.horsebean <- subset(chickwts, feed == "horsebean")
-% sub.horsebean <- droplevels(sub.horsebean)
-% summary(sub.casein$weight)
-% summary(sub.horsebean$weight)
-% boxplot(sub.casein$weight ~ sub.casein$feed, ylim = c(100, 410))
-% boxplot(sub.horsebean$weight ~ sub.horsebean$feed, ylim = c(100, 410))
-% @
-% \item How do you enlarge the font size of the axis as well as the axis labels
-% of the following plot with the \texttt{perulung} data set?
-% <<echo = TRUE, eval = FALSE>>=
-% plot(lung$fev1, lung$height)
-% @
-% <<echo = FALSE, eval = FALSE>>=
-% plot(lung$fev1, lung$height, cex.axis = 1.5, cex.lab = 1.5)
-% plot(lung$fev1, lung$height, cex.axis = 1.5, cex.lab = 1.5, las = 1)
-% @
-% \item Label the x-axis of the following plot with ''Vitamin C in $\mu$g''. Use the
-% greek letter for $\mu$.
-% <<echo = TRUE, eval = FALSE>>=
-% plot(ToothGrowth$dose, ToothGrowth$len)
-% @
-% <<echo = FALSE, eval = FALSE>>=
-% plot(ToothGrowth$dose, ToothGrowth$len,
-%      xlab = expression(paste("Vitamin C in ", mu, "g")))
-% @
-% \item Read \url{http://www.statmethods.net/advgraphs/parameters.html}.
-% \end{itemize}
+\section*{Exercise 1}
+\begin{itemize}
+\item Open R Studio
+\item Open a new R-Script
+\item Load data set \texttt{chickwts}
+<<echo = FALSE, eval = FALSE>>=
+data(chickwts)
+head(chickwts)
+# ?chickwts
+@
+%
+\item Do summary statistic (numerically and graphically)
+<<echo = FALSE, eval = FALSE>>=
+summary(chickwts)
+tapply(chickwts$weight, chickwts$feed, mean)
+tapply(chickwts$weight, chickwts$feed, median)
+tapply(chickwts$weight, chickwts$feed, sd)
+table(chickwts$feed)
+barplot(table(chickwts$feed))
+boxplot(chickwts$weight ~ chickwts$feed)
+# boxplot(weight ~ feed, data = chickwts)
+hist(chickwts$weight)
+boxplot(weight ~ feed, data = chickwts, col = "lightgray",
+        varwidth = TRUE, notch = TRUE, main = "chickwt data",
+        ylab = "Weight at six weeks (gm)")
+@
+Anova, lm, which groups differ, Bonferroni, Tukey-Anscombe
+Histogram with density line
+Normally distributed weights
+\end{itemize}
+%
+\section*{Exercise 2}
+\begin{itemize}
+\item Create a data frame with 3 columns.
+<<echo = FALSE, eval = FALSE>>=
+a <- c(1, 2, 3, 4)
+b <- c("d", "h", "h", "d")
+c <- factor(c("male", "female", "male", "female"),
+            levels = c("female", "male"))
+dat <- data.frame(a, b, c)
+dat
+@
+\end{itemize}
+%
+\section*{Exercise 3}
+\begin{itemize}
+\item Install package \texttt{MASS}.
+<<echo = FALSE, eval = FALSE>>=
+# install.packages("MASS")
+library("MASS")
+@
+%
+\item Load data set \texttt{bacteria}.
+<<echo = FALSE, eval = FALSE>>=
+data(bacteria)
+head(bacteria)
+# ?bacteria
+@
+%
+\item Do summary statistic (numerically and graphically).
+<<echo = FALSE, eval = FALSE>>=
+summary(bacteria)
+table(bacteria$week)
+barplot(table(bacteria$week))
+barplot(table(bacteria$trt))
+table(bacteria$trt, bacteria$ap)
+table(bacteria$trt, bacteria$y)
+%
+fisher.test(table(bacteria$trt, bacteria$y))
+%
+prop.table(table(bacteria$trt, bacteria$y))
+prop.table(table(bacteria$trt, bacteria$y), margin = 1)
+prop.table(table(bacteria$trt, bacteria$y), margin = 2)
+%
+plot(prop.table(table(bacteria$trt, bacteria$y)))
+mosaicplot(~trt + y, data = bacteria)
+barplot(prop.table(table(bacteria$y, bacteria$trt),margin=1), beside=TRUE)
+barplot(prop.table(table(bacteria$trt, bacteria$y),margin=1), beside=TRUE)
+barplot(prop.table(table(bacteria$y, bacteria$trt),margin=1), beside=FALSE)
+barplot(prop.table(table(bacteria$trt, bacteria$y),margin=1), beside=FALSE)
+?barplot
+@
+%
+\item Select only observations collected during the second week.
+<<echo = FALSE, eval = FALSE>>=
+subset(bacteria, week == 2)
+ss <- subset(bacteria, week == 2)
+summary(ss)
+# Check if we only have observations of week 2.
+table(bacteria$week)
+table(ss$week)
+@
+\end{itemize}
+%
+\section*{Exercise 4}
+What is conceptionally the difference between these bracket types ([...], (...))?
+<<echo=TRUE, eval=FALSE, size="scriptsize", message=FALSE, warning=FALSE>>=
+chickwts[, 2]
+summary(aov(weight ~ feed, data = chickwts))
+@
+%
+<<echo=FALSE, eval=FALSE, size="scriptsize", message=FALSE, warning=FALSE>>=
+# SOLUTION: [...] the squared brackets we need to select rows and columns of a
+# data frame.
+# (...) the round brackets we need around function calls,
+# e. g.:
+subset(...) # to define a subset
+c(...) # to define a vector
+data.frame(...) # to define a data frame
+@
+%
+\section*{Exercise 5}
+\begin{itemize}
+\item How many levels has the factor variable \texttt{trt} from \texttt{bacteria}?
+<<echo = FALSE, eval = FALSE>>=
+str(bacteria)
+head(bacteria$trt)
+table(bacteria$trt)
+levels(bacteria$trt)
+nlevels(bacteria$trt)
+@
+\item Define a new variable \texttt{trt.new} in which you combine the levels
+\texttt{drug} and \texttt{drug+} into one single level and label it as \texttt{treated}.
+The new variable \texttt{trt.new} should in the end have two levels: \texttt{placebo} and \texttt{treated}.
+<<echo = FALSE, eval = FALSE>>=
+table(bacteria$trt)
+# OPTION 1:
+# Test how many levels are in the variable "trt"?
+levels(bacteria$trt)
+bacteria$trt.new <- bacteria$trt
+# Overwrite the levels "placebo", "drug", "drug+" with new
+# levels called "placebo", "drug", "drug" --> combine "drug" and "drug+"
+levels(bacteria$trt.new) <- c("placebo", "drug", "drug")
+# Do table for variable "trt" and "trt.new" to see if you combined correctly
+table(bacteria$trt)
+table(bacteria$trt.new)
+# Rename the levels from "placebo", "drug" to "placebo", "treated"
+levels(bacteria$trt.new) <- c("placebo", "treated")
+# Do another table to check if you did everything correctly:
+table(bacteria$trt.new)
+@
+\item Do summary statistics for \texttt{placebo} and \texttt{treated} group.
+<<echo = FALSE, eval = FALSE>>=
+summary(bacteria)
+table(bacteria$trt.new)
+barplot(table(bacteria$trt.new))
+table(bacteria$trt.new, bacteria$ap)
+table(bacteria$trt.new, bacteria$y)
+plot(table(bacteria$trt.new, bacteria$y))
+@
+\end{itemize}
+%
+\section*{Exercise 6}
+\begin{itemize}
+\item Load data set \texttt{ToothGrowth}.
+<<echo = FALSE, eval = FALSE>>=
+data(ToothGrowth)
+str(ToothGrowth)
+head(ToothGrowth)
+@
+\item Do summary statistic (numerically and graphically).
+<<echo = FALSE, eval = FALSE>>=
+table(ToothGrowth$supp)
+tapply(ToothGrowth$len, ToothGrowth$supp, mean)
+tapply(ToothGrowth$len, ToothGrowth$supp, median)
+tapply(ToothGrowth$len, ToothGrowth$supp, sd)
+%
+tapply(ToothGrowth$len, ToothGrowth$dose, mean)
+tapply(ToothGrowth$len, ToothGrowth$dose, median)
+tapply(ToothGrowth$len, ToothGrowth$dose, sd)
+%
+barplot(table(ToothGrowth$supp))
+hist(ToothGrowth$len)
+# install.packages("graphics")
+library("graphics")
+coplot(len ~ dose | supp, data = ToothGrowth, panel = panel.smooth,
+       xlab = "ToothGrowth data: length vs dose, given type of supplement")
+@
+\item Define additional column \texttt{dose.fac} by converting the numeric variable \texttt{dose} into a factor variable.
+<<echo = FALSE, eval = FALSE>>=
+table(ToothGrowth$dose)
+class(ToothGrowth$dose)
+ToothGrowth$dose.fac <- factor(ToothGrowth$dose, levels = c("0.5", "1", "2"))
+class(ToothGrowth$dose.fac)
+table(ToothGrowth$dose.fac)
+@
+%
+\item Are the tooth length measurements normally distributed within the treatment
+(\texttt{supp}: VC or OJ) and within in the different doses (\texttt{dose}: 0.5, 1, 2)?
+<<echo = FALSE, eval = FALSE>>=
+# supp: VC, OJ
+sub.OJ <- subset(ToothGrowth, supp == "OJ")
+sub.VC <- subset(ToothGrowth, supp == "VC")
+# graphically
+qqnorm(sub.OJ$len)
+qqline(sub.OJ$len)
+qqnorm(sub.VC$len)
+qqline(sub.VC$len)
+# with a statistical test
+shapiro.test(sub.OJ$len)
+shapiro.test(sub.VC$len)
+# dose: 0.5, 1, 2
+sub.0.5 <- subset(ToothGrowth, dose.fac == "0.5")
+sub.1 <- subset(ToothGrowth, dose.fac == "1")
+sub.2 <- subset(ToothGrowth, dose.fac == "2")
+# graphically
+qqnorm(sub.0.5$len)
+qqline(sub.0.5$len)
+qqnorm(sub.1$len)
+qqline(sub.1$len)
+qqnorm(sub.2$len)
+qqline(sub.2$len)
+# with a statistical test
+shapiro.test(sub.0.5$len)
+shapiro.test(sub.1$len)
+shapiro.test(sub.2$len)
+@
+\end{itemize}
+%
+\section*{Exercise 7}
+\begin{itemize}
+\item Import the data set \texttt{perulung\_ems.csv} (taken from Kirkwood and
+Sterne, 2nd edition) into R. \newline
+Data from a study of lung function among children living in a deprived suburb of
+Lima, Peru. \newline
+Variables:
+\begin{itemize}
+\item \texttt{fev1}:  in liter, ''Forced Expiratory Volume in 1 second'' measured
+by a spirometer. This is the maximum volume of air which the children could breath
+out in 1 second
+\item \texttt{age}: in years
+\item \texttt{height}: in cm
+\item \texttt{sex}: 0 = girl, 1 = boy
+\item \texttt{respsymp}: respiratory symptoms experienced by the child over the
+previous 12 months
+\end{itemize}
+\item What \textit{delimiter} do you need to choose?
+<<echo = FALSE, eval = FALSE>>=
+# OPTION 1:
+# install.packages("readr")
+library("readr")
+lung <- read_delim("~/Dropbox/201710_Makerere/03_Exercises/data/perulung_ems.csv",
+                   ";", escape_double = FALSE, trim_ws = TRUE)
+lung <- data.frame(lung)
+# OPTION 2:
+# Import .csv file with the help of the read.csv function
+# Be sure to add sep = ";" so that we separate the columns.
+lung <- read.csv("C:\\Users\\Exercises\\data\\perulung_ems.csv", sep = ";")
+head(lung)
+str(lung)
+@
+\item Do all variables have the correct data type (numeric, integer, factor)?
+If not, do correct and / or define them.
+<<echo = FALSE, eval = FALSE>>=
+head(lung)
+str(lung)
+lung$sex <- factor(lung$sex, levels = c("0", "1"))
+# levels(lung$sex) <- c("female", "male")
+# levels(lung$sex)[levels(lung$sex)=="0"] <- "female"
+# levels(lung$sex)[levels(lung$sex)=="1"] <- "male"
+# tapply(lung$fev1, lung$sex, mean)
+lung$respsymptoms <- factor(lung$respsymptoms, levels = c("0", "1"))
+@
+\end{itemize}
+%
+<<echo = FALSE, eval = FALSE>>=
+library(usdm)
+# check for multicollinearity by using variance inflation factors
+# cerate a dataframe just with the three continuous/numeric variables fevs, age and height
+try.vif <- lung[,c("fev1","height","age")];
+# perform scatterplots for these three variables
+pairs(try.vif)
+# get the three VIF, as a rule of thumb they should be < 3
+vif(try.vif)
+@
+%
+Check for heteroscedascity or homogeneity of variances
+<<echo = FALSE, eval = FALSE>>=
+?bartlett.test
+data("chickwts")
+bartlett.test(weight ~ feed, data = chickwts)
+@
+%
+\section*{Exercise 8}
+Apply the summary statistics to the \texttt{perulung\_ems} and \texttt{ToothGrowth}
+data set.
+<<echo = FALSE, eval = FALSE>>=
+# Read in .csv data
+lung <- read.csv("C:\\Users\\Exercises\\data\\perulung_ems.csv", sep = ";")
+head(lung)
+str(lung)
+summary(lung)
+lung$sex <- factor(lung$sex, levels = c("0", "1"))
+levels(lung$sex) <- c("female", "male")
+lung$respsymptoms <- factor(lung$respsymptoms, levels = c("0", "1"))
+# Continuous and factor
+tapply(lung$height, lung$sex, mean)
+tapply(lung$height, lung$respsymptoms, mean)
+# Factor and factor
+table(lung$respsymptoms, lung$sex)
+prop.table(table(lung$respsymptoms, lung$sex))
+# Continuous and factor
+tapply(lung$age, lung$sex, mean)
+tapply(lung$age, lung$respsymptoms, mean)
+# Continuous and factor
+tapply(lung$fev1, lung$sex, mean)
+tapply(lung$fev1, lung$respsymptoms, mean)
+# Continuous and continuous
+pairs(lung)
+cor.test(lung$fev1, lung$age, method = "pearson")
+cor.test(lung$fev1, lung$height, method = "pearson")
+# ToothGrowth
+summary(ToothGrowth)
+table(ToothGrowth$supp)
+tapply(ToothGrowth$len, ToothGrowth$supp, mean)
+tapply(ToothGrowth$len, ToothGrowth$supp, median)
+tapply(ToothGrowth$len, ToothGrowth$supp, sd)
+table(ToothGrowth$dose)
+tapply(ToothGrowth$len, ToothGrowth$dose, mean)
+tapply(ToothGrowth$len, ToothGrowth$dose, median)
+tapply(ToothGrowth$len, ToothGrowth$dose, sd)
+@
+%
+\section*{Exercise 9A: Plausibility Checks}
+\begin{itemize}
+\item What can go wrong?
+\item Identify different strategies for spotting these potential errors.
+\begin{itemize}
+\item Logical errors
+\item Spelling mistakes
+\end{itemize}
+\item Import the data set \texttt{bacteria\_plausibility\_check.csv} to R.
+<<echo = FALSE, eval = FALSE>>=
+# OPTION 1:
+# install.packages("readr")
+library("readr")
+bac <- read_delim("~/Dropbox/201710_Makerere/03_Exercises/data/bacteria_plausibility_check.csv",
+                  ";", escape_double = FALSE, trim_ws = TRUE)
+bac <- data.frame(bac)
+# OPTION 2:
+# Import .csv file with the help of the read.csv function
+# Be sure to add sep = ";" so that we separate the columns.
+bac <- read.csv("~/Dropbox/201710_Makerere/03_Exercises/data/bacteria_plausibility_check.csv", sep = ",")
+head(bac)
+str(bac)
+summary(bac)
+@
+\item Detect the \textbf{six} errors in the imported data set
+\texttt{bacteria\_plausibility\_check.csv} in R.
+<<echo = FALSE, eval = FALSE>>=
+str(bac)
+table(bac$y) # We have wrong factor levels: 0, 1
+table(bac$ap)
+table(bac$hilo) # We have a spelling mistake: Hi.
+table(bac$week) # There's only ONE observation in week 20.
+table(bac$ID)
+table(bac$trt) # We have wrong factor levels: drug++, penicillin+
+summary(bac$child_weight) # child weight of 302.8 kg is impossible --> comma
+@
+\item Find possible solutions in R how to handle these challenges.
+<<echo = FALSE, eval = FALSE>>=
+bac$y[which(bac$y == 0)] <- "n"
+# bac$y[bac$y == 0] <- "n"
+bac$y[which(bac$y == 1)] <- "y"
+# Delete the unused levels with the function droplevels(...)
+bac$y <- droplevels(bac$y)
+bac$hilo[bac$hilo == "Hi"] <- "hi"
+bac$hilo[which(bac$hilo == "Hi")] <- "hi"
+levels(bac$hilo) <- c("hi", "hi", "lo")
+summary(bac)
+bac <- bac[-which(bac$week == 20), ] # dim(bac)
+bac$trt[bac$trt == "drug++"] <- "drug+"
+bac$trt[bac$trt == "penicillin+"] <- "drug+"
+table(bac$trt) # We have wrong factor levels: drug++, penicillin+
+bac$child_weight[bac$child_weight == 302.8] <- 30.28
+summary(bac)
+@
+\item Do all variables have the correct data type (numeric, integer, factor)?
+- If not, do correct / define them.
+<<echo = FALSE, eval = FALSE>>=
+bac$y <- factor(bac$y, levels = c("n", "y"))
+bac$hilo[bac$hilo == "Hi"] <- "hi"
+bac$ID <- factor(bac$ID)
+bac$trt <- factor(bac$trt)
+@
+\end{itemize}
+%
+\section*{Exercise 9B: Missing Values}
+\begin{itemize}
+\item Check out the difference between the different missing values
+<<echo = FALSE, eval = FALSE>>=
+y1 <- c(2, 4, 3, NA, 6, 1)
+y2 <- c("diseased", "healthy", NA, "NA")
+y3 <- c(1, "NA", 0, 1, NaN)
+%
+is.na(y1)
+which(is.na(y1))
+is.na(y2)
+which(is.na(y2))
+is.na(y3)
+which(is.na(y3))
+is.nan(y3)
+@
+%
+\item Create a vector with missing values and determine the mean and median
+<<echo = FALSE, eval = FALSE>>=
+myvector <- c(1:3,NA,NA,1:3)
+mean(myvector)
+mean(myvector,na.rm=TRUE) # calculates c(1, 2, 3, 1, 2, 3)
+median(myvector,na.rm=TRUE)
+@
+%
+\item If \texttt{x = c (22,3,7,NA,NA,67)} what will be the output for the R
+statement \texttt{length(x)}?
+<<echo = FALSE, eval = FALSE>>=
+x <- c (22,3,7,NA,NA,67)
+length(x)
+@
+%
+\item If \texttt{x = c(NA,3,14,NA,33,17,NA,41)} which line of R code removes
+all occurrences of NA in x.
+<<echo = FALSE, eval = FALSE>>=
+x <- c(NA,3,14,NA,33,17,NA,41)
+x[!is.na(x)]
+x[is.na(x)]
+x[which(is.na(x))] <- 0
+@
+%
+\item If \texttt{y = c(1,3,12,NA,33,7,NA,21)} what R statement will replace
+all occurrences of NA with 11?
+<<echo = FALSE, eval = FALSE>>=
+y <- c(1,3,12,NA,33,7,NA,21)
+y[y=="NA"] <- 11
+y[is.na(y)] <- 11
+y[y==11] <- NA
+@
+%
+\item If \texttt{x = c(34,33,65,37,89,NA,43,NA,11,NA,23,NA)} then what will
+count the number of occurrences of NA in \texttt{x}?
+<<echo = FALSE, eval = FALSE>>=
+x <- c(34,33,65,37,89,NA,43,NA,11,NA,23,NA)
+sum(x=="NA")
+sum(x == "NA", is.na(x))
+sum(is.na(x))
+@
+%
+\item Create a vector and find the number of missing values and their position
+<<echo = FALSE, eval = FALSE>>=
+x1 <- c(rnorm(10,5,2),NA,5:12,NA,6,7.5,NA)
+is.na(x1)
+summary(x1)
+sum(is.na(x1))
+which(is.na(x1))
+@
+%
+\item Now, create the vector x2 and assess the difference to x1
+<<echo = FALSE, eval = FALSE>>=
+x2 <- c(rnorm(10,5,2),NA,5:12,NA,6,7.5,NA,log(-2))
+x2
+@
+%
+\item What is the meaning of "NA" versus "NaN"?
+%
+\item Replace the missing values in x1 with a 0, and check that no NAs are present
+try two different commands to coerce the NAs into 0
+<<echo = FALSE, eval = FALSE>>=
+x1[is.na(x1)] <- 0
+is.na(x1)
+# or
+ifelse(is.na(x1),0,x1)
+@
+\end{itemize}
+%
+\section*{Exercise 10}
+\begin{itemize}
+\item Import the data set \texttt{water\_errors.csv} to R:
+A data frame with $61$ observations on the following $6$
+variables.
+\begin{itemize}
+\item \textbf{location}: a factor with levels \texttt{North} and \texttt{South} indicating
+whether the town is as north as Derby.
+\item \textbf{town}: the name of the town.
+\item \textbf{mortality}: averaged annual mortality per 100.000 male inhabitants.
+\item \textbf{hardness}: calcium concentration (in parts per million).
+\item \textbf{smoker}: If there are any smokers living in town.
+\item \textbf{num.of.cig}: In case, smokers live in town, what number of
+cigarettes do they smoke per day.
+\end{itemize}
+<<echo = FALSE, eval = FALSE>>=
+# H2O_err <- read_csv("C:\\Users\\admin\\Dropbox\\201710_Makerere\\03_Exercises\\data\\water_errors.csv")
+# str(H2O_err)
+# H2O_err <- data.frame(H2O_err)
+# str(H2O_err)
+# BEST SOLUTION how to read it in:
+# Try to use the "read.csv(...)" function to read data in!
+# use the separator sep=";" or sep="," - which ever works better.
+H2O_err <- read.csv("C:\\Users\\admin\\Dropbox\\201710_Makerere\\03_Exercises\\data\\water_errors.csv", sep=",")
+str(H2O_err)
+%
+# H2O_err <- read_csv("~/Dropbox/201710_Makerere/03_Exercises/data/water_errors.csv")
+H2O_err <- read.csv("~/Dropbox/201710_Makerere/03_Exercises/data/water_errors.csv", sep=",")
+%
+%
+C:\Users\admin\Dropbox\201710_Makerere\03_Exercises\data
+H2O_err <- data.frame(H2O_err)
+str(H2O_err)
+head(H2O_err)
+@
+%
+%
+%
+%
+%
+\item Detect the errors in the imported data set \texttt{water\_errors.csv} in R.
+<<echo = FALSE, eval = FALSE>>=
+str(H2O_err)
+table(H2O_err$location) # Only one N and only one West observation.
+table(H2O_err$town) # LIVERPOOL is in capital letter.
+summary(H2O_err$mortality)
+summary(H2O_err$hardness) # hardness of -2 does not make sense, two NA's
+table(H2O_err$num.of.cig) # only one "zero" observation (wrong coding / level)
+table(H2O_err$smoker, H2O_err$num.of.cig) # non-smokers who smoke more than 20?
+@
+\item Find possible solutions in R how to handle these challenges.
+<<echo = FALSE, eval = FALSE>>=
+str(H2O_err)
+which(H2O_err$location == "N") # 6th row
+which(H2O_err$location == "West") # 9th row
+H2O_err$location[H2O_err$location == "N"] <- "North"
+H2O_err$location[H2O_err$location == "West"] <- NA # Option 1: Set to NA.
+dim(H2O_err)
+H2O_err <- H2O_err[-which(H2O_err$location == "West"), ] # Option 2: Remove from data.
+dim(H2O_err)
+# H2O_err$town[H2O_err$town == "LIVERPOOL"] <- "Liverpool"
+# H2O_err <- H2O_err$town[-which(H2O_err$town == "LIVERPOOL"), ]
+which(is.na(H2O_err$hardness))
+H2O_err$hardness[which(is.na(H2O_err$hardness))] <- NA
+H2O_err$hardness[which(H2O_err$hardness == -2)] <- NA
+# H2O_err$hardness[which(H2O_err$hardness == -2)] <- 2
+summary(H2O_err$hardness)
+# Check levels of varibale num.of.cig
+levels(H2O_err$num.of.cig)
+table(H2O_err$num.of.cig)
+# Change the zero level to none
+H2O_err$num.of.cig[H2O_err$num.of.cig == "zero"] <- "none"
+# Drop unused levels
+H2O_err$num.of.cig <- droplevels(H2O_err$num.of.cig)
+# levels(droplevels(H2O_err$num.of.cig))
+table(H2O_err$num.of.cig)
+%
+which.F.morethan20 <- which(H2O_err$smoker == FALSE & H2O_err$num.of.cig == "more than 20")
+H2O_err[which.F.morethan20, ]
+# OPTION 1:
+H2O_err$num.of.cig[which.F.morethan20] <- NA
+# OPTION 2:
+H2O_err$smoker[which.F.morethan20] <- TRUE
+# check again, that we corrected it right
+H2O_err[which.F.morethan20, ]
+table(H2O_err$smoker, H2O_err$num.of.cig) # check again!
+%
+which(H2O_err$smoker == FALSE & H2O_err$num.of.cig == "more than 20")
+which.T.none <- which(H2O_err$smoker == TRUE & H2O_err$num.of.cig == "none")
+H2O_err[which.T.none, ]
+H2O_err$smoker[which.T.none] <- FALSE
+table(H2O_err$smoker, H2O_err$num.of.cig)
+@
+\item Do all variables have the correct data type (numeric, integer, factor)?
+- If not, do correct / define them.
+<<echo = FALSE, eval = FALSE>>=
+str(H2O_err)
+levels(H2O_err$location)
+H2O_err$location <- factor(H2O_err$location, levels = c("North", "South", NA),
+                           exclude = NULL)
+levels(H2O_err$smoker)
+H2O_err$smoker <- factor(H2O_err$smoker, levels = c("FALSE", "TRUE"))
+table(H2O_err$num.of.cig)
+H2O_err$num.of.cig <- factor(H2O_err$num.of.cig,
+                             levels = c("none", "less than 5", "5 to 20", "more than 20"),
+                             ordered = TRUE)
+table(H2O_err$num.of.cig)
+levels(H2O_err$num.of.cig)
+levels(H2O_err$num.of.cig) <- c("none", "1 to less than 5", "5 to 20", "more than 20")
+table(H2O_err$num.of.cig)
+levels(H2O_err$num.of.cig)
+@
+\end{itemize}
+%
+\section*{Exercise 11}
+\begin{itemize}
+\item Apply the two-sided two sample t-test to suitable variables of the data set \texttt{ToothGrowth}.
+<<echo = FALSE, eval = FALSE>>=
+?t.test
+t.test(ToothGrowth$len ~ ToothGrowth$supp)
+t.test(len ~ supp, data = ToothGrowth)
+# p-value = 0.06039 (borderline) significant, close to 0.05
+# p-value says the difference is not (borderline) significant
+# however, the boxplot do somehow look different
+boxplot(ToothGrowth$len ~ ToothGrowth$supp)
+# change the default setting of var.equal
+t.test(ToothGrowth$len ~ ToothGrowth$supp, var.equal = TRUE)
+t.test(ToothGrowth$len ~ ToothGrowth$supp, var.equal = FALSE) # DEFAULT!
+%
+# Define subset
+sub.OJ <- subset(ToothGrowth, supp == "OJ")
+sub.VC <- subset(ToothGrowth, supp == "VC")
+# Drop (unused) levels for each subset
+sub.VC$supp <- droplevels(sub.VC$supp)
+levels(sub.VC$supp) # check that levels are dropped
+sub.OJ$supp <- droplevels(sub.OJ$supp)
+levels(sub.OJ$supp) # check that levels are dropped
+# Additional option for comparing lengths between the two groups:
+# Compare the two vectors of lengths
+t.test(sub.VC$len, sub.OJ$len)
+%
+@
+\item Interpret the results.
+<<echo = FALSE, eval = FALSE>>=
+# t = 1.9153
+# df = 55.309
+# p-value = 0.06063
+# 95 percent confidence interval: -0.1710156  7.5710156
+# sample mean in group OJ: 20.66333
+# sample mean in group VC: 16.96333
+# Also with the lm(...) function  for "linear model" you get the same sample means:
+lm.mod0 <- lm(ToothGrowth$len ~ ToothGrowth$supp - 1)
+coef(lm.mod)
+@
+\item Apply the two-sided t-test to the \texttt{perulang\_ems} data set
+<<echo = FALSE, eval = FALSE>>=
+# two-sided t-test of fev1 vs respsymptoms
+t.test(lung$fev1 ~ lung$respsymptoms)
+t.test(fev1 ~ respsymptoms, data = lung)
+# Define linear model
+mod.fev.resp.0 <- lm(lung$fev1 ~ lung$respsymptoms)
+summary(mod.fev.resp.0)
+mod.fev.resp.1 <- lm(lung$fev1 ~ lung$respsymptoms - 1)
+summary(mod.fev.resp.1)
+# Coefficients of linear model
+coef(mod.fev.resp.0)
+coef(mod.fev.resp.1)
+# Anova
+anova(mod.fev.resp.0)
+anova(mod.fev.resp.1)
+# two-sided t-test of fev1 vs sex
+t.test(lung$fev1 ~ lung$sex)
+t.test(fev1 ~ sex, data = lung)
+# Define linear model
+mod.fev.sex.0 <- lm(lung$fev1 ~ lung$sex)
+mod.fev.sex.1 <- lm(lung$fev1 ~ lung$sex - 1)
+# Coefficients of linear model
+coef(mod.fev.sex.0)
+coef(mod.fev.sex.1)
+# Anova
+anova(mod.fev.sex.0)
+anova(mod.fev.sex.1)
+@
+\end{itemize}
+%
+%
+\section*{Exercise 12}
+\begin{itemize}
+\item Apply the Chi-square Test and the fisher exact test to the whole
+\texttt{bacteria} data set.
+<<echo = FALSE, eval = FALSE>>=
+library("MASS")
+data(bacteria)
+summary(bacteria)
+subbac <- subset(bacteria, week == 2)
+bacteria$trt.new <- bacteria$trt
+levels(bacteria$trt.new) <- c("placebo", "drug", "drug")
+bacteria$trt.new <- droplevels(bacteria$trt.new)
+# Ordering of the variables does not matter
+chisq.test(table(bacteria$trt, bacteria$y))
+chisq.test(table(bacteria$y, bacteria$trt))
+chisq.test(bacteria$trt, bacteria$y)
+my.table <- table(bacteria$trt, bacteria$y)
+chisq.test(my.table)
+table(subbac$trt, subbac$y)
+chisq.test(table(subbac$trt, subbac$y))
+fisher.test(table(subbac$trt, subbac$y))
+fisher.test(table(subbac$trt.new, subbac$y))
+# Chi-squared test with trt and y
+chisq.test(table(bacteria$trt, bacteria$y))
+# Fisher test with trt and y
+fisher.test(table(bacteria$trt, bacteria$y))
+@
+\item Apply the Chi-square Test and the fisher exact test to the subset of
+\texttt{bacteria} containing only the observations taken in week 2.
+Are there any issues?
+<<echo = FALSE, eval = FALSE>>=
+subbac <- subset(bacteria, week == 2)
+# Chi-squared test with trt and y
+chisq.test(table(subbac$trt, subbac$y))
+# --> NOT RELIABLE RESULTS: at least 5 observations per group.
+# Fisher test with trt and y
+fisher.test(table(subbac$trt, subbac$y))
+@
+\item Repeat this exercise by using the (previously defined) combined
+\texttt{trt.new} variable with the two levels \texttt{treated} and \texttt{drug}.
+<<echo = FALSE, eval = FALSE>>=
+# WHOLE DATA SET
+# Chi-squared test with trt.new and y
+chisq.test(table(bacteria$trt.new, bacteria$y))
+# Fisher test with trt.new and y
+fisher.test(table(bacteria$trt.new, bacteria$y))
+# SUB DATA SET only observations from week 2
+# Chi-squared test with trt.new and y
+chisq.test(table(subbac$trt.new, subbac$y))
+# --> NOT RELIABLE RESULTS: at least 5 observations per group.
+# Fisher test with trt.new and y
+fisher.test(table(subbac$trt.new, subbac$y))
+@
+\item Could you also obtain the odds ratios?
+<<echo = FALSE, eval = FALSE>>=
+fisher.test(table(subbac$trt.new, subbac$y))
+fisher.test(bacteria$y, bacteria$ap)
+my.logreg <- glm(y ~ ap, data = bacteria, family = "binomial")
+summary(my.logreg)
+exp(0.8473 )
+coef(my.logreg)
+exp(coef(my.logreg))
+@
+\item Try also a logistic regression in R. Ask Google for help!
+<<echo = FALSE, eval = FALSE>>=
+model.logreg <- glm(bacteria$y ~ bacteria$trt.new, family = "binomial")
+model.logreg <- glm(y ~ trt.new, data = bacteria, family = "binomial")
+summary(model.logreg)
+anova(model.logreg)
+coef(model.logreg)
+exp(coef(model.logreg))
+@
+\end{itemize}
+%
+\section*{Exercise 13A: Outside plot frame}
+\begin{itemize}
+\item Type \texttt{demo(graphics)} in your console and press enter.
+This command shows you a nice demonstration of possible R graphics.
+<<echo = FALSE, eval = FALSE>>=
+# After the demonstration us the following commands:
+dev.off()
+par(mfrow=c(1,1))
+@
+\item Change the x-axis and y-axis labelling of a boxplot plotting the
+\texttt{len} variable of the \texttt{ToothGrowth} data set.
+<<echo = FALSE, eval = FALSE>>=
+boxplot(ToothGrowth$len, xlab = "Length of Teeth",
+        ylab = "Length in mm")
+@
+\item How do you set a main title for your above plot?
+<<echo = FALSE, eval = FALSE>>=
+# OPTION 1:
+boxplot(ToothGrowth$len, xlab = "Length of Teeth",
+        ylab = "Length in mm",
+        main = "Boxplot of Tooth Length")
+# OPTION 2:
+boxplot(ToothGrowth$len, xlab = "Length of Teeth",
+        ylab = "Length in mm")
+title("Boxplot of Tooth Length")
+@
+\item What does the following command do?
+<<echo = FALSE, eval = FALSE>>=
+par(mfrow=c(2,2))
+@
+<<echo = FALSE, eval = FALSE>>=
+# With the par(...) function, you can include the option
+# mfrow=c(nrows, ncols) to create a matrix of nrows x ncols plots
+# that are filled in by row.
+par(mfrow=c(2,2)) # 2 rows, 2 columns
+par(mfrow=c(4,3)) # 4 rows, 3 columns
+# DO NOT FORGET TO CHANGE IT BACK TO:
+par(mfrow=c(1, 1)) # the default
+@
+%
+\item We have six different feed types in \texttt{chickwts}. Try to plot two
+separate boxplots for \texttt{casein} and \texttt{horsebean} and set the same
+minimum and maximum for the y-axis. Use the function \texttt{subset} for doing so.
+<<echo = FALSE, eval = FALSE>>=
+sub.casein <- subset(chickwts, feed == "casein")
+sub.casein <- droplevels(sub.casein)
+sub.horsebean <- subset(chickwts, feed == "horsebean")
+sub.horsebean <- droplevels(sub.horsebean)
+@
+<<echo = FALSE, eval = FALSE>>=
+sub.casein <- subset(chickwts, feed == "casein")
+sub.casein <- droplevels(sub.casein)
+sub.horsebean <- subset(chickwts, feed == "horsebean")
+sub.horsebean <- droplevels(sub.horsebean)
+summary(sub.casein$weight)
+summary(sub.horsebean$weight)
+boxplot(sub.casein$weight ~ sub.casein$feed, ylim = c(100, 410))
+boxplot(sub.horsebean$weight ~ sub.horsebean$feed, ylim = c(100, 410))
+@
+\item How do you enlarge the font size of the axis as well as the axis labels
+of the following plot with the \texttt{perulung} data set?
+<<echo = FALSE, eval = FALSE>>=
+plot(lung$fev1, lung$height)
+@
+<<echo = FALSE, eval = FALSE>>=
+plot(lung$fev1, lung$height, cex.axis = 1.5, cex.lab = 1.5)
+plot(lung$fev1, lung$height, cex.axis = 1.5, cex.lab = 1.5, las = 1)
+@
+\item Label the x-axis of the following plot with ''Vitamin C in $\mu$g''. Use the
+greek letter for $\mu$.
+<<echo = FALSE, eval = FALSE>>=
+plot(ToothGrowth$dose, ToothGrowth$len)
+@
+<<echo = FALSE, eval = FALSE>>=
+plot(ToothGrowth$dose, ToothGrowth$len,
+     xlab = expression(paste("Vitamin C in ", mu, "g")))
+@
+\item Read \url{http://www.statmethods.net/advgraphs/parameters.html}.
+\end{itemize}
 
-% \section*{Exercise 13B: Inside the square of the plot}
-% \begin{itemize}
-% \item Type \texttt{demo(graphics)} in your console and press enter.
-% \item Add a legend to the following barplot. Are there several different solutions
-% for this?
-% <<echo = TRUE, eval = FALSE>>=
-% barplot(prop.table(table(bacteria$y, bacteria$trt),margin=1),
-%         beside=FALSE, ylim = c(0,0.8))
-% @
-% <<echo = FALSE, eval = FALSE>>=
-% barplot(prop.table(table(bacteria$y, bacteria$trt),margin=1), beside=FALSE,
-%         ylim = c(0,0.8), legend.text = levels(bacteria$y))
-% # Helen's solution (THANK YOU!):
-% barplot(prop.table(table(bacteria$y, bacteria$trt), margin=1),
-%         beside=FALSE, ylim = c(0,0.8), col = topo.colors(2),
-%         ylab = "y", xlab = "treatments",
-%         main = "bacteria")
-% legend("topright", legend = c("yes", "no"), fill = topo.colors(2))
-% @
-% \item Add a density line to this histogram.
-% <<echo = TRUE, eval = FALSE>>=
-% hist(ToothGrowth$len, prob = TRUE, col = "grey", ylim = c(0, 0.05))
-% @
-% <<echo = FALSE, eval = FALSE>>=
-% hist(ToothGrowth$len, prob = TRUE, col = "grey", ylim = c(0, 0.05))
-% # add a density estimate with defaults
-% lines(density(ToothGrowth$len), col="blue", lwd = 4)
-% # add a density estimate with adjustments
-% lines(density(ToothGrowth$len, adjust=2), lty="dotted", col="darkgreen",
-%       lwd = 4)
-% @
-% \item Add a \textbf{dotted red} linear regression line to the following plot.
-% <<echo = TRUE, eval = FALSE>>=
-% plot(lung$height, lung$fev1)
-% @
-% <<echo = FALSE, eval = FALSE>>=
-% plot(lung$height, lung$fev1)
-% abline(lm(lung$fev1 ~ lung$height), col = "red",
-%        lwd = 3, lty = 2)
-% # See
-% # https://stackoverflow.com/questions/24173468/r-print-equation-of-linear-regression-on-the-plot-itself
-% # to learn how to print equation of linear regression on the plot
-% ## rounded coefficients for better output
-% lm.mod <- lm(lung$fev1 ~ lung$height)
-% cf <- round(coef(lm.mod), 2)
-% ## sign check to avoid having plus followed by minus for negative coefficients
-% eq <- paste0("fev1 = ", cf[1],
-%              ifelse(sign(cf[2])==1, " + ", " - "), abs(cf[2]), " height ")
-% ## printing of the equation
-% mtext(eq, 3, line=-2)
-% @
-% \item Color the points in the following plot according to the \texttt{sex} variable.
-% <<echo = TRUE, eval = FALSE>>=
-% plot(lung$height, lung$fev1)
-% @
-% <<echo = FALSE, eval = FALSE>>=
-% plot(lung$height, lung$fev1, col = as.numeric(lung$sex))
-% @
-% \item Add two linear regression lines separately for \texttt{female} and \texttt{male}to the following plot.
-% <<echo = TRUE, eval = FALSE>>=
-% plot(lung$height, lung$fev1)
-% @
-% <<echo = FALSE, eval = FALSE>>=
-% plot(lung$height, lung$fev1, col = as.numeric(lung$respsymptoms))
-% abline(lm(lung$fev1 ~ lung$height,
-%           data = subset(lung, sex == "female")),
-%        col  = "black")
-% abline(lm(lung$fev1 ~ lung$height,
-%           data = subset(lung, sex == "male")),
-%        col  = "red")
-% # library("graphics")
-% # coplot(fev1 ~ height | sex, data = lung, panel = panel.smooth)
-% # coplot(fev1 ~ height | respsymptoms, data = lung, panel = panel.smooth)
-% @
-% \item Color the points in the following plot according to the \texttt{supp} variable.
-% Use different point characters (\texttt{pch}) based on the \texttt{supp} variable.
-% <<echo = TRUE, eval = FALSE>>=
-% plot(ToothGrowth$len, ToothGrowth$dose)
-% @
-% <<echo = FALSE, eval = FALSE>>=
-% plot(ToothGrowth$len, ToothGrowth$dose,
-%      pch = levels(ToothGrowth$supp),
-%      col = as.numeric(ToothGrowth$supp))
-% @
-% \item Read \url{http://www.statmethods.net/advgraphs/parameters.html}.
-% \end{itemize}
+\section*{Exercise 13B: Inside the square of the plot}
+\begin{itemize}
+\item Type \texttt{demo(graphics)} in your console and press enter.
+\item Add a legend to the following barplot. Are there several different solutions
+for this?
+<<echo = FALSE, eval = FALSE>>=
+barplot(prop.table(table(bacteria$y, bacteria$trt),margin=1),
+        beside=FALSE, ylim = c(0,0.8))
+@
+<<echo = FALSE, eval = FALSE>>=
+barplot(prop.table(table(bacteria$y, bacteria$trt),margin=1), beside=FALSE,
+        ylim = c(0,0.8), legend.text = levels(bacteria$y))
+# Helen's solution (THANK YOU!):
+barplot(prop.table(table(bacteria$y, bacteria$trt), margin=1),
+        beside=FALSE, ylim = c(0,0.8), col = topo.colors(2),
+        ylab = "y", xlab = "treatments",
+        main = "bacteria")
+legend("topright", legend = c("yes", "no"), fill = topo.colors(2))
+@
+\item Add a density line to this histogram.
+<<echo = FALSE, eval = FALSE>>=
+hist(ToothGrowth$len, prob = TRUE, col = "grey", ylim = c(0, 0.05))
+@
+<<echo = FALSE, eval = FALSE>>=
+hist(ToothGrowth$len, prob = TRUE, col = "grey", ylim = c(0, 0.05))
+# add a density estimate with defaults
+lines(density(ToothGrowth$len), col="blue", lwd = 4)
+# add a density estimate with adjustments
+lines(density(ToothGrowth$len, adjust=2), lty="dotted", col="darkgreen",
+      lwd = 4)
+@
+\item Add a \textbf{dotted red} linear regression line to the following plot.
+<<echo = FALSE, eval = FALSE>>=
+plot(lung$height, lung$fev1)
+@
+<<echo = FALSE, eval = FALSE>>=
+plot(lung$height, lung$fev1)
+abline(lm(lung$fev1 ~ lung$height), col = "red",
+       lwd = 3, lty = 2)
+# See
+# https://stackoverflow.com/questions/24173468/r-print-equation-of-linear-regression-on-the-plot-itself
+# to learn how to print equation of linear regression on the plot
+## rounded coefficients for better output
+lm.mod <- lm(lung$fev1 ~ lung$height)
+cf <- round(coef(lm.mod), 2)
+## sign check to avoid having plus followed by minus for negative coefficients
+eq <- paste0("fev1 = ", cf[1],
+             ifelse(sign(cf[2])==1, " + ", " - "), abs(cf[2]), " height ")
+## printing of the equation
+mtext(eq, 3, line=-2)
+@
+\item Color the points in the following plot according to the \texttt{sex} variable.
+<<echo = FALSE, eval = FALSE>>=
+plot(lung$height, lung$fev1)
+@
+<<echo = FALSE, eval = FALSE>>=
+plot(lung$height, lung$fev1, col = as.numeric(lung$sex))
+@
+\item Add two linear regression lines separately for \texttt{female} and \texttt{male}to the following plot.
+<<echo = FALSE, eval = FALSE>>=
+plot(lung$height, lung$fev1)
+@
+<<echo = FALSE, eval = FALSE>>=
+plot(lung$height, lung$fev1, col = as.numeric(lung$respsymptoms))
+abline(lm(lung$fev1 ~ lung$height,
+          data = subset(lung, sex == "female")),
+       col  = "black")
+abline(lm(lung$fev1 ~ lung$height,
+          data = subset(lung, sex == "male")),
+       col  = "red")
+# library("graphics")
+# coplot(fev1 ~ height | sex, data = lung, panel = panel.smooth)
+# coplot(fev1 ~ height | respsymptoms, data = lung, panel = panel.smooth)
+@
+\item Color the points in the following plot according to the \texttt{supp} variable.
+Use different point characters (\texttt{pch}) based on the \texttt{supp} variable.
+<<echo = FALSE, eval = FALSE>>=
+plot(ToothGrowth$len, ToothGrowth$dose)
+@
+<<echo = FALSE, eval = FALSE>>=
+plot(ToothGrowth$len, ToothGrowth$dose,
+     pch = levels(ToothGrowth$supp),
+     col = as.numeric(ToothGrowth$supp))
+@
+\item Read \url{http://www.statmethods.net/advgraphs/parameters.html}.
+\end{itemize}
 
 \section*{Exercise 14}
 \begin{itemize}
 \item Load the below data set and for further information check the command
 \texttt{?water}.
-<<echo = TRUE, eval = FALSE>>=
+<<echo = FALSE, eval = FALSE>>=
 # install.packages("HSAUR3")
 library("HSAUR3")
 data("water")
@@ -1048,7 +1047,7 @@ barplot(table(water$location))
 @
 \item ADDITIONAL: Try if any of these following plotting functions can be
 applied to the data sets \texttt{perulung} or \texttt{ToothGrowth}.
-<<echo = TRUE, eval = FALSE>>=
+<<echo = FALSE, eval = FALSE>>=
 install.packages("graphics")
 library("graphics")
 ?coplot
@@ -1303,7 +1302,7 @@ ToothGrowth$dose.fac <- factor(ToothGrowth$dose, levels = c(0.5, 1.0, 2.0),
                           labels = c("low", "med", "high"))
 @
 
-<<echo = TRUE, eval = FALSE>>=
+<<echo = FALSE, eval = FALSE>>=
 mod1 <- lm(len ~ dose.fac, data = ToothGrowth)
 mod2 <- lm(len ~ supp, data = ToothGrowth)
 mod3 <- lm(len ~ dose.fac + supp, data = ToothGrowth)
@@ -1484,26 +1483,5 @@ a risk factor?
 @
 
 \end{itemize}
-
-% \section*{Exercise }
-% \begin{itemize}
-% \item ...
-% \end{itemize}
-
-% \section*{Exercise }
-% \begin{itemize}
-% \item ...
-% \end{itemize}
-
-% \section*{Exercise }
-% \begin{itemize}
-% \item ...
-% \end{itemize}
-
-% \section*{Exercise }
-% \begin{itemize}
-% \item ...
-% \end{itemize}
-
 
 \end{document}
