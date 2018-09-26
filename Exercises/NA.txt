@@ -1,9 +1,0 @@
-http://thomasleeper.com/Rcourse/Tutorials/NAhandling.html
-
-http://www.statmethods.net/input/missingdata.html
-
-https://stats.idre.ucla.edu/r/faq/how-does-r-handle-missing-values/
-
-https://discuss.analyticsvidhya.com/t/how-to-count-the-missing-value-in-r/2949
-
-http://faculty.nps.edu/sebuttre/home/R/missings.html
