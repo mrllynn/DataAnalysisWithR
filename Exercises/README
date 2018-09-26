@@ -1,6 +1,6 @@
-# ~~~~~~~~~~~~~~~~~~~
+# ~~~~~~~~~~~~~~~~~~~~
 # File name convention
-# ~~~~~~~~~~~~~~~~~~~
+# ~~~~~~~~~~~~~~~~~~~~
 The files are named as in the "Lecture" folder. The order of the files (the numbering) is also according to the "Lecture" files.
 xx_E_S_[...] are the Exercise related files for STUDENTS.
 xx_E_T_[...] are the Exercise related files for the TEACHER.
@@ -9,17 +9,27 @@ Wile changing xx_E_T_[...]  files to xx_E_S_[...] files make sure to add the fol
 # For students files:
 opts_chunk$set(echo = FALSE, eval = TRUE, results = "hide", include = FALSE)
 
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Notes on KnitR chunk options
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Code Evaluation: eval: (TRUE; logical)
 # Text Results: echo: (TRUE; logical or numeric) whether to include R source code in the output file; TRUE/FALSE completely turns on/off the source code
 # results: results = "hide"
 # include: (TRUE; logical) whether to include the chunk output in the final output document
 
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # How to extract R Code from .Rnw file?
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 f <- 'somefile.Rnw'
 knitr::purl(f)
 Stangle(f)
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Literature on missing values
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+http://thomasleeper.com/Rcourse/Tutorials/NAhandling.html
+http://www.statmethods.net/input/missingdata.html
+https://stats.idre.ucla.edu/r/faq/how-does-r-handle-missing-values/
+https://discuss.analyticsvidhya.com/t/how-to-count-the-missing-value-in-r/2949
+http://faculty.nps.edu/sebuttre/home/R/missings.html
+ 
