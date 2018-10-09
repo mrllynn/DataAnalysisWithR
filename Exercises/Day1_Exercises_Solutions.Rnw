@@ -9,14 +9,14 @@
 
 % *****************************************************************************
 % ADD HERE THE TOPIC OF THE LECTURE!
-\newcommand{\exercisetopic}{Day 1}
+\newcommand{\exercisetopic}{Day 1 - preliminary - SOLUTIONS}
 % *****************************************************************************
 
 % Add information about the title section of the file
 \author{Sonja Hartnack, Terence Odoch \& Muriel Buri}
 \date{\today}
 \title{\vspace{-3ex}Practical Exercises for \textbf{\exercisetopic}}
-\date{October 2017}
+\date{October 2018}
 
 \usepackage[round,sectionbib]{natbib} \bibliographystyle{ims}
 \usepackage{graphicx}
@@ -68,7 +68,7 @@ data(chickwts)
 head(chickwts)
 # ?chickwts
 @
-
+%
 \item Do summary statistic (numerically and graphically)
 <<echo = TRUE, eval = FALSE>>=
 summary(chickwts)
@@ -84,11 +84,19 @@ boxplot(weight ~ feed, data = chickwts, col = "lightgray",
         varwidth = TRUE, notch = TRUE, main = "chickwt data",
         ylab = "Weight at six weeks (gm)")
 @
-% Anova, lm, which groups differ, Bonferroni, Tukey-Anscombe
-% Histogram with density line
-% Normally distributed weights
+\item For advanced R users: Try an anova (are the assumptions fulfilled?)
+and a Tukey-Anscombe plot. \newline Try a histogram with a density line on top. ...
+<<echo = TRUE, eval = FALSE>>=
+lm.mod <- lm(weight ~ feed, data = chickwts)
+summary(lm.mod)
+anova <- aov(weight ~ feed, data = chickwts)
+TukeyHSD(anova)
+summary(anova)
+par(mfrow=c(2,2))
+plot(lm.mod)
+@
 \end{itemize}
-
+%
 \section*{Exercise 2}
 \begin{itemize}
 \item Create a data frame with 3 columns.
@@ -101,7 +109,7 @@ dat <- data.frame(a, b, c)
 dat
 @
 \end{itemize}
-
+%
 \section*{Exercise 3}
 \begin{itemize}
 \item Install package \texttt{MASS}.
@@ -109,14 +117,16 @@ dat
 # install.packages("MASS")
 library("MASS")
 @
-
+%
 \item Load data set \texttt{bacteria}.
 <<echo = TRUE, eval = FALSE>>=
 data(bacteria)
 head(bacteria)
 # ?bacteria
 @
-
+%
+\item Describe in your own words what the data set \texttt{bacteria} contains.
+%
 \item Do summary statistic (numerically and graphically).
 <<echo = TRUE, eval = FALSE>>=
 summary(bacteria)
@@ -125,13 +135,13 @@ barplot(table(bacteria$week))
 barplot(table(bacteria$trt))
 table(bacteria$trt, bacteria$ap)
 table(bacteria$trt, bacteria$y)
-
+%
 fisher.test(table(bacteria$trt, bacteria$y))
-
+%
 prop.table(table(bacteria$trt, bacteria$y))
 prop.table(table(bacteria$trt, bacteria$y), margin = 1)
 prop.table(table(bacteria$trt, bacteria$y), margin = 2)
-
+%
 plot(prop.table(table(bacteria$trt, bacteria$y)))
 mosaicplot(~trt + y, data = bacteria)
 barplot(prop.table(table(bacteria$y, bacteria$trt),margin=1), beside=TRUE)
@@ -140,7 +150,7 @@ barplot(prop.table(table(bacteria$y, bacteria$trt),margin=1), beside=FALSE)
 barplot(prop.table(table(bacteria$trt, bacteria$y),margin=1), beside=FALSE)
 ?barplot
 @
-
+%
 \item Select only observations collected during the second week.
 <<echo = TRUE, eval = FALSE>>=
 subset(bacteria, week == 2)
