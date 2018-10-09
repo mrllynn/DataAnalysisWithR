@@ -3,7 +3,7 @@
 % *****************************************************************************
 % ADD HERE THE TOPIC OF THE LECTURE!
 % \newcommand{\lecturetopic}{ALL LECTURE SLIDES}
-\newcommand{\lecturetopic}{Day 1 - preliminary - Lecture Slides}
+\newcommand{\lecturetopic}{Day 1 - preliminary - Slides}
 % *****************************************************************************
 
 <<echo = FALSE, eval = TRUE>>=
