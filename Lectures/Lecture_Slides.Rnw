@@ -3,12 +3,11 @@
 % *****************************************************************************
 % ADD HERE THE TOPIC OF THE LECTURE!
 % \newcommand{\lecturetopic}{ALL LECTURE SLIDES}
-\newcommand{\lecturetopic}{ALL SLIDES}
+\newcommand{\lecturetopic}{Lecture Slides (all)}
 % *****************************************************************************
 
 <<echo = FALSE, eval = TRUE>>=
-# data_dir <- "~/Dropbox/201710_Makerere/02_Lectures/data/"
-data_dir <- "C:\\Users\\admin\\Dropbox\\201710_Makerere\\02_Lectures\\data\\"
+data_dir <- "../Exercises/data"
 @
 
 % turn off navigation symbols
@@ -18,7 +17,7 @@ data_dir <- "C:\\Users\\admin\\Dropbox\\201710_Makerere\\02_Lectures\\data\\"
 \author{Sonja Hartnack, Terence Odoch \& Muriel Buri}
 \vspace{0.3cm}
 \footnotesize
-\institute{October 2017}
+\institute{October 2018}
 \date{ }
 
 \setbeamertemplate{footline}[text line]{%
@@ -58,7 +57,7 @@ Terence Odoch \& Muriel Buri \hfill \lecturetopic \hfill \insertpagenumber}}
 \newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 \newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 
-\graphicspath{{figures/}}
+\graphicspath{{slides_figures/}}
 \usepackage[export]{adjustbox} % figure alignment
 \usepackage{wrapfig} % allow for wrapfigure
 \usepackage[margin=1cm]{caption}
@@ -111,14 +110,14 @@ Terence Odoch \& Muriel Buri \hfill \lecturetopic \hfill \insertpagenumber}}
 \begin{columns}
 \begin{column}{.3\linewidth}
 \begin{center}
-\includegraphics[height=.35\linewidth, width = 1.1\linewidth]{uzh_logo.pdf}
+\includegraphics[height=.35\linewidth, width = 1.1\linewidth]{UZH_logo.png}
 \end{center}
 \end{column}
 \begin{column}{0.2\linewidth}
 \end{column}
 \begin{column}{.3\linewidth}
 \begin{center}
-\includegraphics[height=.45\linewidth, width = .65\linewidth]{makere_logo.jpg}
+\includegraphics[height=.45\linewidth, width = .65\linewidth]{Makerere_logo.jpeg}
 \end{center}
 \end{column}
 \end{columns}
@@ -216,7 +215,7 @@ head(chickwts)
 \begin{frame}[fragile]
 \frametitle{Ideas for plotting the data}
 \pause
-<<echo=TRUE, eval=FALSE, size="scriptsize">>=
+<<echo=TRUE, eval=TRUE, size="scriptsize", out.width = "60%", fig.align="center">>=
 boxplot(weight ~ feed, data = chickwts)
 @
 % EXERCISE IDEAS
@@ -253,7 +252,7 @@ summary(aov(weight ~ feed, data = chickwts))
 \end{itemize}
 %
 \begin{center}
-\includegraphics[width=0.7\paperwidth]{Printscreen_chickwts_RScreen.png}
+\includegraphics[width=0.8\paperwidth]{Printscreen_RStudio_Screen.png}
 \end{center}
 %
 \end{frame}
@@ -265,17 +264,21 @@ summary(aov(weight ~ feed, data = chickwts))
 \frametitle{Good housekeeping!}
 \begin{itemize}
 \setlength\itemsep{1.5em}
+\item Define manually a new folder called \textbf{RCourse} in your personal documents
+on your personal computer
 \item Know in which directory you are
 <<echo=TRUE, eval=TRUE, size="scriptsize">>=
 getwd()
 @
 \item Set directory path
 <<echo=TRUE, eval=FALSE, size="scriptsize">>=
-setwd("C:\\Users\\admin\\201710_Makerere\\02_Lectures\\data\\")
+# back- and forslah is dependent on the system
+setwd("C:/Users/mburi/Documents/RCourse/")
+setwd("C:\\Users\\mburi\\Documents\\RCourse\\")
 @
 \item Always clean up before starting with new R-Script
 <<echo=TRUE, eval=TRUE, size="scriptsize">>=
-rm(list=ls()) # empty workspace
+rm(list=ls()) # empty workspace, delete previously saved variables
 @
 \end{itemize}
 \end{frame}
@@ -302,7 +305,7 @@ Also, have a look at the examples at the end of the help pages.
 \begin{frame}
 \frametitle{A data frame in R: \texttt{chickwts}}
 \begin{center}
-\includegraphics[width = \linewidth]{Printscreen_Data_Frame_in_R.png}
+\includegraphics[width = 1.1\linewidth]{Printscreen_Data_Frame_in_R.png}
 \end{center}
 \end{frame}
 
@@ -372,7 +375,7 @@ dat
 \frametitle{Data frame in R: How to add a vector variable}
 <<echo=TRUE, eval=TRUE, size="scriptsize">>=
 c <- factor(c("male", "female", "male", "female"),
-                levels = c("female", "male"))
+            levels = c("female", "male"))
 dat$c <- c # use "$" to refer to the additional vector variable
 dat
 # What is the dimension (number of rows and columns) of our data frame?
@@ -389,7 +392,25 @@ dim(dat) # 4 rows and 3 columns
 % *****************************************************************************
 
 \begin{frame}[fragile]
-\frametitle{How to install a package}
+\frametitle{RELATIONSHIPS IN R WOLRD - What is a package within R}
+% sophisticatex text editor / user interface used it as a text editor
+% install package from it
+% load packages
+% create pdf files
+% 
+<<echo=TRUE, eval=FALSE, size="scriptsize">>=
+# install.packages("MASS")
+# library("MASS")
+# data(bacteria)
+# ?bacteria
+@
+\end{frame}
+
+% *****************************************************************************
+
+\begin{frame}[fragile]
+\frametitle{WHAT IS A PACKAGE AND How to install IT}
+% ERGÄNZEN WHAT A PACKAGE IS
 <<echo=TRUE, eval=FALSE, size="scriptsize">>=
 install.packages("MASS")
 library("MASS")
@@ -401,19 +422,11 @@ data(bacteria)
 % *****************************************************************************
 
 \begin{frame}[fragile]
-\frametitle{How to install a package}
-\begin{center}
-\includegraphics[width = \linewidth]{Printscreen_Rscreen.png}
-\end{center}
-\end{frame}
-
-% *****************************************************************************
-
-\begin{frame}[fragile]
 \frametitle{Exercise 3}
 \end{frame}
 
 % *****************************************************************************
+
 \section{Day 2}
 \usebackgroundtemplate{}
 \begin{frame}[fragile]
@@ -479,7 +492,7 @@ summary(anova_model)
 % *****************************************************************************
 
 \begin{frame}[fragile]
-\frametitle{Examples of assigned objects: Dataframe}
+\frametitle{Examples of assigned objects: Data frame}
 <<echo=FALSE, eval=TRUE, size="scriptsize", message=FALSE, warning=FALSE>>=
 library("MASS")
 data(bacteria)
@@ -540,7 +553,7 @@ Ordinal variables are represented as ordered factors:
 <<echo=TRUE, eval=TRUE, size="scriptsize">>=
 bac_growth <- c("none", "+", "++", "+", "+++", "+", "none") # vector
 bac_growth <- factor(bac_growth, levels = c("none", "+", "++", "+++"),
-               order = TRUE)
+                     order = TRUE)
 bac_growth
 #
 mood <- c("OK", "Well", "Super", "Super", "Don't ask", "OK") # vector
@@ -574,7 +587,7 @@ mood
 (except for the first row).
 \end{itemize}
 \begin{center}
-\includegraphics[width = \linewidth]{Printscreen_ExcelSheet.png}
+\includegraphics[width = 0.7\linewidth]{Printscreen_ExcelSheet.png}
 \end{center}
 \end{frame}
 
@@ -582,9 +595,10 @@ mood
 
 \begin{frame}[fragile]
 \frametitle{Rules for naming variables}
-Variable names should ..
+Variable names should ...
 \begin{itemize}
-\item start with a letter (not a number): \texttt{y, ap, hilo, week, ID, trt}
+\item start with a letter (not a number): \newline
+\texttt{y, ap, hilo, week, ID, trt}
 \item longer variables names should be separated with dots: \texttt{time.in.weeks}
 \item do not use special characters, such as /, \#, $@$, \&, $\star$, ...
 \end{itemize}
@@ -593,11 +607,19 @@ Variable names should ..
 % *****************************************************************************
 
 \begin{frame}[fragile]
-\frametitle{How to import Excel files into R?}
-\framesubtitle{Three major steps: Excel file preparation}
-\begin{center}
-\includegraphics[width = \linewidth]{Printscreen_Import_Data_to_R_1.png}
-\end{center}
+\frametitle{How to import external data files into R?}
+\begin{itemize}
+\item Excel Files (.xlsx)
+<<echo=TRUE, eval=FALSE, size="scriptsize">>=
+install.packages("readxl")
+library("readxl")
+@
+\item CSV Files (.csv)
+<<echo=TRUE, eval=FALSE, size="scriptsize">>=
+?read.csv
+@
+\item Text files (.txt)
+\end{itemize}
 \end{frame}
 
 % *****************************************************************************
@@ -605,9 +627,9 @@ Variable names should ..
 \begin{frame}[fragile]
 \frametitle{How to import Excel files into R?}
 \framesubtitle{Three major steps: Excel file preparation}
-\begin{center}
-\includegraphics[width = \linewidth]{Printscreen_Import_Data_to_R_2.png}
-\end{center}
+% \begin{center}
+% \includegraphics[width = \linewidth]{Printscreen_Import_Data_to_R_2.png}
+% \end{center}
 \end{frame}
 
 % *****************************************************************************
@@ -615,9 +637,9 @@ Variable names should ..
 \begin{frame}[fragile]
 \frametitle{How to import Excel files into R?}
 \framesubtitle{Three major steps: Save raw data file as .csv}
-\begin{center}
-\includegraphics[width = \linewidth]{Printscreen_Import_Data_to_R_3.png}
-\end{center}
+% \begin{center}
+% \includegraphics[width = \linewidth]{Printscreen_Import_Data_to_R_3.png}
+% \end{center}
 \end{frame}
 
 % *****************************************************************************
@@ -632,9 +654,9 @@ Variable names should ..
 \begin{frame}[fragile]
 \frametitle{How to import Excel files into R?}
 \framesubtitle{Three major steps: Import data into R}
-\begin{center}
-\includegraphics[width = \linewidth]{Printscreen_Import_Data_to_R_4.png}
-\end{center}
+% \begin{center}
+% \includegraphics[width = \linewidth]{Printscreen_Import_Data_to_R_4.png}
+% \end{center}
 \end{frame}
 
 % *****************************************************************************
@@ -642,9 +664,9 @@ Variable names should ..
 \begin{frame}[fragile]
 \frametitle{How to import Excel files into R?}
 \framesubtitle{Three major steps: Import data into R}
-\begin{center}
-\includegraphics[width = \linewidth]{Printscreen_Import_Data_to_R_5.png}
-\end{center}
+% \begin{center}
+% \includegraphics[width = \linewidth]{Printscreen_Import_Data_to_R_5.png}
+% \end{center}
 \end{frame}
 
 
@@ -655,7 +677,8 @@ Variable names should ..
 <<echo=TRUE, eval=FALSE, size="scriptsize">>=
 # Import .csv file with the help of the read.csv function
 # Be sure to add sep = ";" so that we separate the columns.
-lung <- read.csv("C:\\Users\\Exercises\\data\\perulung_ems.csv", sep = ";")
+lung <- read.csv("C:\\Users\\Exercises\\data\\perulung_ems.csv",
+                 sep = ";")
 head(lung)
 str(lung)
 @
@@ -682,6 +705,7 @@ previous 12 months
 \end{frame}
 
 % *****************************************************************************
+
 \section{Day 3}
 \usebackgroundtemplate{}
 \begin{frame}{Why do we need Statistics?}
@@ -759,6 +783,7 @@ scientific interest
 \frametitle{As a reminder: The importance of study design}
 Even the most sophisticated statistical analyses cannot rescue a poorly
 designed study
+%
 \begin{itemize}
 \setlength\itemsep{1.5em}
 \item[$\rightarrow$] unreliable results
@@ -803,17 +828,10 @@ e.g. hypothesis testing
 
 % *****************************************************************************
 
-\begin{frame}[plain]
-\begin{figure}
-\includegraphics[scale=0.45]{samplingfig1.pdf}
-\end{figure}
-\end{frame}
-
-% *****************************************************************************
-
 \begin{frame}
-\frametitle{Continuous (Integers / Numeric) Data Summaries}
- \begin{itemize}
+\frametitle{Summary Statistics}
+\framesubtitle{Continuous (Integers / Numeric)}
+\begin{itemize}
 \item {\tt Mean} - a measure of location. Always examine the average value of
 the response variable(s) for the different ``treatment'' effects in your data
 \item {\tt Median} - a robust single value summary of a set of data (50\% quantile
@@ -831,7 +849,7 @@ mean is likely to be from the population mean
 \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
 % \usebackgroundtemplate{}
 \begin{frame}[fragile]
-\frametitle{Continuous (Integers / Numeric) Data Summaries}
+\frametitle{Continuous (Integers / Numeric) Summary Statistics}
 <<echo=TRUE, eval=FALSE>>=
 mean(x) # mean
 
@@ -856,19 +874,8 @@ IQR(x) # interquartile range
 \begin{frame}[plain]
 \frametitle{Continuous Data Summaries}
 \begin{figure}
-\includegraphics[scale=0.45]{se_sd.pdf}
+\includegraphics[width=0.5\linewidth]{se_sd.png}
 \end{figure}
-\end{frame}
-
-% *****************************************************************************
-
-\begin{frame}
-\frametitle{Continuous Data Summaries}
-\framesubtitle{Combination of continuous and continuous}
-\begin{itemize}
-\item {\tt Correlation coefficient} - a measure association between two continuous variables (common but somewhat limited)\\\vspace{0.3cm}
-\includegraphics[scale=0.3]{correlation0.pdf}
-\end{itemize}
 \end{frame}
 
 % *****************************************************************************
@@ -876,8 +883,9 @@ IQR(x) # interquartile range
 \begin{frame}[plain]
 \frametitle{Correlation coefficient}
 \framesubtitle{Combination of continuous and continuous}
+Correlation coefficient a measure association between two continuous variables (common but somewhat limited)
 \begin{figure}
-\includegraphics[scale=0.45]{correlation1.pdf}
+\includegraphics[width=0.6\linewidth]{correlation.png}
 \end{figure}
 \end{frame}
 
@@ -886,8 +894,7 @@ IQR(x) # interquartile range
 \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
 % \usebackgroundtemplate{}
 \begin{frame}[fragile]
-\frametitle{Correlation coefficient}
-\framesubtitle{Combination of continuous with continuous / ordinal}
+\frametitle{Correlation of continuous and ordinal variables}
 <<echo=TRUE, eval=FALSE>>=
 # Test for Association/Correlation Between
 # Paired Samples
@@ -903,8 +910,8 @@ pairs(data)
 % *****************************************************************************
 
 \begin{frame}[fragile]
-\frametitle{Correlation coefficient}
-\framesubtitle{Combination of continuous with factors}
+\frametitle{Summary Statistics}
+\framesubtitle{Continuous and ordinal variables}
 <<echo=TRUE, eval=FALSE>>=
 tapply(data$x.cont, data$y.fac, mean)
 
@@ -917,7 +924,8 @@ tapply(data$x.cont, data$y.fac, sd)
 % *****************************************************************************
 
 \begin{frame}[fragile]
-\frametitle{Ordinal Data Summaries}
+\frametitle{Summary Statistics}
+\framesubtitle{Ordinal}
 \begin{itemize}
 \setlength\itemsep{1.3em}
 \item {\tt Median} - a robust single value summary of a set of data
@@ -938,10 +946,11 @@ prop.table(table(data$x.fac, data$y.fac))
 % *****************************************************************************
 
 \begin{frame}[fragile]
-\frametitle{Nominal Data Summaries}
+\frametitle{Summary Statistics}
+\framesubtitle{Nominal}
 \begin{itemize}
 \item {\tt proportions} - percentage within the different categories
-\item {\tt contingency tables} e. g. 2x2
+\item {\tt contingency tables} e. g. 2 x 2
 <<echo=TRUE, eval=FALSE>>=
 table(data$x.fac)
 table(data$x.fac, data$y.fac)
@@ -1173,6 +1182,7 @@ used to fill this data gap.
 \begin{equation}
 T_{obs}=\frac{261.31-250}{78.07/\sqrt{71}}=1.22 \nonumber
 \end{equation}
+
 Put the values for the sample mean and standard deviation into the t-statistic
 formula along with the $\mu=250$. We now look up the value of this in a
 t-distribution reference table. All this calculation will be done for you in
@@ -1182,8 +1192,10 @@ for hypothesis testing in other more complex analyses.
 
 % *****************************************************************************
 
-\begin{frame}\frametitle{One Sample, one-sided, t-test}
-\includegraphics[angle=270,scale=0.35]{fig1.pdf}
+\begin{frame}
+\frametitle{One Sample, one-sided, t-test}
+\centering
+\includegraphics[width=0.9\textwidth]{onesample_onesided_ttest_1.png}
 \end{frame}
 
 % *****************************************************************************
@@ -1206,7 +1218,7 @@ the alternative hypothesis $H_A$.
 
 \begin{frame}
 \frametitle{Simple Example - One Population}
- {\bfseries After six weeks will the mean weight of a chicken be at least 250 grams?}
+{\bfseries After six weeks will the mean weight of a chicken be at least 250 grams?}
 \begin{eqnarray}
 H_0:\quad \mu &\le& 250 \nonumber\\
 H_A:\quad \mu &>& 250 \nonumber
@@ -1221,7 +1233,8 @@ probability of observing a t-statistic which is $>1.22$
 % *****************************************************************************
 
 \begin{frame}\frametitle{One Sample, one-sided, t-test}
-\includegraphics[angle=270,scale=0.35]{fig2.pdf}
+\centering
+\includegraphics[width=0.9\textwidth]{onesample_onesided_ttest_2.png}
 \end{frame}
 
 % *****************************************************************************
@@ -1323,7 +1336,8 @@ $T_{obs}>1.22$ or $T_{obs}<-1.22$ which we can again look up in reference tables
 
 \begin{frame}
 \frametitle{One Sample, two-sided, t-test}
-\includegraphics[angle=270,scale=0.35]{fig3}
+\centering
+\includegraphics[width=0.9\textwidth]{onesample_twosided_ttest_1.png}
 \end{frame}
 
 % *****************************************************************************
@@ -1358,9 +1372,9 @@ expect a ``more powerful'' analyses (e.g. a lower $p$-value all else being equal
 \usebackgroundtemplate{}
 \begin{frame}
 \frametitle{Chisquare-Test}
-\begin{center}
-\includegraphics[width=0.7\paperwidth]{chi_square_test.png}
-\end{center}
+% \begin{center}
+% \includegraphics[width=0.7\paperwidth]{chi_square_test.png}
+% \end{center}
 \end{frame}
 
 % *****************************************************************************
@@ -1369,9 +1383,9 @@ expect a ``more powerful'' analyses (e.g. a lower $p$-value all else being equal
 \usebackgroundtemplate{}
 \begin{frame}
 \frametitle{The Chisquare Distribution}
-\begin{center}
-\includegraphics[width=0.7\paperwidth]{chi_square_distr.png}
-\end{center}
+% \begin{center}
+% \includegraphics[width=0.7\paperwidth]{chi_square_distr.png}
+% \end{center}
 \end{frame}
 
 % *****************************************************************************
@@ -1380,9 +1394,9 @@ expect a ``more powerful'' analyses (e.g. a lower $p$-value all else being equal
 \usebackgroundtemplate{}
 \begin{frame}
 \frametitle{Exact Fisher Test: Permutation Test}
-\begin{center}
-\includegraphics[width=0.7\paperwidth]{fisher_test.png}
-\end{center}
+% \begin{center}
+% \includegraphics[width=0.7\paperwidth]{fisher_test.png}
+% \end{center}
 \end{frame}
 
 % *****************************************************************************
@@ -1482,7 +1496,7 @@ means. The observed variance in the outcome variable is partitioned into
 components attributable to different sources of variation.
 \end{frame}
 
-% *****************************************************************************
+*****************************************************************************
 
 % \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
 \usebackgroundtemplate{}
@@ -1493,7 +1507,7 @@ components attributable to different sources of variation.
 \item a variance based on the group mean deviations from the grand mean
 \item an (error) variance based on all the observation deviations from their
 group mean
-\includegraphics[scale=0.4]{anova.pdf}
+% \includegraphics[scale=0.4]{anova.pdf}
 \end{itemize}
 \end{frame}
 
@@ -1628,7 +1642,7 @@ plot(fitted.values(aov.mod), residuals(aov.mod))
 \framesubtitle{Graphical interpretation is better!}
 <<echo=TRUE, eval=TRUE, size="scriptsize", out.width = "70%", fig.align="center">>=
 # Plot fitted against residual values
-par(mfrow=c(1,2), pty="s", mar = c(1, 4, 1, 2))
+par(mfrow=c(1,2), pty="s", mar = c(10, 4, 1, 2))
 plot(fitted.values(aov.mod), residuals(aov.mod))
 abline(h = 0, col = "red", lwd = 3, lty = 2)
 plot(aov.mod, which=1)
@@ -1656,7 +1670,7 @@ plot(aov.mod, which=4)
 \begin{frame}[fragile]
 \frametitle{Checking for potential patterns}
 <<echo=TRUE, eval=TRUE, size="scriptsize", out.width = "80%", fig.align="center">>=
-par(mfrow=c(1,3), pty="s")
+par(mfrow=c(1,3), pty="s", mar = c(10, 4, 1, 2))
 plot(fitted.values(aov.mod), residuals(aov.mod))
 abline(h = 0, col = "red", lwd = 3, lty = 2)
 # Plot residuals against variables from the model
@@ -1735,7 +1749,7 @@ pairwise.t.test(chickwts$weight, chickwts$feed, p.adj = "bonferroni")
 @
 \end{frame}
 
-% *****************************************************************************
+*****************************************************************************
 
 \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
 % \usebackgroundtemplate{}
@@ -1815,7 +1829,7 @@ A {\bfseries simple linear regression} fits a straight line through a set of
 data points. This straight line is fitted in a way that makes the sum of the
 squared residuals (the vertical distances between each data point and the fitted
 line) as small as possible.
-\includegraphics[scale=0.3]{linreg.pdf}
+% \includegraphics[scale=0.3]{linreg.pdf}
 \end{frame}
 
 % *****************************************************************************
@@ -1859,7 +1873,6 @@ which would provide a ''best'' fit for the data points (least square approach).
 A {\bfseries simple linear regression} is based on several assumptions which
 should be checked carefully.
 \begin{itemize}
-% How would you check linearity?
 \item linearity of the relationship between the explanatory (independent)
 and the outcome (dependent) variable
 \item normality of the residuals
@@ -1989,7 +2002,7 @@ summary(mod.hard.loc)
 @
 \end{frame}
 
-% *****************************************************************************
+*****************************************************************************
 
 \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
 % \usebackgroundtemplate{}
@@ -2031,8 +2044,7 @@ Among the 3 above models...
 $R^2$ is a measure of fit quality:
 \begin{eqnarray}
 R^2 = \frac{\text{SSRegression}}{\text{SSTotal}} \\
-R^2 = 1 - \frac{\text{SSError}}{\text{SSTotal}}
-\nonumber
+R^2 & = 1 - \frac{\text{SSError}}{\text{SSTotal}} \nonumber
 \end{eqnarray}
 \textbf{CAREFUL}:
 \begin{itemize}
@@ -2055,7 +2067,7 @@ The smaller, the better.
 \end{itemize}
 For a given data set and a given model
 \begin{eqnarray}
-AIC = -2 log(L) + 2p, \nonumber
+AIC = - 2 log(L) + 2p, \nonumber
 \end{eqnarray}
 where $-2 log(L)$ is a function of the prediction error: the smaller, the better.
 Measures how the model fits the data. $2p$ penalizes compex models: the smaller,
@@ -2161,7 +2173,7 @@ corresponding main effects included in the model.
 <<echo = FALSE, eval = TRUE, size="tiny", out.width = "70%", fig.align="center">>=
 data(ToothGrowth)
 ToothGrowth$dose.fac <- factor(ToothGrowth$dose, levels = c(0.5, 1.0, 2.0),
-                          labels = c("low", "med", "high"))
+                               labels = c("low", "med", "high"))
 @
 
 <<echo = TRUE, eval = TRUE, size="tiny", out.width = "70%", fig.align="center">>=
@@ -2189,7 +2201,7 @@ y & \sim \beta_{\text{baseline((dose==low) \& (supp==OJ))}} +
 <<echo = FALSE, eval = TRUE, size="tiny", out.width = "70%", fig.align="center">>=
 data(ToothGrowth)
 ToothGrowth$dose.fac <- factor(ToothGrowth$dose, levels = c(0.5, 1.0, 2.0),
-                          labels = c("low", "med", "high"))
+                               labels = c("low", "med", "high"))
 @
 
 <<echo = TRUE, eval = TRUE, size="tiny", out.width = "70%", fig.align="center">>=
@@ -2245,7 +2257,7 @@ supplement group \texttt{VC}, the slope \textbf{in}creases by approx. $+5.33$.
 \end{itemize}
 \end{frame}
 
-% *****************************************************************************
+*****************************************************************************
 
 \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
 % \usebackgroundtemplate{}
@@ -2264,7 +2276,7 @@ supplement group \texttt{VC}, the slope \textbf{in}creases by approx. $+5.33$.
 \item {\bfseries Confounding variable} - is not part of the causal path between exposure and the outcome
 \end{itemize}
 \begin{center}
-\includegraphics[scale=0.3]{confounding.png} 
+\includegraphics[scale=0.3]{confounding.png}
 \end{center}
 \end{frame}
 
@@ -2278,7 +2290,7 @@ supplement group \texttt{VC}, the slope \textbf{in}creases by approx. $+5.33$.
 \setlength\itemsep{1.5em}
 \item Not adjusting / controlling for a confounding variable may lead to bias
 results. It is good practice to present as well the crude (not adjusted ORs)
-and the adjusted ones. Adjustment is typically done if difference $>$ 10\%. 
+and the adjusted ones. Adjustment is typically done if difference $>$ 10\%.
 \item Check also for interaction (= effect modification) e. g. using logistic
 regression.
 \item Do not adjust for a variable C if it is a common effect of E and D
@@ -2304,7 +2316,7 @@ mentioning as they are particularly common in some areas of veterinary research.
 % \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
 \usebackgroundtemplate{}
 \begin{frame}
-\frametitle{Normally distributed response variables} 
+\frametitle{Normally distributed response variables}
 So far, we have only considered analyses where the response variable is a {\bfseries continuous} measurement.\\ \vspace{0.3cm}
 We now have a brief look at two other common types of {\bfseries response} variables.\\ \vspace{0.3cm}
 The methods we use are largely similar to what we have looked at previously.
@@ -2313,7 +2325,7 @@ The methods we use are largely similar to what we have looked at previously.
 % *****************************************************************************
 
 <<echo=FALSE, eval=TRUE, size="scriptsize", message = FALSE, warning = FALSE>>=
-lung <- read.csv("~/Dropbox/201710_Makerere/03_Exercises/data/perulung_ems.csv", sep = ";")
+lung <- read.csv("Exercises/data/perulung_ems.csv", sep = ";")
 lung$sex <- factor(lung$sex, levels = c(0, 1), labels = c("female", "male"))
 lung$respsymptoms <- factor(lung$respsymptoms, levels = c(0, 1), labels = c("no", "yes"))
 library("MASS")
@@ -2351,16 +2363,18 @@ chickwts$feed[1:6]
 \begin{itemize}
 \setlength\itemsep{1.5em}
 \item random component: $\mathbf{E(Y)} = \mu$
-\item systematic component: covariates: $\mathbf{x_1,x_2,\dots,x_p}$ produce a linear predictor $\eta = \sum^p_1\mathbf{x}_j \beta_j$ 
+\item systematic component: covariates: $\mathbf{x_1,x_2,\dots,x_p}$ produce a linear predictor $\eta = \sum^p_1\mathbf{x}_j \beta_j$
 \item link between random and systematic components: $\mu = \eta$, e.g.
 \begin{itemize}
 \item \textbf{Logistic Regression:} \newline
 $\eta_i=g(\mu_i)$, $g(.)$ is logit function for binomial data
 \item \textbf{Poisson Regression:} \newline
 $\eta_i=g(\mu_i)$, $g(.)$ is exponential function for poisson data
-\end{itemize} 
-\end{itemize} 
+\end{itemize}
+\end{itemize}
 \end{frame}
+
+% *****************************************************************************
 
 \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
 % \usebackgroundtemplate{}
@@ -2374,11 +2388,13 @@ log\left(\frac{\pi}{1-\pi}\right)=\beta_0+\beta_1\mathbf{x}_1 \nonumber
 \end{equation}
 <<echo = TRUE, eval = FALSE, size = "scriptsize">>=
 logreg.mod <- glm(respsymptoms ~ sex,
-               family = binomial, # description of the link function
-               data = lung)
+                  family = binomial, # description of the link function
+                  data = lung)
 summary(logreg.mod)
 @
 \end{frame}
+
+% *****************************************************************************
 
 \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
 % \usebackgroundtemplate{}
@@ -2386,11 +2402,13 @@ summary(logreg.mod)
 \frametitle{Logistic Regression: unordered factor with $2$ levels as response}
 <<echo = TRUE, eval = TRUE, size = "tiny">>=
 logreg.mod <- glm(respsymptoms ~ sex,
-               family = binomial, # description of the link function
-               data = lung)
+                  family = binomial, # description of the link function
+                  data = lung)
 summary(logreg.mod)
 @
 \end{frame}
+
+% *****************************************************************************
 
 \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
 % \usebackgroundtemplate{}
@@ -2402,6 +2420,8 @@ summary(logreg.mod)
 cbind(logodds = coef(logreg.mod), odds = exp(coef(logreg.mod)))
 @
 \end{frame}
+
+% *****************************************************************************
 
 % \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
 \usebackgroundtemplate{}
@@ -2419,6 +2439,8 @@ exposure (here: \texttt{sex}) and an outcome (here: \texttt{respsymptoms}). The 
 \end{center}
 \end{frame}
 
+% *****************************************************************************
+
 \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
 % \usebackgroundtemplate{}
 \begin{frame}[fragile]
@@ -2433,6 +2455,8 @@ The log odds of \texttt{respsymptoms} when \texttt{sex} is female is just
 above in the first row ($\beta_{\text{(Intercept)}}$, reference level of
 \texttt{sex}).
 \end{frame}
+
+% *****************************************************************************
 
 \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
 % \usebackgroundtemplate{}
@@ -2455,17 +2479,21 @@ beetle$Num.Surv <- beetle$Num.Beetles - beetle$Num.Killed
 @
 \end{frame}
 
+% *****************************************************************************
+
 \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
 % \usebackgroundtemplate{}
 \begin{frame}[fragile]
 \frametitle{Logistic Regression: probability of success as response}
 <<echo = TRUE, eval = TRUE, size = "tiny">>=
 logreg.mod <- glm(cbind(Num.Killed, Num.Surv) ~ Dose,
-               family = binomial, # description of the link function
-               data = beetle)
+                  family = binomial, # description of the link function
+                  data = beetle)
 summary(logreg.mod)
 @
 \end{frame}
+
+% *****************************************************************************
 
 \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
 % \usebackgroundtemplate{}
@@ -2477,6 +2505,8 @@ summary(logreg.mod)
 cbind(logodds = coef(logreg.mod), odds = exp(coef(logreg.mod)))
 @
 \end{frame}
+
+% *****************************************************************************
 
 \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
 % \usebackgroundtemplate{}
@@ -2493,6 +2523,8 @@ The log odds of \texttt{being killed} when \texttt{Dose} is $0$ is just
 above in the first row ($\beta_{\text{(Intercept)}})$.
 \end{frame}
 
+% *****************************************************************************
+
 % \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
 \usebackgroundtemplate{}
 \begin{frame}
@@ -2507,6 +2539,8 @@ with counts. Also the residuals being normally distributed is not relevant to th
 doing any formal analyses.}
 \end{itemize}
 \end{frame}
+
+% *****************************************************************************
 
 % \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
 \usebackgroundtemplate{}
@@ -2525,6 +2559,8 @@ modelling. \newline
 statistical analyses using R. CRC press, 2014.)
 \end{itemize}
 \end{frame}
+
+% *****************************************************************************
 
 % \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
 \usebackgroundtemplate{}
@@ -2548,6 +2584,8 @@ The following covariates are considered:
 \end{center}
 A \texttt{z-score} indicates how many standard deviations an element is from the mean. A \texttt{z-score} can be calculated from the following formula. $z = (X - \mu) / \sigma$ where $z$ is the \texttt{z-score}, $X$ is the value of the element, $\mu$ is the population mean, and $\sigma$ is the standard deviation.
 \end{frame}
+
+% *****************************************************************************
 
 <<echo = FALSE, eval = TRUE, size = "scriptsize">>=
 sambia <- read.csv("~/Dropbox/201710_Makerere/03_Exercises/data/sambia.csv", sep = ",")
@@ -2581,16 +2619,16 @@ str(sambia)
 <<echo = TRUE, eval = TRUE, size = "tiny">>=
 library("quantreg")
 # tau = 2.5 %
-rq.025 <- rq(zscore ~ sex + age.child + work + bmi + age.mother.birth, 
+rq.025 <- rq(zscore ~ sex + age.child + work + bmi + age.mother.birth,
              tau = 0.025,
              data = sambia)
 # tau = 5 %
-rq.05 <- rq(zscore ~ sex + age.child + work + bmi + age.mother.birth, 
-            tau = 0.05, 
+rq.05 <- rq(zscore ~ sex + age.child + work + bmi + age.mother.birth,
+            tau = 0.05,
             data = sambia)
 # tau = 50 %
-rq.5 <- rq(zscore ~ sex + age.child + work + bmi + age.mother.birth, 
-           tau = 0.5, 
+rq.5 <- rq(zscore ~ sex + age.child + work + bmi + age.mother.birth,
+           tau = 0.5,
            data = sambia)
 @
 \end{frame}
@@ -2615,12 +2653,12 @@ round(rq_coef, 3)
 \framesubtitle{Estimate \texttt{rq} for a grid of quantiles}
 <<echo = TRUE, eval = TRUE, size = "tiny">>=
 # Estimate rq for a single tau
-# rq.5 <- rq(zscore ~ sex + age.child + work + bmi + age.mother.birth, 
-#            tau = 0.5, 
+# rq.5 <- rq(zscore ~ sex + age.child + work + bmi + age.mother.birth,
+#            tau = 0.5,
 #            data = sambia)
 # Estimate rq for a grid of tau
-rq <- rq(zscore ~ sex + age.child + work + bmi + age.mother.birth, 
-         tau = seq(from = 0.025, to = 0.5, by = 0.025), 
+rq <- rq(zscore ~ sex + age.child + work + bmi + age.mother.birth,
+         tau = seq(from = 0.025, to = 0.5, by = 0.025),
          data = sambia)
 @
 \end{frame}
@@ -2716,7 +2754,7 @@ chain$mental <- factor(chain$mental, levels = c(0, 1),
 # chain$damage <- factor(chain$damage, levels = c(1:5),
 #                        labels = c("1", "2", "3", "4", "5"))
 chain$treatment <- factor(chain$treatment, levels = c(0, 1, 2),
-                       labels = c("0", "1", "2"))
+                          labels = c("0", "1", "2"))
 @
 
 <<echo = TRUE, eval = FALSE>>=
@@ -2730,17 +2768,21 @@ summary(chain)
 @
 \end{frame}
 
+% *****************************************************************************
+
 \begin{frame}[fragile]
 \frametitle{Descriptive Statistics of the \texttt{CHAIN} data set in R}
 <<echo = TRUE, eval = FALSE, size = "tiny">>=
 hist(chain$log_virus, ylim = c(0, 200), col = "darkgray")
 nrow(chain) # [1] 532
 apply(chain, 2, function(x) {sum(is.na(x))})
-# log_virus       age    income   healthy    mental    damage treatment 
+# log_virus       age    income   healthy    mental    damage treatment
 #       179        24        38        24        24        63        24
 summary(chain)
 @
 \end{frame}
+
+% *****************************************************************************
 
 % \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
 \usebackgroundtemplate{}
@@ -2755,6 +2797,8 @@ Material might be spilled or reports might be lost in the mail.
 participants.
 \end{itemize}
 \end{frame}
+
+% *****************************************************************************
 
 % \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
 \usebackgroundtemplate{}
@@ -2774,6 +2818,8 @@ but only on fully observed variables.
 \end{center}
 \end{frame}
 
+% *****************************************************************************
+
 \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
 % \usebackgroundtemplate{}
 \begin{frame}[fragile]
@@ -2781,10 +2827,12 @@ but only on fully observed variables.
 <<echo = TRUE, eval = TRUE, size = "tiny">>=
 # R performs a complete case analysis using only rows with no NAs
 lm.mod.NA <- lm(log_virus ~ age + income + healthy + mental +
-                   damage + treatment, data = chain)
+                  damage + treatment, data = chain)
 summary(lm.mod.NA)
 @
 \end{frame}
+
+% *****************************************************************************
 
 \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
 % \usebackgroundtemplate{}
@@ -2796,6 +2844,8 @@ par(mfrow=c(2,2))
 plot(lm.mod.NA)
 @
 \end{frame}
+
+% *****************************************************************************
 
 \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
 % \usebackgroundtemplate{}
@@ -2812,6 +2862,8 @@ analysis can result substantial biased estimates.
 a substantial part of the observations are omitted due to missing values.
 \end{itemize}
 \end{frame}
+
+% *****************************************************************************
 
 % \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
 \usebackgroundtemplate{}
@@ -2832,6 +2884,8 @@ parts of the variables are missing
 \item Inverse probability weighting (not discussed)
 \end{itemize}
 \end{frame}
+
+% *****************************************************************************
 
 % \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
 \usebackgroundtemplate{}
@@ -2857,6 +2911,8 @@ suspected. In R we can use the missForest package.
 \end{itemize}
 \end{frame}
 
+% *****************************************************************************
+
 \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
 % \usebackgroundtemplate{}
 \begin{frame}[fragile]
@@ -2872,10 +2928,10 @@ chain.imp$OOBerror # estimated imputation error for each variable
 chain.final.rf <- chain.imp$ximp
 dim(chain.final.rf) # [1] 532   7
 apply(chain.final.rf, 2, function(x){sum(is.na(x))})
-# log_virus       age    income   healthy    mental    damage treatment 
-#         0         0         0         0         0         0         0 
+# log_virus       age    income   healthy    mental    damage treatment
+#         0         0         0         0         0         0         0
 lm.mod.rf <- lm(log_virus ~ age + income + healthy +
-                   mental + damage + treatment,
+                  mental + damage + treatment,
                 data = chain.final.rf)
 @
 <<echo = FALSE, eval = TRUE, size = "scriptsize", warning = FALSE, message = FALSE>>=
@@ -2884,10 +2940,12 @@ library("missForest")
 chain.imp <- missForest(chain, variablewise = TRUE)
 chain.final.rf <- chain.imp$ximp
 lm.mod.rf <- lm(log_virus ~ age + income + healthy +
-                   mental + damage + treatment,
+                  mental + damage + treatment,
                 data = chain.final.rf)
 @
 \end{frame}
+
+% *****************************************************************************
 
 \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
 % \usebackgroundtemplate{}
@@ -2897,6 +2955,8 @@ lm.mod.rf <- lm(log_virus ~ age + income + healthy +
 \includegraphics[scale=0.6]{mice_steps.png}
 \end{figure}
 \end{frame}
+
+% *****************************************************************************
 
 \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
 % \usebackgroundtemplate{}
@@ -2912,7 +2972,7 @@ chain.mice <- mice(chain, m = 4, print = FALSE, seed = 2017)
 # ANALYSE RESULTS WITH IMPUTED DATA
 # fit for each of the 4 data sets a linear regression
 fit.4.mice <- with(chain.mice, lm(log_virus ~ age + income + healthy +
-                                     mental + damage + treatment))
+                                    mental + damage + treatment))
 # check out the regression coefficients of the 4 fits
 summary(fit.4.mice)
 # POOL ANALYSIS RESULTS
@@ -2925,10 +2985,12 @@ summary(lm.mod.mice)
 library("mice")
 chain.mice <- mice(chain, m = 5, print = FALSE, seed = 2017)
 fit.4.mice <- with(chain.mice, lm(log_virus ~ age + income + healthy +
-                                     mental + damage + treatment))
+                                    mental + damage + treatment))
 lm.mod.mice <- pool(fit.4.mice)
 @
 \end{frame}
+
+% *****************************************************************************
 
 \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
 % \usebackgroundtemplate{}
@@ -2940,6 +3002,8 @@ round(summary(lm.mod.rf)$coef, 2)
 @
 \end{frame}
 
+% *****************************************************************************
+
 \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
 % \usebackgroundtemplate{}
 \begin{frame}[fragile]
@@ -2949,6 +3013,8 @@ round(summary(lm.mod.NA)$coef, 2)
 round(summary(lm.mod.mice)[,c(1,2,3,5)], 2)
 @
 \end{frame}
+
+% *****************************************************************************
 
 % \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
 \usebackgroundtemplate{}
@@ -2966,6 +3032,8 @@ missing values can be predicted from the observed data.
 \item The results from the different analyses are then combined using Rubin's rule properly taking into account the uncertainty in the imputed values.
 \end{itemize}
 \end{frame}
+
+% *****************************************************************************
 
 % \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
 \usebackgroundtemplate{}
@@ -2987,6 +3055,8 @@ imputation models that include a wide range of variables.
 \item Single imputation methods are also reasonable for prediction.
 \end{itemize}
 \end{frame}
+
+% *****************************************************************************
 
 % \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
 \usebackgroundtemplate{}

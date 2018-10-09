@@ -9,14 +9,14 @@
 
 % *****************************************************************************
 % ADD HERE THE TOPIC OF THE LECTURE!
-\newcommand{\exercisetopic}{ALL EXERCISES}
+\newcommand{\exercisetopic}{Exercise Collection}
 % *****************************************************************************
 
 % Add information about the title section of the file
 \author{Sonja Hartnack, Terence Odoch \& Muriel Buri}
 \date{\today}
 \title{\vspace{-3ex}Practical Exercises for \textbf{\exercisetopic}}
-\date{October 2017}
+\date{October 2018}
 
 \usepackage[round,sectionbib]{natbib} \bibliographystyle{ims}
 \usepackage{graphicx}
@@ -84,9 +84,17 @@ boxplot(weight ~ feed, data = chickwts, col = "lightgray",
         varwidth = TRUE, notch = TRUE, main = "chickwt data",
         ylab = "Weight at six weeks (gm)")
 @
-Anova, lm, which groups differ, Bonferroni, Tukey-Anscombe
-Histogram with density line
-Normally distributed weights
+\item For advanced R users: Try an anova (are the assumptions fulfilled?)
+and a Tukey-Anscombe plot. Try a histogram with a density line on top. ...
+<<echo = FALSE, eval = FALSE>>=
+lm.mod <- lm(weight ~ feed, data = chickwts)
+summary(lm.mod)
+anova <- aov(weight ~ feed, data = chickwts)
+TukeyHSD(anova)
+summary(anova)
+par(mfrow=c(2,2))
+plot(lm.mod)
+@
 \end{itemize}
 %
 \section*{Exercise 2}
@@ -116,6 +124,8 @@ data(bacteria)
 head(bacteria)
 # ?bacteria
 @
+%
+\item Describe in your own words what the data set \texttt{bacteria} contains.
 %
 \item Do summary statistic (numerically and graphically).
 <<echo = FALSE, eval = FALSE>>=
@@ -153,7 +163,7 @@ table(ss$week)
 \end{itemize}
 %
 \section*{Exercise 4}
-What is conceptionally the difference between these bracket types ([...], (...))?
+What is conceptionally the difference between the bracket types [...] and (...)?
 <<echo=TRUE, eval=FALSE, size="scriptsize", message=FALSE, warning=FALSE>>=
 chickwts[, 2]
 summary(aov(weight ~ feed, data = chickwts))

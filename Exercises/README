@@ -13,7 +13,8 @@ opts_chunk$set(echo = FALSE, eval = TRUE, results = "hide", include = FALSE)
 # Notes on KnitR chunk options
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Code Evaluation: eval: (TRUE; logical)
-# Text Results: echo: (TRUE; logical or numeric) whether to include R source code in the output file; TRUE/FALSE completely turns on/off the source code
+# Text Results: echo: (TRUE; logical or numeric) whether to include R source code in the output file;
+# TRUE/FALSE completely turns on/off the source code
 # results: results = "hide"
 # include: (TRUE; logical) whether to include the chunk output in the final output document
 
