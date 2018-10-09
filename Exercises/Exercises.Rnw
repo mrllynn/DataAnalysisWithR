@@ -85,7 +85,7 @@ boxplot(weight ~ feed, data = chickwts, col = "lightgray",
         ylab = "Weight at six weeks (gm)")
 @
 \item For advanced R users: Try an anova (are the assumptions fulfilled?)
-and a Tukey-Anscombe plot. Try a histogram with a density line on top. ...
+and a Tukey-Anscombe plot. \newline Try a histogram with a density line on top. ...
 <<echo = FALSE, eval = FALSE>>=
 lm.mod <- lm(weight ~ feed, data = chickwts)
 summary(lm.mod)
