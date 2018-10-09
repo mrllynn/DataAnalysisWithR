@@ -1371,7 +1371,10 @@ expect a ``more powerful'' analyses (e.g. a lower $p$-value all else being equal
 % \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
 \usebackgroundtemplate{}
 \begin{frame}
-\frametitle{Chisquare-Test}
+\frametitle{Chi-square Test}
+There are two very commonly used statistical tests for testing
+dependence between two categorical variables: Chi-squared test
+\& Fisher’s exact test.
 % \begin{center}
 % \includegraphics[width=0.7\paperwidth]{chi_square_test.png}
 % \end{center}
@@ -1382,7 +1385,7 @@ expect a ``more powerful'' analyses (e.g. a lower $p$-value all else being equal
 % \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
 \usebackgroundtemplate{}
 \begin{frame}
-\frametitle{The Chisquare Distribution}
+\frametitle{The Chi-square Distribution}
 % \begin{center}
 % \includegraphics[width=0.7\paperwidth]{chi_square_distr.png}
 % \end{center}
@@ -1445,6 +1448,7 @@ expect a ``more powerful'' analyses (e.g. a lower $p$-value all else being equal
 \end{frame}
 
 % *****************************************************************************
+ 
 \section{Day 5}
 % \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
 \usebackgroundtemplate{}
@@ -1496,7 +1500,7 @@ means. The observed variance in the outcome variable is partitioned into
 components attributable to different sources of variation.
 \end{frame}
 
-*****************************************************************************
+% *****************************************************************************
 
 % \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
 \usebackgroundtemplate{}
@@ -1532,7 +1536,7 @@ in an ANOVA.
 % \usebackgroundtemplate{}
 \begin{frame}[fragile]
 \frametitle{ANOVA in R with \texttt{chickwts}}
-<<echo = TRUE, eval = TRUE, out.width = "70%", fig.align="center">>=
+<<echo = TRUE, eval = TRUE, size = "scriptsize", out.width = "70%", fig.align = "center">>=
 data(chickwts)
 boxplot(chickwts$weight ~ chickwts$feed)
 @
@@ -1749,7 +1753,7 @@ pairwise.t.test(chickwts$weight, chickwts$feed, p.adj = "bonferroni")
 @
 \end{frame}
 
-*****************************************************************************
+% *****************************************************************************
 
 \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
 % \usebackgroundtemplate{}
@@ -1889,9 +1893,8 @@ and the outcome (dependent) variable
 \frametitle{Linear regression model in R}
 <<echo = FALSE, eval = TRUE, size = "tiny", warning = FALSE, message = FALSE>>=
 library("HSAUR3")
-data(water)
-str(water)
 @
+
 <<echo = TRUE, eval = TRUE, size="scriptsize", out.width = "70%", fig.align="center">>=
 data(water)
 # mod.hard <- lm(mortality ~ hardness, data = water)
@@ -2002,7 +2005,7 @@ summary(mod.hard.loc)
 @
 \end{frame}
 
-*****************************************************************************
+% *****************************************************************************
 
 \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
 % \usebackgroundtemplate{}
@@ -2043,7 +2046,7 @@ Among the 3 above models...
 \frametitle{Multiple $R^2$}
 $R^2$ is a measure of fit quality:
 \begin{eqnarray}
-R^2 = \frac{\text{SSRegression}}{\text{SSTotal}} \\
+R^2 & = \frac{\text{SSRegression}}{\text{SSTotal}} \nonumber \\
 R^2 & = 1 - \frac{\text{SSError}}{\text{SSTotal}} \nonumber
 \end{eqnarray}
 \textbf{CAREFUL}:
@@ -2067,7 +2070,7 @@ The smaller, the better.
 \end{itemize}
 For a given data set and a given model
 \begin{eqnarray}
-AIC = - 2 log(L) + 2p, \nonumber
+AIC = - \; 2 \cdot log(L) + 2p, \nonumber
 \end{eqnarray}
 where $-2 log(L)$ is a function of the prediction error: the smaller, the better.
 Measures how the model fits the data. $2p$ penalizes compex models: the smaller,
@@ -2257,7 +2260,7 @@ supplement group \texttt{VC}, the slope \textbf{in}creases by approx. $+5.33$.
 \end{itemize}
 \end{frame}
 
-*****************************************************************************
+% *****************************************************************************
 
 \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
 % \usebackgroundtemplate{}
@@ -2276,7 +2279,7 @@ supplement group \texttt{VC}, the slope \textbf{in}creases by approx. $+5.33$.
 \item {\bfseries Confounding variable} - is not part of the causal path between exposure and the outcome
 \end{itemize}
 \begin{center}
-\includegraphics[scale=0.3]{confounding.png}
+\includegraphics[width=0.5\textwidth]{confounding.jpg}
 \end{center}
 \end{frame}
 
@@ -2325,7 +2328,7 @@ The methods we use are largely similar to what we have looked at previously.
 % *****************************************************************************
 
 <<echo=FALSE, eval=TRUE, size="scriptsize", message = FALSE, warning = FALSE>>=
-lung <- read.csv("Exercises/data/perulung_ems.csv", sep = ";")
+lung <- read.csv("../Exercises/data/perulung_ems.csv", sep = ";")
 lung$sex <- factor(lung$sex, levels = c(0, 1), labels = c("female", "male"))
 lung$respsymptoms <- factor(lung$respsymptoms, levels = c(0, 1), labels = c("no", "yes"))
 library("MASS")
@@ -2435,7 +2438,7 @@ cbind(logodds = coef(logreg.mod), odds = exp(coef(logreg.mod)))
 exposure (here: \texttt{sex}) and an outcome (here: \texttt{respsymptoms}). The OR represents the odds that an outcome will occur given a particular exposure, compared to the odds of the outcome occurring in the absence of that exposure.
 \end{itemize}
 \begin{center}
-\includegraphics[width=0.65\paperwidth]{two_by_two_table.jpg}
+\includegraphics[width=0.4\paperwidth]{two_by_two_table.jpg}
 \end{center}
 \end{frame}
 
@@ -2471,6 +2474,7 @@ concentrations (in mg/L) for five hours (Bliss, 1935) and the number of
 beetles killed were noted.
 \end{itemize}
 <<echo = TRUE, eval = TRUE, size = "scriptsize">>=
+# install.packages("investr")
 library("investr")
 data(beetle)
 colnames(beetle) <- c("Dose", "Num.Beetles", "Num.Killed")
@@ -2588,7 +2592,7 @@ A \texttt{z-score} indicates how many standard deviations an element is from the
 % *****************************************************************************
 
 <<echo = FALSE, eval = TRUE, size = "scriptsize">>=
-sambia <- read.csv("~/Dropbox/201710_Makerere/03_Exercises/data/sambia.csv", sep = ",")
+sambia <- read.csv("../Exercises/data/sambia.csv", sep = ",")
 # str(sambia)
 sambia$sex <- factor(sambia$sex, levels = c(0,1), labels = c("female", "male"))
 sambia$work <- factor(sambia$work, levels = c(0,1), labels = c("no", "yes"))
@@ -2600,7 +2604,7 @@ sambia$work <- factor(sambia$work, levels = c(0,1), labels = c("no", "yes"))
 \begin{frame}[fragile]
 \frametitle{Quantile regression in R}
 <<echo = TRUE, eval = FALSE, size = "scriptsize">>=
-sambia <- read.csv("~/201710_Makerere/data/sambia.csv", sep = ",")
+sambia <- read.csv("../Exercises/data/sambia.csv", sep = ",")
 str(sambia)
 sambia$sex <- factor(sambia$sex, levels = c(0,1),
                      labels = c("female", "male"))
@@ -2617,6 +2621,7 @@ str(sambia)
 \begin{frame}[fragile]
 \frametitle{Quantile regression in R (cont'd)}
 <<echo = TRUE, eval = TRUE, size = "tiny">>=
+# install.packages("quantreg")
 library("quantreg")
 # tau = 2.5 %
 rq.025 <- rq(zscore ~ sex + age.child + work + bmi + age.mother.birth,
@@ -2772,7 +2777,7 @@ summary(chain)
 
 \begin{frame}[fragile]
 \frametitle{Descriptive Statistics of the \texttt{CHAIN} data set in R}
-<<echo = TRUE, eval = FALSE, size = "tiny">>=
+<<echo = TRUE, eval = FALSE, size = "scriptsize">>=
 hist(chain$log_virus, ylim = c(0, 200), col = "darkgray")
 nrow(chain) # [1] 532
 apply(chain, 2, function(x) {sum(is.na(x))})
@@ -2813,9 +2818,6 @@ a specific variable X is missing does not depend on the missing value of X,
 but only on fully observed variables.
 \item \textbf{MNAR}: Otherwise data are not missing at random (MNAR).
 \end{itemize}
-\begin{center}
-\includegraphics[width=0.7\paperwidth]{missing_data.png}
-\end{center}
 \end{frame}
 
 % *****************************************************************************
