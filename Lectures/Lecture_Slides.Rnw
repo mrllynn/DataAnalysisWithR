@@ -673,7 +673,6 @@ Variable names should ...
 \begin{frame}[fragile]
 \frametitle{How to import external data files into R?}
 \begin{itemize}
-\item Environment (upper right corner)
 \item $>$ Import Dataset $>$ \textbf{From Text (base)...} $>$ CSV Files (.csv) \newline
 or
 \item $>$ Import Dataset $>$ \textbf{From Excel...}
