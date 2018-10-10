@@ -1,22 +1,9 @@
 
 rm(list=ls())
 
-# setwd(…) ----------------------------------------------------------------
-
-# MURIEL
-# data_dir <- "~/Dropbox/201710_Makerere/03_Exercises/data/"
-# setwd(data_dir)
-# SONJA
-data_dir <- "C:\\Users\\admin\\Dropbox\\201710_Makerere\\03_Exercises\\data\\"
-setwd(data_dir)
-
 # perulung_ems ------------------------------------------------------------
 
-# MURIEL
-# lung <- read.csv("~/Dropbox/201710_Makerere/03_Exercises/data/perulung_ems.csv", sep = ";")
-# SONJA
-lung <- read.csv("C:\\Users\\admin\\Dropbox\\201710_Makerere\\03_Exercises\\data\\perulung_ems.csv",
-sep = ";")
+lung <- read.csv("Exercises/data/perulung_ems.csv", sep = ";")
 head(lung)
 str(lung)
 lung$sex <- factor(lung$sex, levels = c(0, 1), labels = c("female", "male"))
@@ -26,27 +13,12 @@ str(lung)
 
 # sambia ------------------------------------------------------------------
 
-# MURIEL
-# sambia <- read.csv("~/Dropbox/201710_Makerere/03_Exercises/data/sambia.csv", sep = ",")
-# SONJA
-sambia <- read.csv("C:\\Users\\admin\\Dropbox\\201710_Makerere\\03_Exercises\\data\\sambia.csv",
-                 sep = ";")
+sambia <- read.csv("Exercises/data/sambia.csv", sep = ",")
 head(sambia)
 str(sambia)
 sambia$sex <- factor(sambia$sex, levels = c(0,1), labels = c("female", "male"))
 sambia$work <- factor(sambia$work, levels = c(0,1), labels = c("no", "yes"))
 str(sambia)
-
-
-# perulung_ems ------------------------------------------------------------
-
-# MURIEL
-lepto <- read.csv("~/Dropbox/201710_Makerere/03_Exercises/data/lepto.csv", sep = ";")
-# SONJA
-# lepto <- read.csv("C:\\Users\\admin\\Dropbox\\201710_Makerere\\03_Exercises\\data\\lepto.csv",
-# sep = ";")
-head(lepto)
-str(lepto)
 
 # bacteria ----------------------------------------------------------------
 
@@ -64,7 +36,7 @@ data(ToothGrowth)
 str(ToothGrowth)
 head(ToothGrowth)
 ToothGrowth$dose.fac <- factor(ToothGrowth$dose, levels = c(0.5, 1.0, 2.0),
-                          labels = c("low", "med", "high"))
+                               labels = c("low", "med", "high"))
 
 # chickwts ----------------------------------------------------------------
 
