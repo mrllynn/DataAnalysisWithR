@@ -106,7 +106,7 @@ Terence Odoch \& Muriel Buri \hfill \lecturetopic \hfill \insertpagenumber}}
 % TITLE PAGE:
 % *****************************************************************************
 
-\begin{frame}[fragile][noframenumbering,plain]
+\begin{frame}[noframenumbering,plain]
 \begin{columns}
 \begin{column}{.3\linewidth}
 \begin{center}
