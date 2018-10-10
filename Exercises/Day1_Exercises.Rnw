@@ -9,7 +9,7 @@
 
 % *****************************************************************************
 % ADD HERE THE TOPIC OF THE LECTURE!
-\newcommand{\exercisetopic}{Day 1 - preliminary}
+\newcommand{\exercisetopic}{Day 1}
 % *****************************************************************************
 
 % Add information about the title section of the file
@@ -94,71 +94,6 @@ TukeyHSD(anova)
 summary(anova)
 par(mfrow=c(2,2))
 plot(lm.mod)
-@
-\end{itemize}
-%
-\section*{Exercise 2}
-\begin{itemize}
-\item Create a data frame with 3 columns.
-<<echo = FALSE, eval = FALSE>>=
-a <- c(1, 2, 3, 4)
-b <- c("d", "h", "h", "d")
-c <- factor(c("male", "female", "male", "female"),
-            levels = c("female", "male"))
-dat <- data.frame(a, b, c)
-dat
-@
-\end{itemize}
-%
-\section*{Exercise 3}
-\begin{itemize}
-\item Install package \texttt{MASS}.
-<<echo = FALSE, eval = FALSE>>=
-# install.packages("MASS")
-library("MASS")
-@
-%
-\item Load data set \texttt{bacteria}.
-<<echo = FALSE, eval = FALSE>>=
-data(bacteria)
-head(bacteria)
-# ?bacteria
-@
-%
-\item Describe in your own words what the data set \texttt{bacteria} contains.
-%
-\item Do summary statistic (numerically and graphically).
-<<echo = FALSE, eval = FALSE>>=
-summary(bacteria)
-table(bacteria$week)
-barplot(table(bacteria$week))
-barplot(table(bacteria$trt))
-table(bacteria$trt, bacteria$ap)
-table(bacteria$trt, bacteria$y)
-%
-fisher.test(table(bacteria$trt, bacteria$y))
-%
-prop.table(table(bacteria$trt, bacteria$y))
-prop.table(table(bacteria$trt, bacteria$y), margin = 1)
-prop.table(table(bacteria$trt, bacteria$y), margin = 2)
-%
-plot(prop.table(table(bacteria$trt, bacteria$y)))
-mosaicplot(~trt + y, data = bacteria)
-barplot(prop.table(table(bacteria$y, bacteria$trt),margin=1), beside=TRUE)
-barplot(prop.table(table(bacteria$trt, bacteria$y),margin=1), beside=TRUE)
-barplot(prop.table(table(bacteria$y, bacteria$trt),margin=1), beside=FALSE)
-barplot(prop.table(table(bacteria$trt, bacteria$y),margin=1), beside=FALSE)
-?barplot
-@
-%
-\item Select only observations collected during the second week.
-<<echo = FALSE, eval = FALSE>>=
-subset(bacteria, week == 2)
-ss <- subset(bacteria, week == 2)
-summary(ss)
-# Check if we only have observations of week 2.
-table(bacteria$week)
-table(ss$week)
 @
 \end{itemize}
 

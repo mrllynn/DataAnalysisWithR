@@ -80,9 +80,12 @@ barplot(table(chickwts$feed))
 boxplot(chickwts$weight ~ chickwts$feed)
 # boxplot(weight ~ feed, data = chickwts)
 hist(chickwts$weight)
+hist(chickwts$weight, freq = FALSE)
+lines(density(chickwts$weight), col = "red", lwd = 3)
 boxplot(weight ~ feed, data = chickwts, col = "lightgray",
-        varwidth = TRUE, notch = TRUE, main = "chickwt data",
+        varwidth = TRUE, main = "chickwt data",
         ylab = "Weight at six weeks (gm)")
+barplot(table(chickwts$feed))
 @
 \item For advanced R users: Try an anova (are the assumptions fulfilled?)
 and a Tukey-Anscombe plot. \newline Try a histogram with a density line on top. ...
