@@ -104,12 +104,21 @@ plot(lm.mod)
 \begin{itemize}
 \item Create a data frame with 3 columns.
 <<echo = FALSE, eval = FALSE>>=
-a <- c(1, 2, 3, 4)
-b <- c("d", "h", "h", "d")
-c <- factor(c("male", "female", "male", "female"),
+# Define single variables
+a <- c(1, 20, 3, 40, 5, 60, 7, 8, 92)
+b <- c("d", "h", "h", "d", "d", "h", "h", "d", "a")
+c <- factor(c("male", "female", "male", "female", "male",
+              "female", "male", "male", "female"),
             levels = c("female", "male"))
+# Define data frame "dat"
 dat <- data.frame(a, b, c)
 dat
+# For the advanced users:
+# Generate dichotomized variable "a.dic" and add it to the data frame
+mean.a <- mean(dat$a)
+dat$a.dic <- ifelse(dat$a < mean.a, "smaller", "bigger")
+dat
+
 @
 \end{itemize}
 %
@@ -125,6 +134,8 @@ library("MASS")
 <<echo = FALSE, eval = FALSE>>=
 data(bacteria)
 head(bacteria)
+str(bacteria)
+summary(bacteria)
 # ?bacteria
 @
 %
@@ -309,16 +320,7 @@ previous 12 months
 \end{itemize}
 \item What \textit{delimiter} do you need to choose?
 <<echo = FALSE, eval = FALSE>>=
-# OPTION 1:
-# install.packages("readr")
-library("readr")
-lung <- read_delim("~/Dropbox/201710_Makerere/03_Exercises/data/perulung_ems.csv",
-                   ";", escape_double = FALSE, trim_ws = TRUE)
-lung <- data.frame(lung)
-# OPTION 2:
-# Import .csv file with the help of the read.csv function
-# Be sure to add sep = ";" so that we separate the columns.
-lung <- read.csv("C:\\Users\\Exercises\\data\\perulung_ems.csv", sep = ";")
+lung <- read.csv("perulung_ems.csv", sep = ";")
 head(lung)
 str(lung)
 @
@@ -359,7 +361,7 @@ Apply the summary statistics to the \texttt{perulung\_ems} and \texttt{ToothGrow
 data set.
 <<echo = FALSE, eval = FALSE>>=
 # Read in .csv data
-lung <- read.csv("C:\\Users\\Exercises\\data\\perulung_ems.csv", sep = ";")
+lung <- read.csv("perulung_ems.csv", sep = ";")
 head(lung)
 str(lung)
 summary(lung)
@@ -407,13 +409,13 @@ tapply(ToothGrowth$len, ToothGrowth$dose, sd)
 # OPTION 1:
 # install.packages("readr")
 library("readr")
-bac <- read_delim("~/Dropbox/201710_Makerere/03_Exercises/data/bacteria_plausibility_check.csv",
+bac <- read_delim("bacteria_plausibility_check.csv",
                   ";", escape_double = FALSE, trim_ws = TRUE)
 bac <- data.frame(bac)
 # OPTION 2:
 # Import .csv file with the help of the read.csv function
 # Be sure to add sep = ";" so that we separate the columns.
-bac <- read.csv("~/Dropbox/201710_Makerere/03_Exercises/data/bacteria_plausibility_check.csv", sep = ",")
+bac <- read.csv("bacteria_plausibility_check.csv", sep = ",")
 head(bac)
 str(bac)
 summary(bac)
@@ -560,30 +562,14 @@ whether the town is as north as Derby.
 cigarettes do they smoke per day.
 \end{itemize}
 <<echo = FALSE, eval = FALSE>>=
-# H2O_err <- read_csv("C:\\Users\\admin\\Dropbox\\201710_Makerere\\03_Exercises\\data\\water_errors.csv")
-# str(H2O_err)
-# H2O_err <- data.frame(H2O_err)
-# str(H2O_err)
 # BEST SOLUTION how to read it in:
 # Try to use the "read.csv(...)" function to read data in!
 # use the separator sep=";" or sep="," - which ever works better.
-H2O_err <- read.csv("C:\\Users\\admin\\Dropbox\\201710_Makerere\\03_Exercises\\data\\water_errors.csv", sep=",")
-str(H2O_err)
-%
-# H2O_err <- read_csv("~/Dropbox/201710_Makerere/03_Exercises/data/water_errors.csv")
-H2O_err <- read.csv("~/Dropbox/201710_Makerere/03_Exercises/data/water_errors.csv", sep=",")
-%
-%
-C:\Users\admin\Dropbox\201710_Makerere\03_Exercises\data
+H2O_err <- read.csv("water_errors.csv", sep=",")
 H2O_err <- data.frame(H2O_err)
 str(H2O_err)
 head(H2O_err)
 @
-%
-%
-%
-%
-%
 \item Detect the errors in the imported data set \texttt{water\_errors.csv} in R.
 <<echo = FALSE, eval = FALSE>>=
 str(H2O_err)
@@ -1238,7 +1224,7 @@ data set.
 model to the data set of \texttt{perulung\_ems}. Use \texttt{fev1} as your
 response variable $y$.
 <<echo = FALSE, eval = FALSE>>=
-lung <- read.csv("~/Dropbox/data/perulung_ems.csv", sep = ";")
+lung <- read.csv("perulung_ems.csv", sep = ";")
 head(lung)
 str(lung)
 lung$sex <- factor(lung$sex, levels = c("0", "1"))
@@ -1406,10 +1392,7 @@ confint(lm.mod)
 \item Read in the data set \texttt{lepto}. This study presents a serology survey of
 leptospira sero-prevalence in rural and urban areas of the west indies.
 <<echo = FALSE, eval = FALSE>>=
-lepto <- read.csv("~/Dropbox/201710_Makerere/03_Exercises/data/lepto.csv", sep = ";")
-# SONJA
-lepto <- read.csv("C:\\Users\\admin\\Dropbox\\201710_Makerere\\03_Exercises\\data\\lepto.csv",
-sep = ";")
+lepto <- read.csv("lepto.csv", sep = ";")
 head(lepto)
 str(lepto)
 @
