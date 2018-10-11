@@ -485,7 +485,7 @@ mean(myvector,na.rm=TRUE) # calculates c(1, 2, 3, 1, 2, 3)
 median(myvector,na.rm=TRUE)
 @
 %
-\item If \texttt{x = c (22,3,7,NA,NA,67)} what will be the output for the R
+\item If \texttt{x = c(22,3,7,NA,NA,67)} what will be the output for the R
 statement \texttt{length(x)}?
 <<echo = FALSE, eval = FALSE>>=
 x <- c (22,3,7,NA,NA,67)
@@ -528,7 +528,7 @@ sum(is.na(x1))
 which(is.na(x1))
 @
 %
-\item Now, create the vector x2 and assess the difference to x1
+\item Now, create the vector \texttt{x2} and assess the difference to \texttt{x1}.
 <<echo = FALSE, eval = FALSE>>=
 x2 <- c(rnorm(10,5,2),NA,5:12,NA,6,7.5,NA,log(-2))
 x2
@@ -536,8 +536,8 @@ x2
 %
 \item What is the meaning of "NA" versus "NaN"?
 %
-\item Replace the missing values in x1 with a 0, and check that no NAs are present
-try two different commands to coerce the NAs into 0
+\item Replace the missing values in \texttt{x1} with a 0, and check that no NAs are present
+try two different commands to coerce the NAs into 0.
 <<echo = FALSE, eval = FALSE>>=
 x1[is.na(x1)] <- 0
 is.na(x1)
@@ -684,7 +684,7 @@ t.test(sub.VC$len, sub.OJ$len)
 lm.mod0 <- lm(ToothGrowth$len ~ ToothGrowth$supp - 1)
 coef(lm.mod)
 @
-\item Apply the two-sided t-test to the \texttt{perulang\_ems} data set
+\item Apply the two-sided t-test to the \texttt{perulung\_ems} data set
 <<echo = FALSE, eval = FALSE>>=
 # two-sided t-test of fev1 vs respsymptoms
 t.test(lung$fev1 ~ lung$respsymptoms)
