@@ -15,7 +15,6 @@ data_dir <- "../Exercises/data"
 
 \title{\textbf{Data Analysis with R:} \\ \lecturetopic}
 \author{Sonja Hartnack, Terence Odoch \& Muriel Buri}
-\vspace{0.3cm}
 \footnotesize
 \institute{October 2018}
 \date{ }
@@ -393,7 +392,7 @@ s <- c("aa", "bb", "cc")
 b <- c(TRUE, FALSE, TRUE)
 df <- data.frame(n, s, b) # df is a data frame
 @
-Following are the characteristics of a data frame:
+The characteristics of a data frame are:
 \begin{itemize}
 \item The column names should be non-empty.
 \item The row names should be unique.
@@ -427,7 +426,7 @@ dat$my.var1 <- my.var
 dat$my.var2 <- my.var
 dat
 # What is the dimension (number of rows and columns) of our data frame?
-dim(dat) # 4 rows and 3 columns
+dim(dat) # 4 rows and 4 columns
 @
 \end{frame}
 
@@ -511,7 +510,7 @@ a <- 1 # ALWAYS use "gets" assignment operator!
 # a = 1 # DO NOT USE the equal sign as the assignment operator!
 @
 After this assignment, the object \texttt{a} contains the value 1.
-Another assignment to the same object will change the content.
+Another assignment to the same object will change its value.
 <<echo=TRUE, eval=TRUE, size="scriptsize">>=
 a <- 5
 @
@@ -637,6 +636,20 @@ mood
 
 \begin{frame}[fragile]
 \frametitle{Exercise 6}
+\end{frame}
+
+% *****************************************************************************
+
+\begin{frame}[fragile]
+\frametitle{Examples of different data types}
+\begin{itemize}
+\setlength\itemsep{1.5em}
+\item numeric variable
+\item integer variable
+\item variable with two levels (binary factor)
+\item ordered variable with \textbf{more than} two levels (ordinal)
+\item unordered variable with \textbf{more than} two levels (nominal)
+\end{itemize}
 \end{frame}
 
 % *****************************************************************************
@@ -798,368 +811,366 @@ previous 12 months
 \begin{frame}[fragile]
 \frametitle{Lecture Slides for Day 3}
 \end{frame}
+% 
+% *****************************************************************************
 
-% % *****************************************************************************
-% 
+\usebackgroundtemplate{}
+\begin{frame}[fragile]{Why do we need Statistics?}
+\Large{\textbf{Repeatability of results:}} \newline
+\textbf{Statistical science} allows us to
+estimate what might happen if an experiment was repeated - but without having to
+actually repeat it!
+\end{frame}
+
+% *****************************************************************************
+
+\begin{frame}[fragile]{Why do we need Statistics?}
+\vspace{0.5cm}
+\begin{itemize}
+\setlength\itemsep{1.5em}
+\item Study results must be shown to be robust, i.e. real and not due to random
+chance
+\item Best way to demonstrate this is to repeat the same experiment/study many
+times each with {\bfseries different} subjects (animals) drawn from the {\bfseries
+same study population} and show that the result is truly repeatable
+\item It is generally totally impractical, in terms of both time and resources,
+to repeat an experiment many times!
+\end{itemize}
+\vspace{0.5cm}
+\end{frame}
+
+% *****************************************************************************
+
+\begin{frame}[fragile]
+\frametitle{Why do we need Statistics?}
+\begin{itemize}
+\setlength\itemsep{1.5em}
+\item Instead of repeating the experiment many times {\bfseries probability
+theory i.e. statistics} is used to {\bfseries estimate} what might have happened
+if the experiment had been repeated
+\item A mathematical model is used to fill this ``data gap''
+\item Generally the most difficult task in statistics is to decide what ``model''
+is most appropriate for a given experiment
+\end{itemize}
+\vspace{0.5cm}
+\end{frame}
+
+% *****************************************************************************
+
+\begin{frame}[fragile]
+\frametitle{What is Statistics? - A definition}
+A set of analytical tools designed to quantify uncertainty
+\vspace{0.3cm}
+\begin{itemize}
+\setlength\itemsep{1.5em}
+\item If an experiment or procedure is repeated, how likely is it that the new
+results will be similar to those already observed?
+\item What is the likely variation in results if the experiment was repeated?
+\end{itemize}\vspace{0.5cm}
+\end{frame}
+
+% *****************************************************************************
+
+\begin{frame}[fragile]
+\frametitle{What is Statistics? - A definition}
+The key scientific purpose of statistics
+\vspace{0.5cm}
+\begin{itemize}
+\setlength\itemsep{1.5em}
+\item to provide {\bfseries evidence} of the existence of some ``effect'' of
+scientific interest
+\item i.e. evidence based medicine
+\end{itemize}
+\vspace{0.5cm}
+\end{frame}
+
+% *****************************************************************************
+
+\begin{frame}[fragile]
+\frametitle{As a reminder: The importance of study design}
+Even the most sophisticated statistical analyses cannot rescue a poorly
+designed study
+%
+\begin{itemize}
+\setlength\itemsep{1.5em}
+\item[$\rightarrow$] unreliable results
+\item[$\rightarrow$] inability to answer the main research question
+\end{itemize}
+\vspace{0.5cm}
+\end{frame}
+
+% *****************************************************************************
+
+\begin{frame}[fragile]
+\frametitle{Putting Statistics in Context}
+\begin{itemize}
+\setlength\itemsep{1.5em}
+\item The vast majority of analyses can be done in a straightforward fashion -
+just remember and always use common sense as a guide - be skeptical!
+\item It is very easy to get ``lost'' in the statistical software and technical
+jargon, which differs markedly between different software packages. Terminology
+can also differ greatly between textbooks...
+\item Wikipedia is as good a resource as any for finding out about different
+statistical tests and terminology
+\end{itemize}
+\end{frame}
+
+% *****************************************************************************
+
+\begin{frame}[fragile]
+\frametitle{Exploratory Data Analysis}
+\begin{itemize}
+\item It is crucially important to explore your data fully before considering any
+``formal'' statistical analyses\pause
+\item What explorations are done depends on the objective of the study - the
+research question(s)\pause
+\item Helps to decide what kind of formal statistical analyses might be most
+appropriate for the data available\pause
+\item What a simple descriptive analysis {\bfseries does not} provide is evidence
+of whether the observed treatment effects are large enough to be notable once
+sampling variation has been accounted - that is the role of formal analyses,
+e.g. hypothesis testing
+\end{itemize}
+\end{frame}
+
+% *****************************************************************************
+
+\begin{frame}[fragile]
+\frametitle{Summary Statistics}
+\framesubtitle{Continuous (Integers / Numeric)}
+\begin{itemize}
+\item {\tt Mean} - a measure of location. Always examine the average value of
+the response variable(s) for the different ``treatment'' effects in your data
+\item {\tt Median} - a robust single value summary of a set of data (50\% quantile
+point) - most useful in highly skewed data or data with outliers
+\item {\tt Standard deviation (sd)} - a measure of spread, how variable the data
+are
+\item {\tt Standard error of the mean (se)} - an estimate of how far the sample
+mean is likely to be from the population mean
+\item and others:  {\tt min, max, range, IQR, ...}
+\end{itemize}
+\end{frame}
+
+% *****************************************************************************
+
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
 % \usebackgroundtemplate{}
-% \begin{frame}[fragile]{Why do we need Statistics?}
-% \Large{\textbf{Repeatability of results:}} \newline
-% \textbf{Statistical science} allows us to
-% estimate what might happen if an experiment was repeated - but without having to
-% actually repeat it!
-% \end{frame}
-% 
-% % *****************************************************************************
-% 
-% \begin{frame}[fragile]{Why do we need Statistics?}
-% \vspace{0.5cm}
-% \begin{itemize}
-% \setlength\itemsep{1.5em}
-% \item Study results must be shown to be robust, i.e. real and not due to random
-% chance
-% \item Best way to demonstrate this is to repeat the same experiment/study many
-% times each with {\bfseries different} subjects (animals) drawn from the {\bfseries
-% same study population} and show that the result is truly repeatable
-% \item It is generally totally impractical, in terms of both time and resources,
-% to repeat an experiment many times!
-% \end{itemize}
-% \vspace{0.5cm}
-% \end{frame}
-% 
-% % *****************************************************************************
-% 
-% \begin{frame}[fragile]
-% \frametitle{Why do we need Statistics?}
-% \begin{itemize}
-% \setlength\itemsep{1.5em}
-% \item Instead of repeating the experiment many times {\bfseries probability
-% theory i.e. statistics} is used to {\bfseries estimate} what might have happened
-% if the experiment had been repeated
-% \item A mathematical model is used to fill this ``data gap''
-% \item Generally the most difficult task in statistics is to decide what ``model''
-% is most appropriate for a given experiment
-% \end{itemize}
-% \vspace{0.5cm}
-% \end{frame}
-% 
-% % *****************************************************************************
-% 
-% \begin{frame}[fragile]
-% \frametitle{What is Statistics? - A definition}
-% A set of analytical tools designed to quantify uncertainty
-% \vspace{0.3cm}
-% \begin{itemize}
-% \setlength\itemsep{1.5em}
-% \item If an experiment or procedure is repeated, how likely is it that the new
-% results will be similar to those already observed?
-% \item What is the likely variation in results if the experiment was repeated?
-% \end{itemize}\vspace{0.5cm}
-% \end{frame}
-% 
-% % *****************************************************************************
-% 
-% \begin{frame}[fragile]
-% \frametitle{What is Statistics? - A definition}
-% The key scientific purpose of statistics
-% \vspace{0.5cm}
-% \begin{itemize}
-% \setlength\itemsep{1.5em}
-% \item to provide {\bfseries evidence} of the existence of some ``effect'' of
-% scientific interest
-% \item i.e. evidence based medicine
-% \end{itemize}
-% \vspace{0.5cm}
-% \end{frame}
-% 
-% % *****************************************************************************
-% 
-% \begin{frame}[fragile]
-% \frametitle{As a reminder: The importance of study design}
-% Even the most sophisticated statistical analyses cannot rescue a poorly
-% designed study
-% %
-% \begin{itemize}
-% \setlength\itemsep{1.5em}
-% \item[$\rightarrow$] unreliable results
-% \item[$\rightarrow$] inability to answer the main research question
-% \end{itemize}
-% \vspace{0.5cm}
-% \end{frame}
-% 
-% % *****************************************************************************
-% 
-% \begin{frame}[fragile]
-% \frametitle{Putting Statistics in Context}
-% \begin{itemize}
-% \setlength\itemsep{1.5em}
-% \item The vast majority of analyses can be done in a straightforward fashion -
-% just remember and always use common sense as a guide - be skeptical!
-% \item It is very easy to get ``lost'' in the statistical software and technical
-% jargon, which differs markedly between different software packages. Terminology
-% can also differ greatly between textbooks...
-% \item Wikipedia is as good a resource as any for finding out about different
-% statistical tests and terminology
-% \end{itemize}
-% \end{frame}
-% 
-% % *****************************************************************************
-% 
-% \begin{frame}[fragile]
-% \frametitle{Exploratory Data Analysis}
-% \begin{itemize}
-% \item It is crucially important to explore your data fully before considering any
-% ``formal'' statistical analyses\pause
-% \item What explorations are done depends on the objective of the study - the
-% research question(s)\pause
-% \item Helps to decide what kind of formal statistical analyses might be most
-% appropriate for the data available\pause
-% \item What a simple descriptive analysis {\bfseries does not} provide is evidence
-% of whether the observed treatment effects are large enough to be notable once
-% sampling variation has been accounted - that is the role of formal analyses,
-% e.g. hypothesis testing
-% \end{itemize}
-% \end{frame}
-% 
-% % *****************************************************************************
-% 
-% \begin{frame}[fragile]
-% \frametitle{Summary Statistics}
-% \framesubtitle{Continuous (Integers / Numeric)}
-% \begin{itemize}
-% \item {\tt Mean} - a measure of location. Always examine the average value of
-% the response variable(s) for the different ``treatment'' effects in your data
-% \item {\tt Median} - a robust single value summary of a set of data (50\% quantile
-% point) - most useful in highly skewed data or data with outliers
-% \item {\tt Standard deviation (sd)} - a measure of spread, how variable the data
-% are
-% \item {\tt Standard error of the mean (se)} - an estimate of how far the sample
-% mean is likely to be from the population mean
-% \item and others:  {\tt min, max, range, IQR, ...}
-% \end{itemize}
-% \end{frame}
-% 
-% % *****************************************************************************
-% 
+\begin{frame}[fragile]
+\frametitle{Continuous (Integers / Numeric) Summary Statistics}
+<<echo=TRUE, eval=FALSE>>=
+mean(x) # mean
+
+median(x) # median
+
+sd(x) # standard deviation
+
+min(x) # minimum
+
+max(x) # maximum
+
+range(x) # range
+
+IQR(x) # interquartile range
+@
+\end{frame}
+
+% *****************************************************************************
+
 % \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
-% % \usebackgroundtemplate{}
-% \begin{frame}[fragile]
-% \frametitle{Continuous (Integers / Numeric) Summary Statistics}
-% <<echo=TRUE, eval=FALSE>>=
-% mean(x) # mean
-% 
-% median(x) # median
-% 
-% sd(x) # standard deviation
-% 
-% min(x) # minimum
-% 
-% max(x) # maximum
-% 
-% range(x) # range
-% 
-% IQR(x) # interquartile range
-% @
-% \end{frame}
-% 
-% % *****************************************************************************
-% 
-% % \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+\usebackgroundtemplate{}
+\begin{frame}[fragile]
+\frametitle{Continuous Data Summaries}
+\begin{figure}
+\includegraphics[width=0.5\linewidth]{se_sd.png}
+\end{figure}
+\end{frame}
+
+% *****************************************************************************
+
+\begin{frame}[fragile]
+\frametitle{Correlation coefficient}
+\framesubtitle{Combination of continuous and continuous}
+Correlation coefficient a measure association between two continuous variables (common but somewhat limited)
+\begin{figure}
+\includegraphics[width=0.6\linewidth]{correlation.png}
+\end{figure}
+\end{frame}
+
+% *****************************************************************************
+
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
 % \usebackgroundtemplate{}
-% \begin{frame}[fragile][plain]
-% \frametitle{Continuous Data Summaries}
-% \begin{figure}
-% \includegraphics[width=0.5\linewidth]{se_sd.png}
-% \end{figure}
-% \end{frame}
-% 
-% % *****************************************************************************
-% 
-% \begin{frame}[fragile][plain]
-% \frametitle{Correlation coefficient}
-% \framesubtitle{Combination of continuous and continuous}
-% Correlation coefficient a measure association between two continuous variables (common but somewhat limited)
-% \begin{figure}
-% \includegraphics[width=0.6\linewidth]{correlation.png}
-% \end{figure}
-% \end{frame}
-% 
-% % *****************************************************************************
-% 
+\begin{frame}[fragile]
+\frametitle{Correlation of continuous and ordinal variables}
+<<echo=TRUE, eval=FALSE>>=
+# Test for Association/Correlation Between
+# Paired Samples
+cor.test(data$x, data$y, method = "pearson")
+cor.test(data$x, data$y, method = "spearman")
+
+# Scatterplot(s)
+pairs(data$x ~ data$y)
+pairs(data)
+@
+\end{frame}
+
+% *****************************************************************************
+
+\begin{frame}[fragile]
+\frametitle{Summary Statistics}
+\framesubtitle{Continuous and ordinal variables}
+<<echo=TRUE, eval=FALSE>>=
+tapply(data$x.cont, data$y.fac, mean)
+
+tapply(data$x.cont, data$y.fac, median)
+
+tapply(data$x.cont, data$y.fac, sd)
+@
+\end{frame}
+
+% *****************************************************************************
+
+\begin{frame}[fragile]
+\frametitle{Summary Statistics}
+\framesubtitle{Ordinal}
+\begin{itemize}
+\setlength\itemsep{1.3em}
+\item {\tt Median} - a robust single value summary of a set of data
+(50\% quantile point) - most useful in highly skewed data or data with outliers
+\item {\tt e.g.10th and 90th percentile} - a measure of spread, how variable
+the data are
+<<echo=TRUE, eval=FALSE>>=
+quantile(x, probs = c(0.1, 0.9))
+@
+\item {\tt proportions} - e.g. percentage per grade
+<<echo=TRUE, eval=FALSE>>=
+prop.table(table(data$x.fac))
+prop.table(table(data$x.fac, data$y.fac))
+@
+\end{itemize}
+\end{frame}
+
+% *****************************************************************************
+
+\begin{frame}[fragile]
+\frametitle{Summary Statistics}
+\framesubtitle{Nominal}
+\begin{itemize}
+\item {\tt proportions} - percentage within the different categories
+\item {\tt contingency tables} e. g. 2 x 2
+<<echo=TRUE, eval=FALSE>>=
+table(data$x.fac)
+table(data$x.fac, data$y.fac)
+prop.table(table(data$x.fac))
+prop.table(table(data$x.fac, data$y.fac))
+@
+\end{itemize}
+\end{frame}
+
+% *****************************************************************************
+
+\begin{frame}[fragile]
+\frametitle{Exercise 8}
+\end{frame}
+
+% *****************************************************************************
+
 % \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
-% % \usebackgroundtemplate{}
-% \begin{frame}[fragile]
-% \frametitle{Correlation of continuous and ordinal variables}
-% <<echo=TRUE, eval=FALSE>>=
-% # Test for Association/Correlation Between
-% # Paired Samples
-% cor.test(data$x, data$y, method = "pearson")
-% cor.test(data$x, data$y, method = "spearman")
-% 
-% # Scatterplot(s)
-% pairs(data$x ~ data$y)
-% pairs(data)
-% @
-% \end{frame}
-% 
-% % *****************************************************************************
-% 
-% \begin{frame}[fragile]
-% \frametitle{Summary Statistics}
-% \framesubtitle{Continuous and ordinal variables}
-% <<echo=TRUE, eval=FALSE>>=
-% tapply(data$x.cont, data$y.fac, mean)
-% 
-% tapply(data$x.cont, data$y.fac, median)
-% 
-% tapply(data$x.cont, data$y.fac, sd)
-% @
-% \end{frame}
-% 
-% % *****************************************************************************
-% 
-% \begin{frame}[fragile]
-% \frametitle{Summary Statistics}
-% \framesubtitle{Ordinal}
-% \begin{itemize}
-% \setlength\itemsep{1.3em}
-% \item {\tt Median} - a robust single value summary of a set of data
-% (50\% quantile point) - most useful in highly skewed data or data with outliers
-% \item {\tt e.g.10th and 90th percentile} - a measure of spread, how variable
-% the data are
-% <<echo=TRUE, eval=FALSE>>=
-% quantile(x, probs = c(0.1, 0.9))
-% @
-% \item {\tt proportions} - e.g. percentage per grade
-% <<echo=TRUE, eval=FALSE>>=
-% prop.table(table(data$x.fac))
-% prop.table(table(data$x.fac, data$y.fac))
-% @
-% \end{itemize}
-% \end{frame}
-% 
-% % *****************************************************************************
-% 
-% \begin{frame}[fragile]
-% \frametitle{Summary Statistics}
-% \framesubtitle{Nominal}
-% \begin{itemize}
-% \item {\tt proportions} - percentage within the different categories
-% \item {\tt contingency tables} e. g. 2 x 2
-% <<echo=TRUE, eval=FALSE>>=
-% table(data$x.fac)
-% table(data$x.fac, data$y.fac)
-% prop.table(table(data$x.fac))
-% prop.table(table(data$x.fac, data$y.fac))
-% @
-% \end{itemize}
-% \end{frame}
-% 
-% % *****************************************************************************
-% 
-% \begin{frame}[fragile]
-% \frametitle{Exercise 8}
-% \end{frame}
-% 
-% % *****************************************************************************
-% 
-% % \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
-% \usebackgroundtemplate{}
-% \begin{frame}[fragile]
-% \frametitle{How to deal with missing values in R? (1/3)}
-% \begin{itemize}
-% \setlength\itemsep{1.3em}
-% \item In R, missing values are represented by the symbol \textbf{NA}
-% (not available).
-% \item Impossible values (e. g., dividing by zero) are represented by the symbol
-% \textbf{NaN} (not a number).
-% \item Ask yourself why a \textbf{NA} and / or \textbf{NaN} occurs!
-% \end{itemize}
-% \end{frame}
-% 
-% % *****************************************************************************
-% 
-% % \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
-% \usebackgroundtemplate{}
-% \begin{frame}[fragile]
-% \frametitle{How to deal with missing values in R? (2/3)}
-% \begin{itemize}
-% \setlength\itemsep{1.3em}
-% \item Testing for Missing Values
-% <<echo=TRUE, eval=FALSE, size="scriptsize">>=
-% vec1 <- c(1, 2, 3, NA)
-% is.na(vec1) # returns a vector (FALSE, FALSE, FALSE, TRUE)
-% # The TRUE indicates the position of the NA in vec1.
-% @
-% \item Recoding Values to Missing
-% <<echo=TRUE, eval=FALSE, size="scriptsize">>=
-% # recode specific values (e. g. 0.001) to missing for variable x
-% # select rows where x is 0.001 and recode value in column x with NA
-% dat$x[dat$x == 0.001] <- NA
-% @
-% \end{itemize}
-% \end{frame}
-% 
-% % *****************************************************************************
-% 
-% \begin{frame}[fragile]
-% \frametitle{How to deal with missing values in R? (3/3)}
-% \begin{itemize}
-% \setlength\itemsep{1.3em}
-% \item Excluding Missing Values from specific function calls
-% <<echo=TRUE, eval=FALSE, size="scriptsize">>=
-% a <- c(1, 2, NA, 3)
-% mean(a) # returns NA
-% mean(a, na.rm=TRUE) # returns 2
-% @
-% \item Check for complete cases with function \texttt{complete.cases(...)}
-% <<echo=TRUE, eval=FALSE, size="scriptsize">>=
-% # list rows of data that have missing values
-% dat[!complete.cases(dat),]
-% subdat <- dat[complete.cases(dat),]
-% @
-% \item Create new dataset without missing data with function \texttt{na.omit(...)}
-% <<echo=TRUE, eval=FALSE, size="scriptsize">>=
-% new.dat <- na.omit(dat)
-% @
-% \end{itemize}
-% \end{frame}
-% 
-% % *****************************************************************************
-% 
-% % \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
-% \usebackgroundtemplate{}
-% \begin{frame}[fragile]
-% \frametitle{How to check your data for plausibility?}
-% \begin{itemize}
-% \setlength\itemsep{1.3em}
-% \item Ask yourself what can go wrong?
-% \item Implausible values?
-% \item Impossible values?
-% \item Logical errors?
-% \end{itemize}
-% \end{frame}
-% 
-% % *****************************************************************************
-% 
+\usebackgroundtemplate{}
+\begin{frame}[fragile]
+\frametitle{How to deal with missing values in R? (1/3)}
+\begin{itemize}
+\setlength\itemsep{1.3em}
+\item In R, missing values are represented by the symbol \textbf{NA}
+(not available).
+\item Impossible values (e. g., dividing by zero) are represented by the symbol
+\textbf{NaN} (not a number).
+\item Ask yourself why a \textbf{NA} and / or \textbf{NaN} occurs!
+\end{itemize}
+\end{frame}
+
+% *****************************************************************************
+
 % \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
-% % \usebackgroundtemplate{}
-% \begin{frame}[fragile]
-% \frametitle{Exercise 9A: Plausibility Checks}
-% \end{frame}
-% 
-% % *****************************************************************************
-% 
-% \begin{frame}[fragile]
-% \frametitle{Exercise 9B: Missing Values}
-% \end{frame}
-% 
-% % *****************************************************************************
-% 
-% \begin{frame}[fragile]
-% \frametitle{Exercise 10}
-% \end{frame}
-% 
-% % *****************************************************************************
+\usebackgroundtemplate{}
+\begin{frame}[fragile]
+\frametitle{How to deal with missing values in R? (2/3)}
+\begin{itemize}
+\setlength\itemsep{1.3em}
+\item Testing for Missing Values
+<<echo=TRUE, eval=FALSE, size="scriptsize">>=
+vec1 <- c(1, 2, 3, NA)
+is.na(vec1) # returns a vector (FALSE, FALSE, FALSE, TRUE)
+# The TRUE indicates the position of the NA in vec1.
+@
+\item Recoding Values to Missing
+<<echo=TRUE, eval=FALSE, size="scriptsize">>=
+# recode specific values (e. g. 0.001) to missing for variable x
+# select rows where x is 0.001 and recode value in column x with NA
+dat$x[dat$x == 0.001] <- NA
+@
+\end{itemize}
+\end{frame}
+
+% *****************************************************************************
+
+\begin{frame}[fragile]
+\frametitle{How to deal with missing values in R? (3/3)}
+\begin{itemize}
+\setlength\itemsep{1.3em}
+\item Excluding Missing Values from specific function calls
+<<echo=TRUE, eval=FALSE, size="scriptsize">>=
+a <- c(1, 2, NA, 3)
+mean(a) # returns NA
+mean(a, na.rm=TRUE) # returns 2
+@
+\item Check for complete cases with function \texttt{complete.cases(...)}
+<<echo=TRUE, eval=FALSE, size="scriptsize">>=
+# list rows of data that have missing values
+dat[!complete.cases(dat),]
+subdat <- dat[complete.cases(dat),]
+@
+\item Create new dataset without missing data with function \texttt{na.omit(...)}
+<<echo=TRUE, eval=FALSE, size="scriptsize">>=
+new.dat <- na.omit(dat)
+@
+\end{itemize}
+\end{frame}
+
+% *****************************************************************************
+
+% \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+\usebackgroundtemplate{}
+\begin{frame}[fragile]
+\frametitle{How to check your data for plausibility?}
+\begin{itemize}
+\setlength\itemsep{1.3em}
+\item Ask yourself what can go wrong?
+\item Implausible values?
+\item Impossible values?
+\item Logical errors?
+\end{itemize}
+\end{frame}
+
+% *****************************************************************************
+
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+% \usebackgroundtemplate{}
+\begin{frame}[fragile]
+\frametitle{Exercise 9A: Plausibility Checks}
+\end{frame}
+
+% *****************************************************************************
+
+\begin{frame}[fragile]
+\frametitle{Exercise 9B: Missing Values}
+\end{frame}
+
+% *****************************************************************************
+
+\begin{frame}[fragile]
+\frametitle{Exercise 10}
+\end{frame}
 
 % % *****************************************************************************
   
@@ -3233,5 +3244,3 @@ previous 12 months
 % % *****************************************************************************
 
 \end{document}
-
-% as.numeric.factor <- function(x) {as.numeric(levels(x))[x]}

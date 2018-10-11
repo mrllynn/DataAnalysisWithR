@@ -1,0 +1,662 @@
+\documentclass{beamer}
+
+% *****************************************************************************
+% ADD HERE THE TOPIC OF THE LECTURE!
+% \newcommand{\lecturetopic}{ALL LECTURE SLIDES}
+\newcommand{\lecturetopic}{Day 3 - Preliminary - Slides}
+% *****************************************************************************
+
+<<echo = FALSE, eval = TRUE>>=
+data_dir <- "../Exercises/data"
+@
+
+% turn off navigation symbols
+\beamertemplatenavigationsymbolsempty
+
+\title{\textbf{Data Analysis with R:} \\ \lecturetopic}
+\author{Sonja Hartnack, Terence Odoch \& Muriel Buri}
+\footnotesize
+\institute{October 2018}
+\date{ }
+
+\setbeamertemplate{footline}[text line]{%
+\parbox{\linewidth}{\vspace*{-1pt} \fontsize{3.5}{5}\selectfont Sonja Hartnack,
+Terence Odoch \& Muriel Buri \hfill \lecturetopic \hfill \insertpagenumber}}
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{animate}
+
+\usepackage{verbatim}
+\usepackage{url}
+\usepackage{lmodern}
+\usepackage{fancyhdr}
+\usepackage{color}
+\usepackage{amsmath, amssymb}
+\usepackage{longtable}
+\usepackage{lscape}
+\usepackage{xspace}
+\usepackage[normalem]{ulem}
+% Use Palatino (URW Palladio) for most of the text\ldots
+\usepackage[sc]{mathpazo}
+% And Arial for the rest
+\usepackage[scaled]{helvet}
+\usepackage[latin1]{inputenc}
+\usepackage{multicol} % A flexible tool to handle multicolumn documents
+\usepackage{colortbl, xcolor} % enable colored rows in table
+\usepackage{color} % enable colored rows in table
+\usepackage{bibentry} % Include Full BibTeX Entry Inside Slides
+\usepackage{nicefrac}
+\usepackage{soul}
+
+\setbeamertemplate{itemize items}[circle]
+
+\usepackage{array}
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\graphicspath{{slides_figures/}}
+\usepackage[export]{adjustbox} % figure alignment
+\usepackage{wrapfig} % allow for wrapfigure
+\usepackage[margin=1cm]{caption}
+\captionsetup{font=scriptsize, labelfont=scriptsize}
+
+% change font family in footnote
+\usepackage{footmisc}
+\renewcommand*{\footnotelayout}{\tiny\sffamily}
+% \renewcommand*{\footnotelayout}{\fontsize{3.5}{5}\selectfont\sffamily}
+
+% change footer symbol
+\usepackage{perpage}
+\MakePerPage{footnote}
+\renewcommand*{\thefootnote}{$\star$}
+
+% change font sizes of frametitles
+\setbeamerfont{frametitle}{size=\normalsize, series=\bfseries}
+\setbeamerfont{framesubtitle}{size=\small, series=\bfseries}
+
+% Settings for the references
+\usepackage{natbib}
+\usepackage{bibentry} % Include Full BibTeX Entry Inside Slides
+
+% Writting the whole reference in ONE line.
+% \def\newblock{\hskip .5em plus .33em minus .07em}
+
+\setbeamerfont{title}{size=\LARGE}
+
+\makeatletter
+\def\mathcolor#1#{\@mathcolor{#1}}
+\def\@mathcolor#1#2#3{%
+\protect\leavevmode
+\begingroup\color#1{#2}#3\endgroup
+}
+\makeatother
+
+% *****************************************************************************
+
+% {\usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+{\usebackgroundtemplate{}}
+\begin{document}
+
+\bibliographystyle{plainnat}
+
+% *****************************************************************************
+% TITLE PAGE:
+% *****************************************************************************
+
+\begin{frame}[noframenumbering,plain]
+\begin{columns}
+\begin{column}{.3\linewidth}
+\begin{center}
+\includegraphics[height=.35\linewidth, width = 1.1\linewidth]{UZH_logo.png}
+\end{center}
+\end{column}
+\begin{column}{0.2\linewidth}
+\end{column}
+\begin{column}{.3\linewidth}
+\begin{center}
+\includegraphics[height=.45\linewidth, width = .65\linewidth]{Makerere_logo.jpeg}
+\end{center}
+\end{column}
+\end{columns}
+\titlepage
+\end{frame}
+
+% *****************************************************************************
+
+\begin{frame}[fragile]
+\frametitle{Examples of different data types}
+\begin{itemize}
+\setlength\itemsep{1.5em}
+\item numeric variable
+\item integer variable
+\item variable with two levels (binary factor)
+\item ordered variable with \textbf{more than} two levels (ordinal)
+\item unordered variable with \textbf{more than} two levels (nominal)
+\end{itemize}
+\end{frame}
+
+% *****************************************************************************
+
+\begin{frame}[fragile]
+\frametitle{Rules for importing data into R (from Excel)}
+\begin{itemize}
+\item First row of excel sheet contains \textbf{variable names}: \newline
+\texttt{y, ap, hilo, week, ID, trt}.
+\item Columns of excel sheet represent \textbf{variables}.
+\item Rows of excel sheet represent \textbf{observations per individual}
+(except for the first row).
+\end{itemize}
+\begin{center}
+\includegraphics[width = 0.7\linewidth]{Printscreen_ExcelSheet.png}
+\end{center}
+\end{frame}
+
+% *****************************************************************************
+
+\begin{frame}[fragile]
+\frametitle{Rules for naming variables}
+Variable names should ...
+\begin{itemize}
+\item start with a letter (not a number): \newline
+\texttt{y, ap, hilo, week, ID, trt}
+\item longer variables names should be separated with dots: \texttt{time.in.weeks}
+\item do not use special characters, such as /, \#, $@$, \&, $\star$, ...
+\end{itemize}
+\end{frame}
+
+% *****************************************************************************
+
+\begin{frame}[fragile]
+\frametitle{How to import external data files into R?}
+\begin{itemize}
+\item $>$ Import Dataset $>$ \textbf{From Text (base)...} $>$ CSV Files (.csv) \newline
+or
+\item $>$ Import Dataset $>$ \textbf{From Excel...}
+\end{itemize}
+\begin{center}
+\includegraphics[width = 0.6\linewidth]{Import_data_to_R.png}
+\end{center}
+\end{frame}
+
+% *****************************************************************************
+
+\begin{frame}[fragile]
+\frametitle{How to import external data files into R?}
+\begin{itemize}
+\item Environment (upper right corner)
+\item $>$ Import Dataset $>$ \textbf{From Text (base)...} $>$ CSV Files (.csv)
+<<echo=TRUE, eval=FALSE, size="scriptsize">>=
+perulung_ems <- read.csv("perulung_ems.csv", row.names = 1,
+                         sep = ";")
+lung <- data.frame(perulung_ems)
+@
+\item $>$ Import Dataset $>$ \textbf{From Text (base)...} $>$ Text Files (.txt)
+\item $>$ Import Dataset $>$ \textbf{From Excel...} $>$ Excel Files (.xlsx)
+<<echo=TRUE, eval=FALSE, size="scriptsize">>=
+install.packages("readxl")
+library("readxl")
+perulung_ems <- read_excel("perulung_ems.xlsx")
+lung <- data.frame(perulung_ems)
+head(lung)
+@
+\end{itemize}
+\end{frame}
+
+% *****************************************************************************
+
+\begin{frame}[fragile]
+\frametitle{How to import .txt and .csv files into R? (1/2)}
+\begin{itemize}
+\item Environment (upper right corner)
+\item $>$ Import Dataset $>$ From Text (base)... $>$ CSV Files (.csv)
+\end{itemize}
+\pause
+\begin{center}
+\includegraphics[width = 0.8\linewidth]{Import_csv_Perulung_1.png}
+\end{center}
+\end{frame}
+
+% *****************************************************************************
+
+\begin{frame}[fragile]
+\frametitle{How to import .txt and .csv files into R? (2/2)}
+\begin{center}
+\includegraphics[width = 0.75\linewidth]{Import_csv_Perulung_2.png}
+\end{center}
+<<echo=TRUE, eval=FALSE, size="scriptsize">>=
+perulung_ems <- read.csv("perulung_ems.csv", row.names = 1,
+                         sep = ";")
+lung <- data.frame(perulung_ems)
+@
+\end{frame}
+
+% *****************************************************************************
+
+\begin{frame}[fragile]
+\frametitle{How to import .xlsx files into R? (1/3)}
+\begin{itemize}
+\item Environment (upper right corner)
+\item $>$ Import Dataset $>$ From Excel... $>$ Excel Files (.xlsx)
+\end{itemize}
+\pause
+\begin{center}
+\includegraphics[width = \linewidth]{Import_xlsx_Perulung_1.png}
+\end{center}
+\end{frame}
+
+% *****************************************************************************
+
+\begin{frame}[fragile]
+\frametitle{How to import .xlsx files into R? (2/3)}
+\begin{center}
+\includegraphics[width = 0.85\linewidth]{Import_xlsx_Perulung_2.png}
+\end{center}
+\end{frame}
+
+% *****************************************************************************
+
+\begin{frame}[fragile]
+\frametitle{How to import .xlsx files into R? (3/3)}
+\begin{center}
+\includegraphics[width = 0.9\linewidth]{Import_xlsx_Perulung_3.png}
+\end{center}
+<<echo=TRUE, eval=FALSE, size="scriptsize">>=
+perulung_ems <- read_excel("perulung_ems.xlsx")
+lung <- data.frame(perulung_ems)
+head(lung)
+@
+\end{frame}
+
+% *****************************************************************************
+
+\begin{frame}[fragile]
+\frametitle{Exercise 7: perulung}
+Data from a study of lung function among children living in a deprived suburb of
+Lima, Peru. Data taken from Kirkwood and Sterne, 2nd edition. \newline
+Variables:
+\begin{itemize}
+\item \texttt{fev1}:  in liter, ''forced expiratory volume in 1 second'' measured
+by a spirometer. This is the maximum volume of air which the children could breath
+out in 1 second
+\item \texttt{age}: in years
+\item \texttt{height}: in cm
+\item \texttt{sex}: 0 = girl, 1 = boy
+\item \texttt{respsymp}: respiratory symptoms experienced by the child over the
+previous 12 months
+\end{itemize}
+\end{frame}
+
+% *****************************************************************************
+
+\section{Day 3}
+
+\usebackgroundtemplate{}
+\begin{frame}[fragile]
+\frametitle{Lecture Slides for Day 3}
+\end{frame}
+% 
+% *****************************************************************************
+
+\usebackgroundtemplate{}
+\begin{frame}[fragile]{Why do we need Statistics?}
+\Large{\textbf{Repeatability of results:}} \newline
+\textbf{Statistical science} allows us to
+estimate what might happen if an experiment was repeated - but without having to
+actually repeat it!
+\end{frame}
+
+% *****************************************************************************
+
+\begin{frame}[fragile]{Why do we need Statistics?}
+\vspace{0.5cm}
+\begin{itemize}
+\setlength\itemsep{1.5em}
+\item Study results must be shown to be robust, i.e. real and not due to random
+chance
+\item Best way to demonstrate this is to repeat the same experiment/study many
+times each with {\bfseries different} subjects (animals) drawn from the {\bfseries
+same study population} and show that the result is truly repeatable
+\item It is generally totally impractical, in terms of both time and resources,
+to repeat an experiment many times!
+\end{itemize}
+\vspace{0.5cm}
+\end{frame}
+
+% *****************************************************************************
+
+\begin{frame}[fragile]
+\frametitle{Why do we need Statistics?}
+\begin{itemize}
+\setlength\itemsep{1.5em}
+\item Instead of repeating the experiment many times {\bfseries probability
+theory i.e. statistics} is used to {\bfseries estimate} what might have happened
+if the experiment had been repeated
+\item A mathematical model is used to fill this ``data gap''
+\item Generally the most difficult task in statistics is to decide what ``model''
+is most appropriate for a given experiment
+\end{itemize}
+\vspace{0.5cm}
+\end{frame}
+
+% *****************************************************************************
+
+\begin{frame}[fragile]
+\frametitle{What is Statistics? - A definition}
+A set of analytical tools designed to quantify uncertainty
+\vspace{0.3cm}
+\begin{itemize}
+\setlength\itemsep{1.5em}
+\item If an experiment or procedure is repeated, how likely is it that the new
+results will be similar to those already observed?
+\item What is the likely variation in results if the experiment was repeated?
+\end{itemize}\vspace{0.5cm}
+\end{frame}
+
+% *****************************************************************************
+
+\begin{frame}[fragile]
+\frametitle{What is Statistics? - A definition}
+The key scientific purpose of statistics
+\vspace{0.5cm}
+\begin{itemize}
+\setlength\itemsep{1.5em}
+\item to provide {\bfseries evidence} of the existence of some ``effect'' of
+scientific interest
+\item i.e. evidence based medicine
+\end{itemize}
+\vspace{0.5cm}
+\end{frame}
+
+% *****************************************************************************
+
+\begin{frame}[fragile]
+\frametitle{As a reminder: The importance of study design}
+Even the most sophisticated statistical analyses cannot rescue a poorly
+designed study
+%
+\begin{itemize}
+\setlength\itemsep{1.5em}
+\item[$\rightarrow$] unreliable results
+\item[$\rightarrow$] inability to answer the main research question
+\end{itemize}
+\vspace{0.5cm}
+\end{frame}
+
+% *****************************************************************************
+
+\begin{frame}[fragile]
+\frametitle{Putting Statistics in Context}
+\begin{itemize}
+\setlength\itemsep{1.5em}
+\item The vast majority of analyses can be done in a straightforward fashion -
+just remember and always use common sense as a guide - be skeptical!
+\item It is very easy to get ``lost'' in the statistical software and technical
+jargon, which differs markedly between different software packages. Terminology
+can also differ greatly between textbooks...
+\item Wikipedia is as good a resource as any for finding out about different
+statistical tests and terminology
+\end{itemize}
+\end{frame}
+
+% *****************************************************************************
+
+\begin{frame}[fragile]
+\frametitle{Exploratory Data Analysis}
+\begin{itemize}
+\item It is crucially important to explore your data fully before considering any
+``formal'' statistical analyses\pause
+\item What explorations are done depends on the objective of the study - the
+research question(s)\pause
+\item Helps to decide what kind of formal statistical analyses might be most
+appropriate for the data available\pause
+\item What a simple descriptive analysis {\bfseries does not} provide is evidence
+of whether the observed treatment effects are large enough to be notable once
+sampling variation has been accounted - that is the role of formal analyses,
+e.g. hypothesis testing
+\end{itemize}
+\end{frame}
+
+% *****************************************************************************
+
+\begin{frame}[fragile]
+\frametitle{Summary Statistics}
+\framesubtitle{Continuous (Integers / Numeric)}
+\begin{itemize}
+\item {\tt Mean} - a measure of location. Always examine the average value of
+the response variable(s) for the different ``treatment'' effects in your data
+\item {\tt Median} - a robust single value summary of a set of data (50\% quantile
+point) - most useful in highly skewed data or data with outliers
+\item {\tt Standard deviation (sd)} - a measure of spread, how variable the data
+are
+\item {\tt Standard error of the mean (se)} - an estimate of how far the sample
+mean is likely to be from the population mean
+\item and others:  {\tt min, max, range, IQR, ...}
+\end{itemize}
+\end{frame}
+
+% *****************************************************************************
+
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+% \usebackgroundtemplate{}
+\begin{frame}[fragile]
+\frametitle{Continuous (Integers / Numeric) Summary Statistics}
+<<echo=TRUE, eval=FALSE>>=
+mean(x) # mean
+
+median(x) # median
+
+sd(x) # standard deviation
+
+min(x) # minimum
+
+max(x) # maximum
+
+range(x) # range
+
+IQR(x) # interquartile range
+@
+\end{frame}
+
+% *****************************************************************************
+
+% \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+\usebackgroundtemplate{}
+\begin{frame}[fragile]
+\frametitle{Continuous Data Summaries}
+\begin{figure}
+\includegraphics[width=0.5\linewidth]{se_sd.png}
+\end{figure}
+\end{frame}
+
+% *****************************************************************************
+
+\begin{frame}[fragile]
+\frametitle{Correlation coefficient}
+\framesubtitle{Combination of continuous and continuous}
+Correlation coefficient a measure association between two continuous variables (common but somewhat limited)
+\begin{figure}
+\includegraphics[width=0.6\linewidth]{correlation.png}
+\end{figure}
+\end{frame}
+
+% *****************************************************************************
+
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+% \usebackgroundtemplate{}
+\begin{frame}[fragile]
+\frametitle{Correlation of continuous and ordinal variables}
+<<echo=TRUE, eval=FALSE>>=
+# Test for Association/Correlation Between
+# Paired Samples
+cor.test(data$x, data$y, method = "pearson")
+cor.test(data$x, data$y, method = "spearman")
+
+# Scatterplot(s)
+pairs(data$x ~ data$y)
+pairs(data)
+@
+\end{frame}
+
+% *****************************************************************************
+
+\begin{frame}[fragile]
+\frametitle{Summary Statistics}
+\framesubtitle{Continuous and ordinal variables}
+<<echo=TRUE, eval=FALSE>>=
+tapply(data$x.cont, data$y.fac, mean)
+
+tapply(data$x.cont, data$y.fac, median)
+
+tapply(data$x.cont, data$y.fac, sd)
+@
+\end{frame}
+
+% *****************************************************************************
+
+\begin{frame}[fragile]
+\frametitle{Summary Statistics}
+\framesubtitle{Ordinal}
+\begin{itemize}
+\setlength\itemsep{1.3em}
+\item {\tt Median} - a robust single value summary of a set of data
+(50\% quantile point) - most useful in highly skewed data or data with outliers
+\item {\tt e.g.10th and 90th percentile} - a measure of spread, how variable
+the data are
+<<echo=TRUE, eval=FALSE>>=
+quantile(x, probs = c(0.1, 0.9))
+@
+\item {\tt proportions} - e.g. percentage per grade
+<<echo=TRUE, eval=FALSE>>=
+prop.table(table(data$x.fac))
+prop.table(table(data$x.fac, data$y.fac))
+@
+\end{itemize}
+\end{frame}
+
+% *****************************************************************************
+
+\begin{frame}[fragile]
+\frametitle{Summary Statistics}
+\framesubtitle{Nominal}
+\begin{itemize}
+\item {\tt proportions} - percentage within the different categories
+\item {\tt contingency tables} e. g. 2 x 2
+<<echo=TRUE, eval=FALSE>>=
+table(data$x.fac)
+table(data$x.fac, data$y.fac)
+prop.table(table(data$x.fac))
+prop.table(table(data$x.fac, data$y.fac))
+@
+\end{itemize}
+\end{frame}
+
+% *****************************************************************************
+
+\begin{frame}[fragile]
+\frametitle{Exercise 8}
+\end{frame}
+
+% *****************************************************************************
+
+% \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+\usebackgroundtemplate{}
+\begin{frame}[fragile]
+\frametitle{How to deal with missing values in R? (1/3)}
+\begin{itemize}
+\setlength\itemsep{1.3em}
+\item In R, missing values are represented by the symbol \textbf{NA}
+(not available).
+\item Impossible values (e. g., dividing by zero) are represented by the symbol
+\textbf{NaN} (not a number).
+\item Ask yourself why a \textbf{NA} and / or \textbf{NaN} occurs!
+\end{itemize}
+\end{frame}
+
+% *****************************************************************************
+
+% \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+\usebackgroundtemplate{}
+\begin{frame}[fragile]
+\frametitle{How to deal with missing values in R? (2/3)}
+\begin{itemize}
+\setlength\itemsep{1.3em}
+\item Testing for Missing Values
+<<echo=TRUE, eval=FALSE, size="scriptsize">>=
+vec1 <- c(1, 2, 3, NA)
+is.na(vec1) # returns a vector (FALSE, FALSE, FALSE, TRUE)
+# The TRUE indicates the position of the NA in vec1.
+@
+\item Recoding Values to Missing
+<<echo=TRUE, eval=FALSE, size="scriptsize">>=
+# recode specific values (e. g. 0.001) to missing for variable x
+# select rows where x is 0.001 and recode value in column x with NA
+dat$x[dat$x == 0.001] <- NA
+@
+\end{itemize}
+\end{frame}
+
+% *****************************************************************************
+
+\begin{frame}[fragile]
+\frametitle{How to deal with missing values in R? (3/3)}
+\begin{itemize}
+\setlength\itemsep{1.3em}
+\item Excluding Missing Values from specific function calls
+<<echo=TRUE, eval=FALSE, size="scriptsize">>=
+a <- c(1, 2, NA, 3)
+mean(a) # returns NA
+mean(a, na.rm=TRUE) # returns 2
+@
+\item Check for complete cases with function \texttt{complete.cases(...)}
+<<echo=TRUE, eval=FALSE, size="scriptsize">>=
+# list rows of data that have missing values
+dat[!complete.cases(dat),]
+subdat <- dat[complete.cases(dat),]
+@
+\item Create new dataset without missing data with function \texttt{na.omit(...)}
+<<echo=TRUE, eval=FALSE, size="scriptsize">>=
+new.dat <- na.omit(dat)
+@
+\end{itemize}
+\end{frame}
+
+% *****************************************************************************
+
+% \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+\usebackgroundtemplate{}
+\begin{frame}[fragile]
+\frametitle{How to check your data for plausibility?}
+\begin{itemize}
+\setlength\itemsep{1.3em}
+\item Ask yourself what can go wrong?
+\item Implausible values?
+\item Impossible values?
+\item Logical errors?
+\end{itemize}
+\end{frame}
+
+% *****************************************************************************
+
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+% \usebackgroundtemplate{}
+\begin{frame}[fragile]
+\frametitle{Exercise 9A: Plausibility Checks}
+\end{frame}
+
+% *****************************************************************************
+
+\begin{frame}[fragile]
+\frametitle{Exercise 9B: Missing Values}
+\end{frame}
+
+% *****************************************************************************
+
+\begin{frame}[fragile]
+\frametitle{Exercise 10}
+\end{frame}
+
+% *****************************************************************************
+
+\end{document}
