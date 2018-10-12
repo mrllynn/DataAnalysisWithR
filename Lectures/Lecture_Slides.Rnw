@@ -1172,398 +1172,398 @@ new.dat <- na.omit(dat)
 \frametitle{Exercise 10}
 \end{frame}
 
-% % *****************************************************************************
-  
-% \section{Day 4}
+ % *****************************************************************************
+%   
+ \section{Day 4}
+ 
+ \usebackgroundtemplate{}
+ \begin{frame}[fragile]
+ \frametitle{Lecture Slides for Day 4}
+ \end{frame}
 % 
-% \usebackgroundtemplate{}
-% \begin{frame}[fragile]
-% \frametitle{Lecture Slides for Day 4}
-% \end{frame}
-
-% % *****************************************************************************
-% 
-% % \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
-% \usebackgroundtemplate{}
-% \begin{frame}[fragile]
-% \frametitle{Basic Statistical Tests}
-% Study data is collected for a purpose - to answer one or more specific
-% scientific questions. The classical way to perform a formal statistical
-% analyses of these data is to formulate these research questions into
-% statistical {\bfseries hypothesis tests}. \\
-% \vspace{0.5cm}
-% In this section we will go through a simple example in detail to highlight
-% some of the important concepts - the general approach for more complex
-% analyses is exactly same. \emph{Note: the precise technical details are
-% much less important than the concepts!}
-% \end{frame}
-% 
-% % *****************************************************************************
-% 
-% \begin{frame}[fragile]
-% \frametitle{Simple Example - One Population}
-% {\bfseries After six weeks will the mean weight of a chicken be more than 250
-% grams?}\\
-% There are 71 observations in \texttt{chickwts} from which to answer this
-% question. This can be formulated into a statistical hypothesis test. A
-% hypothesis test has two parts, the null hypothesis and the alternative
-% hypothesis. This is typically written as follows:
-% \begin{eqnarray}
-% H_0:\quad \mu &\le& 250 \nonumber\\
-% H_A:\quad \mu &>& 250 \nonumber
-% \end{eqnarray}
-% where $\mu$ is the mean weight in the {\bfseries population} of
-% chickens from which the sample of 71 chickens was drawn. Remember - we know the
-% mean weight in the sample of chickens is greater than 250 it is the
-% {\bfseries population} of chickens which we are interested in.
-% \end{frame}
-% 
-% % *****************************************************************************
-% 
-% \begin{frame}[fragile]
-% \frametitle{Simple Example - One Population}
-% {\bfseries After six weeks will the mean weight of a chicken be at least 250 grams?}
-% \begin{eqnarray}
-% H_0:\quad \mu &\le& 250 \nonumber\\
-% H_A:\quad \mu &>& 250 \nonumber
-% \end{eqnarray}
-% The null hypothesis ($H_0$) is the default situation, sometimes called the
-% ``state of nature''. In a treatment-control trial, $H_0$ is typically that
-% the effect of the treatment is not different from the control. In this
-% example our default position is that the mean weight of chickens is
-% {\bfseries $\le{250}$}. This is called a single-sided hypothesis test.
-% \end{frame}
-% 
-% % *****************************************************************************
-% 
-% \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
-% % \usebackgroundtemplate{}
-% \begin{frame}[fragile]
-% \frametitle{Simple Example - One Population}
-% We now analyse the 71 observations to see whether there is evidence to
-% {\bfseries REJECT} the null hypothesis $H_0$, and if the null hypothesis is
-% rejected then we can conclude that the available evidence supports the
-% alternative hypothesis.
-% <<echo=TRUE, eval=FALSE>>=
-% t.test(chickwts$weight, mu = 250)
-% @
-% Note that hypothesis testing is concerned with finding evidence in support
-% of the null hypothesis $H_0$ - the default situation -  rather than evidence
-% in favour of the alternative hypothesis.
-% \end{frame}
-% 
-% % *****************************************************************************
-% 
-% % \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
-% \usebackgroundtemplate{}
-% \begin{frame}[fragile]
-% \frametitle{One Sample t-test}
-% For the chicken weights data an appropriate formal analyses is to use a
-% {\bfseries one-sample t-test}, why this test is appropriate will be discussed
-% later. This analysis involves calculating a simple summary statistic - called
-% a $t$-statistic - which we do entirely from the observed data.
-% \begin{equation}
-% T_{obs}=\frac{\bar{x}-\mu}{s/\sqrt{n}} \nonumber
-% \end{equation}
-% where $\bar{x}$ is the sample mean, $s$ the sample standard deviation and $\mu$
-% is the population mean in the null hypothesis which we wish to test for. We then
-% look up the value of $T_{obs}$ in a set of statistical tables/computer to see
-% what the answer is to our research question.
-% \end{frame}
-% 
-% % *****************************************************************************
-% 
-% \begin{frame}[fragile]
-% \frametitle{Important concept - sampling }
-% \begin{center}
-% Why is $T_{obs}=\frac{\bar{x}-\mu}{s/\sqrt(n)}$ called a $t$-statistic?
-% \end{center}
-% \vspace{0.2cm}
-% If another sample of 71 chickens from the same population were weighed then the
-% values for $\bar{x}$ and $s$ would be different, and hence the value for $T_{obs}$.
-% If this was repeated many times and a histogram/Q-Q/P-P plot produced of the
-% values for $T_{obs}$ then this would follow the shape of a known distribution
-% - {\bfseries student-$t$ probability distribution}. It is this piece of
-% mathematics - knowing what the sampling distribution of $T_{obs}$ is -
-% which allows us to infer information about the population of chickens from
-% which our original 71 chickens were sampled - without actually having to
-% collect lots and lots of other samples of chickens! Mathematical theory is
-% used to fill this data gap.
-% \end{frame}
-% 
-% % *****************************************************************************
-% 
-% \begin{frame}[fragile]
-% \frametitle{\texttt{chickwts}: t-test}
-% \begin{equation}
-% T_{obs}=\frac{261.31-250}{78.07/\sqrt{71}}=1.22 \nonumber
-% \end{equation}
-% 
-% Put the values for the sample mean and standard deviation into the t-statistic
-% formula along with the $\mu=250$. We now look up the value of this in a
-% t-distribution reference table. All this calculation will be done for you in
-% R but it is important to understand the general process as this is the same
-% for hypothesis testing in other more complex analyses.
-% \end{frame}
-% 
-% % *****************************************************************************
-% 
-% \begin{frame}[fragile]
-% \frametitle{One Sample, one-sided, t-test}
-% \centering
-% \includegraphics[width=0.9\textwidth]{onesample_onesided_ttest_1.png}
-% \end{frame}
-% 
-% % *****************************************************************************
-% 
-% \begin{frame}[fragile]
-% \frametitle{Important concept - $p$-values}
-% \begin{itemize}
-% \item The result of a hypothesis test is usually communicated in the form of a
-% {\bfseries $p$-value}
-% \item The interpretation of a $p$-value is of crucial importance - it is the
-% \emph{probability that the test statistic takes values at least as extreme
-% as that observed {\bfseries assuming that $H_0$ is true}}
-% \item Exactly what {\bfseries at least as extreme as} refers to depends on
-% the alternative hypothesis $H_A$.
-% \item This may sound rather abstract but it is usually obvious in practice
-% \end{itemize}
-% \end{frame}
-% 
-% % *****************************************************************************
-% 
-% \begin{frame}[fragile]
-% \frametitle{Simple Example - One Population}
-% {\bfseries After six weeks will the mean weight of a chicken be at least 250 grams?}
-% \begin{eqnarray}
-% H_0:\quad \mu &\le& 250 \nonumber\\
-% H_A:\quad \mu &>& 250 \nonumber
-% \end{eqnarray}
-% The alternative hypothesis is $\mu > 250$ so in this test
-% {\bfseries at least as extreme as} in the definition of a $p$-value is the
-% probability of observing a t-statistic which is $>1.22$
-% {\bfseries assuming that $H_0$ is true} - this is why 250 was used for $\mu$ when calculating $T_{obs}$.
-% \\\vspace{0.2cm}
-% \end{frame}
-% 
-% % *****************************************************************************
-% 
-% \begin{frame}[fragile]\frametitle{One Sample, one-sided, t-test}
-% \centering
-% \includegraphics[width=0.9\textwidth]{onesample_onesided_ttest_2.png}
-% \end{frame}
-% 
-% % *****************************************************************************
-% 
-% \begin{frame}[fragile]
-% \frametitle{Research Question}
-% The purpose of this hypothesis test analysis is to answer a very specific
-% scientific question:
-% \begin{center}{\bfseries After six weeks will the mean weight of a chicken be
-% more than 250 grams?}\end{center}
-% So what is our answer?\\\vspace{0.3cm}
-% The $p$-value for this hypothesis test is 0.113. Based on this value we can either
-% {\bfseries \large reject} $H_0$ and conclude that the mean weight of chickens
-% in the population is likely to be greater than 250 grams or else we can
-% {\bfseries \large accept} $H_0$ where the mean chicken weight is less than 250 grams.
-% \\\vspace{0.3cm}
-% \end{frame}
-% 
-% % *****************************************************************************
-% 
-% \begin{frame}[fragile]
-% \frametitle{Research Question - be pragmatic with $p$-values}
-% \vspace{0.2cm}
-% By convention a $p$-value of less than 0.05 is considered to provide reasonable
-% evidence for rejecting $H_0$. A $p$-value of between 0.05 and 0.1 might be
-% considered as weak evidence against $H_0$. Values of less that 0.01 are generally
-% considered as very strong evidence for rejecting $H_0$. It is {\bfseries always}
-% best to provide a $p$-value in any analyses to let the reviewer/client see the
-% strength of evidence rather than simply claiming statistically significant
-% findings!
-% \vspace{0.2cm}
-% \end{frame}
-% 
-% % *****************************************************************************
-% 
-% \begin{frame}[fragile]
-% \frametitle{Communicating Results of Hypothesis Tests}
-% Transparency is essential - the devil can be in the detail - which at the very
-% least should comprise:
-% \begin{itemize}
-% \item[i.] what hypothesis was being tested - be clear and precise
-% \item[ii.] what statistical test was used
-% \item[iii.] what the $p$-value is
-% \item[iv.] what the treatment effect is (more later).
-% \end{itemize}
-% \vspace{0.2cm}
-% This is particularly crucial if the analyses are to be given to someone
-% \emph{else} to then make a judgment on the scientific significance.
-% \end{frame}
-% 
-% % *****************************************************************************
-% 
-% \begin{frame}[fragile]
-% \frametitle{Two-sided Tests: One Population}
-% {\bfseries After six weeks will the mean weight of a chicken {\bfseries be equal}
-% to 250 grams?}\\
-% This is now a two sided hypothesis test:
-% \begin{eqnarray}
-% H_0:\quad \mu &=& 250 \nonumber \\
-% H_A:\quad \mu &\ne& 250 \nonumber
-% \end{eqnarray}
-% This time the hypothesis test is asking how much evidence is there in our sample
-% data to conclude that in the population of all chickens the mean weight is not
-% equal to 250 grams.
-% \end{frame}
-% 
-% % *****************************************************************************
-% 
-% \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
-% % \usebackgroundtemplate{}
-% \begin{frame}[fragile]
-% \frametitle{Two-sided Tests: One Population}
-% <<echo=FALSE, eval=TRUE>>=
-% data(chickwts)
-% @
-% 
-% <<echo=TRUE, eval=TRUE>>=
-% t.test(chickwts$weight, mu = 250)
-% @
-% \end{frame}
-% 
-% % *****************************************************************************
-% 
-% % \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
-% \usebackgroundtemplate{}
-% \begin{frame}[fragile]
-% \frametitle{Two-sided Tests}
-% \vspace{0.2cm}
-% A two-sided test is similar to a one-sided test - the key difference is in what
-% is now defined as {\bfseries at least as extreme} in the definition of the $p$-value.
-% This time the alternative hypothesis refers to observing a value of
-% {\bfseries either} $\bar{x}>250$ or $\bar{x}< -250$ {\bfseries assuming that $H_0$ is true},
-% which using the t-test approach is equivalent to the probability of observing
-% $T_{obs}>1.22$ or $T_{obs}<-1.22$ which we can again look up in reference tables.
-% \vspace{0.2cm}
-% \end{frame}
-% 
-% % *****************************************************************************
-% 
-% \begin{frame}[fragile]
-% \frametitle{One Sample, two-sided, t-test}
-% \centering
-% \includegraphics[width=0.9\textwidth]{onesample_twosided_ttest_1.png}
-% \end{frame}
-% 
-% % *****************************************************************************
-% 
-% \begin{frame}[fragile]
-% \frametitle{Two-sided Tests}
-% \begin{itemize}
-% \item The two-sided t-test has a $p$-value which is exactly double the single
-% sided test
-% \item Think! - intuitively the $p$-value should be less for a single sided test
-% as the research question you are asking is much narrower e.g. greater than
-% 250 grams, as opposed to whether the mean chicken weight might be {\bfseries either}
-% less than 250 grams {\bfseries or greater} than 250 grams.\\
-% \vspace{0.2cm}
-% $\rightarrow$ You are using the same amount of information (71 observations)
-% to answer a narrower research question and so all else being equal you should
-% expect a ``more powerful'' analyses (e.g. a lower $p$-value all else being equal)
-% \end{itemize}
-% \end{frame}
-% 
-% % *****************************************************************************
-% 
-% \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
-% % \usebackgroundtemplate{}
-% \begin{frame}[fragile]
-% \frametitle{Exercise 11}
-% \end{frame}
-% 
-% % *****************************************************************************
-% 
-% % \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
-% \usebackgroundtemplate{}
-% \begin{frame}[fragile]
-% \frametitle{Chi-square Test}
-% There are two very commonly used statistical tests for testing
-% dependence between two categorical variables: Chi-squared test
-% \& Fisher’s exact test.
-% % \begin{center}
-% % \includegraphics[width=0.7\paperwidth]{chi_square_test.png}
-% % \end{center}
-% \end{frame}
-% 
-% % *****************************************************************************
-% 
-% % \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
-% \usebackgroundtemplate{}
-% \begin{frame}[fragile]
-% \frametitle{The Chi-square Distribution}
-% % \begin{center}
-% % \includegraphics[width=0.7\paperwidth]{chi_square_distr.png}
-% % \end{center}
-% \end{frame}
-% 
-% % *****************************************************************************
-% 
-% % \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
-% \usebackgroundtemplate{}
-% \begin{frame}[fragile]
-% \frametitle{Exact Fisher Test: Permutation Test}
-% % \begin{center}
-% % \includegraphics[width=0.7\paperwidth]{fisher_test.png}
-% % \end{center}
-% \end{frame}
-% 
-% % *****************************************************************************
-% 
-% \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
-% % \usebackgroundtemplate{}
-% \begin{frame}[fragile]
-% \frametitle{Exercise 12}
-% \end{frame}
-% 
-% % *****************************************************************************
-% 
-% \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
-% % \usebackgroundtemplate{}
-% \begin{frame}[fragile]
-% \frametitle{Plotting in R}
-% \pause
-% \begin{itemize}
-% \setlength\itemsep{1.5em}
-% \item Continuous data
-% \begin{itemize}
-% \item Histogram
-% \item Boxplot
-% \end{itemize}
-% \item Nominal / Ordinal data
-% \begin{itemize}
-% \item Barplot
-% \item Mosaicplot
-% \item Scatterplots
-% \end{itemize}
-% \end{itemize}
-% \end{frame}
-% 
-% % *****************************************************************************
-% 
-% \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
-% % \usebackgroundtemplate{}
-% \begin{frame}[fragile]
-% \frametitle{Exercise 13A and 13B}
-% \end{frame}
-% 
-% \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
-% % \usebackgroundtemplate{}
-% \begin{frame}[fragile]
-% \frametitle{Exercise 14}
-% \end{frame}
-% 
-% % *****************************************************************************
+ % *****************************************************************************
+ 
+ % \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+ \usebackgroundtemplate{}
+ \begin{frame}[fragile]
+ \frametitle{Basic Statistical Tests}
+ Study data is collected for a purpose - to answer one or more specific
+ scientific questions. The classical way to perform a formal statistical
+ analyses of these data is to formulate these research questions into
+ statistical {\bfseries hypothesis tests}. \\
+ \vspace{0.5cm}
+ In this section we will go through a simple example in detail to highlight
+ some of the important concepts - the general approach for more complex
+ analyses is exactly same. \emph{Note: the precise technical details are
+ much less important than the concepts!}
+ \end{frame}
+ 
+ % *****************************************************************************
+ 
+ \begin{frame}[fragile]
+ \frametitle{Simple Example - One Population}
+ {\bfseries After six weeks will the mean weight of a chicken be more than 250
+ grams?}\\
+ There are 71 observations in \texttt{chickwts} from which to answer this
+ question. This can be formulated into a statistical hypothesis test. A
+ hypothesis test has two parts, the null hypothesis and the alternative
+ hypothesis. This is typically written as follows:
+ \begin{eqnarray}
+ H_0:\quad \mu &\le& 250 \nonumber\\
+ H_A:\quad \mu &>& 250 \nonumber
+ \end{eqnarray}
+ where $\mu$ is the mean weight in the {\bfseries population} of
+ chickens from which the sample of 71 chickens was drawn. Remember - we know the
+ mean weight in the sample of chickens is greater than 250 it is the
+ {\bfseries population} of chickens which we are interested in.
+ \end{frame}
+ 
+ % *****************************************************************************
+ 
+ \begin{frame}[fragile]
+ \frametitle{Simple Example - One Population}
+ {\bfseries After six weeks will the mean weight of a chicken be at least 250 grams?}
+ \begin{eqnarray}
+ H_0:\quad \mu &\le& 250 \nonumber\\
+ H_A:\quad \mu &>& 250 \nonumber
+ \end{eqnarray}
+ The null hypothesis ($H_0$) is the default situation, sometimes called the
+ ``state of nature''. In a treatment-control trial, $H_0$ is typically that
+ the effect of the treatment is not different from the control. In this
+ example our default position is that the mean weight of chickens is
+ {\bfseries $\le{250}$}. This is called a single-sided hypothesis test.
+ \end{frame}
+ 
+ % *****************************************************************************
+ 
+ \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+ % \usebackgroundtemplate{}
+ \begin{frame}[fragile]
+ \frametitle{Simple Example - One Population}
+ We now analyse the 71 observations to see whether there is evidence to
+ {\bfseries REJECT} the null hypothesis $H_0$, and if the null hypothesis is
+ rejected then we can conclude that the available evidence supports the
+ alternative hypothesis.
+ <<echo=TRUE, eval=FALSE>>=
+ t.test(chickwts$weight, mu = 250)
+ @
+ Note that hypothesis testing is concerned with finding evidence in support
+ of the null hypothesis $H_0$ - the default situation -  rather than evidence
+ in favour of the alternative hypothesis.
+ \end{frame}
+ 
+ % *****************************************************************************
+ 
+ % \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+ \usebackgroundtemplate{}
+ \begin{frame}[fragile]
+ \frametitle{One Sample t-test}
+ For the chicken weights data an appropriate formal analyses is to use a
+ {\bfseries one-sample t-test}, why this test is appropriate will be discussed
+ later. This analysis involves calculating a simple summary statistic - called
+ a $t$-statistic - which we do entirely from the observed data.
+ \begin{equation}
+ T_{obs}=\frac{\bar{x}-\mu}{s/\sqrt{n}} \nonumber
+ \end{equation}
+ where $\bar{x}$ is the sample mean, $s$ the sample standard deviation and $\mu$
+ is the population mean in the null hypothesis which we wish to test for. We then
+ look up the value of $T_{obs}$ in a set of statistical tables/computer to see
+ what the answer is to our research question.
+ \end{frame}
+ 
+ % *****************************************************************************
+ 
+ \begin{frame}[fragile]
+ \frametitle{Important concept - sampling }
+ \begin{center}
+ Why is $T_{obs}=\frac{\bar{x}-\mu}{s/\sqrt(n)}$ called a $t$-statistic?
+ \end{center}
+ \vspace{0.2cm}
+ If another sample of 71 chickens from the same population were weighed then the
+ values for $\bar{x}$ and $s$ would be different, and hence the value for $T_{obs}$.
+ If this was repeated many times and a histogram/Q-Q/P-P plot produced of the
+ values for $T_{obs}$ then this would follow the shape of a known distribution
+ - {\bfseries student-$t$ probability distribution}. It is this piece of
+ mathematics - knowing what the sampling distribution of $T_{obs}$ is -
+ which allows us to infer information about the population of chickens from
+ which our original 71 chickens were sampled - without actually having to
+ collect lots and lots of other samples of chickens! Mathematical theory is
+ used to fill this data gap.
+ \end{frame}
+ 
+ % *****************************************************************************
+ 
+ \begin{frame}[fragile]
+ \frametitle{\texttt{chickwts}: t-test}
+ \begin{equation}
+ T_{obs}=\frac{261.31-250}{78.07/\sqrt{71}}=1.22 \nonumber
+ \end{equation}
+ 
+ Put the values for the sample mean and standard deviation into the t-statistic
+ formula along with the $\mu=250$. We now look up the value of this in a
+ t-distribution reference table. All this calculation will be done for you in
+ R but it is important to understand the general process as this is the same
+ for hypothesis testing in other more complex analyses.
+ \end{frame}
+ 
+ % *****************************************************************************
+ 
+ \begin{frame}[fragile]
+ \frametitle{One Sample, one-sided, t-test}
+ \centering
+ \includegraphics[width=0.9\textwidth]{onesample_onesided_ttest_1.png}
+ \end{frame}
+ 
+ % *****************************************************************************
+ 
+ \begin{frame}[fragile]
+ \frametitle{Important concept - $p$-values}
+ \begin{itemize}
+ \item The result of a hypothesis test is usually communicated in the form of a
+ {\bfseries $p$-value}
+ \item The interpretation of a $p$-value is of crucial importance - it is the
+ \emph{probability that the test statistic takes values at least as extreme
+ as that observed {\bfseries assuming that $H_0$ is true}}
+ \item Exactly what {\bfseries at least as extreme as} refers to depends on
+ the alternative hypothesis $H_A$.
+ \item This may sound rather abstract but it is usually obvious in practice
+ \end{itemize}
+ \end{frame}
+ 
+ % *****************************************************************************
+ 
+ \begin{frame}[fragile]
+ \frametitle{Simple Example - One Population}
+ {\bfseries After six weeks will the mean weight of a chicken be at least 250 grams?}
+ \begin{eqnarray}
+ H_0:\quad \mu &\le& 250 \nonumber\\
+ H_A:\quad \mu &>& 250 \nonumber
+ \end{eqnarray}
+ The alternative hypothesis is $\mu > 250$ so in this test
+ {\bfseries at least as extreme as} in the definition of a $p$-value is the
+ probability of observing a t-statistic which is $>1.22$
+ {\bfseries assuming that $H_0$ is true} - this is why 250 was used for $\mu$ when calculating $T_{obs}$.
+ \\\vspace{0.2cm}
+ \end{frame}
+ 
+ % *****************************************************************************
+ 
+ \begin{frame}[fragile]\frametitle{One Sample, one-sided, t-test}
+ \centering
+ \includegraphics[width=0.9\textwidth]{onesample_onesided_ttest_2.png}
+ \end{frame}
+ 
+ % *****************************************************************************
+ 
+ \begin{frame}[fragile]
+ \frametitle{Research Question}
+ The purpose of this hypothesis test analysis is to answer a very specific
+ scientific question:
+ \begin{center}{\bfseries After six weeks will the mean weight of a chicken be
+ more than 250 grams?}\end{center}
+ So what is our answer?\\\vspace{0.3cm}
+ The $p$-value for this hypothesis test is 0.113. Based on this value we can either
+ {\bfseries \large reject} $H_0$ and conclude that the mean weight of chickens
+ in the population is likely to be greater than 250 grams or else we can
+ {\bfseries \large accept} $H_0$ where the mean chicken weight is less than 250 grams.
+ \\\vspace{0.3cm}
+ \end{frame}
+ 
+ % *****************************************************************************
+ 
+ \begin{frame}[fragile]
+ \frametitle{Research Question - be pragmatic with $p$-values}
+ \vspace{0.2cm}
+ By convention a $p$-value of less than 0.05 is considered to provide reasonable
+ evidence for rejecting $H_0$. A $p$-value of between 0.05 and 0.1 might be
+ considered as weak evidence against $H_0$. Values of less that 0.01 are generally
+ considered as very strong evidence for rejecting $H_0$. It is {\bfseries always}
+ best to provide a $p$-value in any analyses to let the reviewer/client see the
+ strength of evidence rather than simply claiming statistically significant
+ findings!
+ \vspace{0.2cm}
+ \end{frame}
+ 
+ % *****************************************************************************
+ 
+ \begin{frame}[fragile]
+ \frametitle{Communicating Results of Hypothesis Tests}
+ Transparency is essential - the devil can be in the detail - which at the very
+ least should comprise:
+ \begin{itemize}
+ \item[i.] what hypothesis was being tested - be clear and precise
+ \item[ii.] what statistical test was used
+ \item[iii.] what the $p$-value is
+ \item[iv.] what the treatment effect is (more later).
+ \end{itemize}
+ \vspace{0.2cm}
+ This is particularly crucial if the analyses are to be given to someone
+ \emph{else} to then make a judgment on the scientific significance.
+ \end{frame}
+ 
+ % *****************************************************************************
+ 
+ \begin{frame}[fragile]
+ \frametitle{Two-sided Tests: One Population}
+ {\bfseries After six weeks will the mean weight of a chicken {\bfseries be equal}
+ to 250 grams?}\\
+ This is now a two sided hypothesis test:
+ \begin{eqnarray}
+ H_0:\quad \mu &=& 250 \nonumber \\
+ H_A:\quad \mu &\ne& 250 \nonumber
+ \end{eqnarray}
+ This time the hypothesis test is asking how much evidence is there in our sample
+ data to conclude that in the population of all chickens the mean weight is not
+ equal to 250 grams.
+ \end{frame}
+ 
+ % *****************************************************************************
+ 
+ \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+ % \usebackgroundtemplate{}
+ \begin{frame}[fragile]
+ \frametitle{Two-sided Tests: One Population}
+ <<echo=FALSE, eval=TRUE>>=
+ data(chickwts)
+ @
+ 
+ <<echo=TRUE, eval=TRUE>>=
+ t.test(chickwts$weight, mu = 250)
+ @
+ \end{frame}
+ 
+ % *****************************************************************************
+ 
+ % \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+ \usebackgroundtemplate{}
+ \begin{frame}[fragile]
+ \frametitle{Two-sided Tests}
+ \vspace{0.2cm}
+ A two-sided test is similar to a one-sided test - the key difference is in what
+ is now defined as {\bfseries at least as extreme} in the definition of the $p$-value.
+ This time the alternative hypothesis refers to observing a value of
+ {\bfseries either} $\bar{x}>250$ or $\bar{x}< -250$ {\bfseries assuming that $H_0$ is true},
+ which using the t-test approach is equivalent to the probability of observing
+ $T_{obs}>1.22$ or $T_{obs}<-1.22$ which we can again look up in reference tables.
+ \vspace{0.2cm}
+ \end{frame}
+ 
+ % *****************************************************************************
+ 
+ \begin{frame}[fragile]
+ \frametitle{One Sample, two-sided, t-test}
+ \centering
+ \includegraphics[width=0.9\textwidth]{onesample_twosided_ttest_1.png}
+ \end{frame}
+ 
+ % *****************************************************************************
+ 
+ \begin{frame}[fragile]
+ \frametitle{Two-sided Tests}
+ \begin{itemize}
+ \item The two-sided t-test has a $p$-value which is exactly double the single
+ sided test
+ \item Think! - intuitively the $p$-value should be less for a single sided test
+ as the research question you are asking is much narrower e.g. greater than
+ 250 grams, as opposed to whether the mean chicken weight might be {\bfseries either}
+ less than 250 grams {\bfseries or greater} than 250 grams.\\
+ \vspace{0.2cm}
+ $\rightarrow$ You are using the same amount of information (71 observations)
+ to answer a narrower research question and so all else being equal you should
+ expect a ``more powerful'' analyses (e.g. a lower $p$-value all else being equal)
+ \end{itemize}
+ \end{frame}
+ 
+ % *****************************************************************************
+ 
+ \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+ % \usebackgroundtemplate{}
+ \begin{frame}[fragile]
+ \frametitle{Exercise 11}
+ \end{frame}
+ 
+ % *****************************************************************************
+ 
+ % \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+ \usebackgroundtemplate{}
+ \begin{frame}[fragile]
+ \frametitle{Chi-square Test}
+ There are two very commonly used statistical tests for testing
+ dependence between two categorical variables: Chi-squared test
+ \& Fisher’s exact test.
+ % \begin{center}
+ % \includegraphics[width=0.7\paperwidth]{chi_square_test.png}
+ % \end{center}
+ \end{frame}
+ 
+ % *****************************************************************************
+ 
+ % \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+ \usebackgroundtemplate{}
+ \begin{frame}[fragile]
+ \frametitle{The Chi-square Distribution}
+ % \begin{center}
+ % \includegraphics[width=0.7\paperwidth]{chi_square_distr.png}
+ % \end{center}
+ \end{frame}
+ 
+ % *****************************************************************************
+ 
+ % \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+ \usebackgroundtemplate{}
+ \begin{frame}[fragile]
+ \frametitle{Exact Fisher Test: Permutation Test}
+ % \begin{center}
+ % \includegraphics[width=0.7\paperwidth]{fisher_test.png}
+ % \end{center}
+ \end{frame}
+ 
+ % *****************************************************************************
+ 
+ \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+ % \usebackgroundtemplate{}
+ \begin{frame}[fragile]
+ \frametitle{Exercise 12}
+ \end{frame}
+ 
+ % *****************************************************************************
+ 
+ \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+ % \usebackgroundtemplate{}
+ \begin{frame}[fragile]
+ \frametitle{Plotting in R}
+ \pause
+ \begin{itemize}
+ \setlength\itemsep{1.5em}
+ \item Continuous data
+ \begin{itemize}
+ \item Histogram
+ \item Boxplot
+ \end{itemize}
+ \item Nominal / Ordinal data
+ \begin{itemize}
+ \item Barplot
+ \item Mosaicplot
+ \item Scatterplots
+ \end{itemize}
+ \end{itemize}
+ \end{frame}
+ 
+ % *****************************************************************************
+ 
+ \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+ % \usebackgroundtemplate{}
+ \begin{frame}[fragile]
+ \frametitle{Exercise 13A and 13B}
+ \end{frame}
+ 
+ \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+ % \usebackgroundtemplate{}
+ \begin{frame}[fragile]
+ \frametitle{Exercise 14}
+ \end{frame}
+ 
+ % *****************************************************************************
 
 % \section{Day 5}
 % 
