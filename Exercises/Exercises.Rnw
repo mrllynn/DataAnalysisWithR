@@ -29,6 +29,7 @@
 \usepackage{bibentry} % Include Full BibTeX Entry Inside Slides
 \usepackage{nicefrac}
 \usepackage{soul}
+\usepackage{enumerate}
 
 \graphicspath{{figures/}}
 
@@ -59,7 +60,7 @@
 \thispagestyle{fancy}
 
 \section*{Exercise 1}
-\begin{itemize}
+\begin{enumerate}[(a)]
 \item Open R Studio
 \item Open a new R-Script
 \item Load data set \texttt{chickwts}
@@ -98,10 +99,10 @@ summary(anova)
 par(mfrow=c(2,2))
 plot(lm.mod)
 @
-\end{itemize}
+\end{enumerate}
 %
 \section*{Exercise 2}
-\begin{itemize}
+\begin{enumerate}[(a)]
 \item Create a data frame with 3 columns.
 <<echo = FALSE, eval = FALSE>>=
 # Define single variables
@@ -120,10 +121,10 @@ dat$a.dic <- ifelse(dat$a < mean.a, "smaller", "bigger")
 dat
 
 @
-\end{itemize}
+\end{enumerate}
 %
 \section*{Exercise 3}
-\begin{itemize}
+\begin{enumerate}[(a)]
 \item Install package \texttt{MASS}.
 <<echo = FALSE, eval = FALSE>>=
 # install.packages("MASS")
@@ -174,7 +175,7 @@ summary(ss)
 table(bacteria$week)
 table(ss$week)
 @
-\end{itemize}
+\end{enumerate}
 %
 \section*{Exercise 4}
 What is conceptionally the difference between the bracket types [...] and (...)?
@@ -194,7 +195,7 @@ data.frame(...) # to define a data frame
 @
 %
 \section*{Exercise 5}
-\begin{itemize}
+\begin{enumerate}[(a)]
 \item How many levels has the factor variable \texttt{trt} from \texttt{bacteria}?
 <<echo = FALSE, eval = FALSE>>=
 str(bacteria)
@@ -231,42 +232,63 @@ barplot(table(bacteria$trt.new))
 table(bacteria$trt.new, bacteria$ap)
 table(bacteria$trt.new, bacteria$y)
 plot(table(bacteria$trt.new, bacteria$y))
+fisher.test(table(bacteria$trt.new, bacteria$y))   # Fisher's exact test
+chisq.test(table(bacteria$trt.new, bacteria$y))    # Chi-squared test
+# odds ratio: (a*d)/(b*c)
+(12*93)/(31*84)
 @
-\end{itemize}
+\end{enumerate}
 %
 \section*{Exercise 6}
-\begin{itemize}
+\begin{enumerate}[(a)]
 \item Load data set \texttt{ToothGrowth}.
 <<echo = FALSE, eval = FALSE>>=
 data(ToothGrowth)
 str(ToothGrowth)
 head(ToothGrowth)
+summary(ToothGrowth)
 @
 \item Do summary statistic (numerically and graphically).
 <<echo = FALSE, eval = FALSE>>=
+# NUMERICAL statistics
+# supplement
 table(ToothGrowth$supp)
 tapply(ToothGrowth$len, ToothGrowth$supp, mean)
 tapply(ToothGrowth$len, ToothGrowth$supp, median)
 tapply(ToothGrowth$len, ToothGrowth$supp, sd)
-%
+# dose
 tapply(ToothGrowth$len, ToothGrowth$dose, mean)
 tapply(ToothGrowth$len, ToothGrowth$dose, median)
 tapply(ToothGrowth$len, ToothGrowth$dose, sd)
-%
-barplot(table(ToothGrowth$supp))
+# GRAPHICAL exploration
+# length
 hist(ToothGrowth$len)
+boxplot(ToothGrowth$len, ylab = "tooth length",
+        main = "Boxplot of the tooth length")
+# supplement
+barplot(table(ToothGrowth$supp), legend.text = TRUE)
+boxplot(ToothGrowth$len ~ ToothGrowth$supp, , ylab = "tooth length",
+        main = "Boxplot of the tooth length separately plotted per supplement")
+# dose
+barplot(table(ToothGrowth$dose), legend.text = TRUE)
+# display tooth length increase in dosage
+boxplot(ToothGrowth$len ~ ToothGrowth$dose, , ylab = "tooth length",
+        main = "Boxplot of the tooth length separately plotted per dose")
 # install.packages("graphics")
 library("graphics")
 coplot(len ~ dose | supp, data = ToothGrowth, panel = panel.smooth,
        xlab = "ToothGrowth data: length vs dose, given type of supplement")
 @
-\item Define additional column \texttt{dose.fac} by converting the numeric variable \texttt{dose} into a factor variable.
+\item Define additional column \texttt{dose.factor} by converting the numeric
+variable \texttt{dose} into a factor variable.
 <<echo = FALSE, eval = FALSE>>=
-table(ToothGrowth$dose)
 class(ToothGrowth$dose)
-ToothGrowth$dose.fac <- factor(ToothGrowth$dose, levels = c("0.5", "1", "2"))
-class(ToothGrowth$dose.fac)
-table(ToothGrowth$dose.fac)
+str(ToothGrowth$dose)
+table(ToothGrowth$dose)
+# ToothGrowth$dose.factor <- as.factor(ToothGrowth$dose)
+ToothGrowth$dose.factor <- factor(ToothGrowth$dose, levels = c("0.5", "1", "2"))
+class(ToothGrowth$dose.factor)
+table(ToothGrowth$dose.factor)
 @
 %
 \item Are the tooth length measurements normally distributed within the treatment
@@ -276,17 +298,18 @@ table(ToothGrowth$dose.fac)
 sub.OJ <- subset(ToothGrowth, supp == "OJ")
 sub.VC <- subset(ToothGrowth, supp == "VC")
 # graphically
-qqnorm(sub.OJ$len)
+par(mfrow = c(1,2))
+qqnorm(sub.OJ$len, main = "Normal Q-Q Plot for OJ")
 qqline(sub.OJ$len)
-qqnorm(sub.VC$len)
+qqnorm(sub.VC$len, main = "Normal Q-Q Plot for VC")
 qqline(sub.VC$len)
 # with a statistical test
 shapiro.test(sub.OJ$len)
 shapiro.test(sub.VC$len)
 # dose: 0.5, 1, 2
-sub.0.5 <- subset(ToothGrowth, dose.fac == "0.5")
-sub.1 <- subset(ToothGrowth, dose.fac == "1")
-sub.2 <- subset(ToothGrowth, dose.fac == "2")
+sub.0.5 <- subset(ToothGrowth, dose.factor == "0.5")
+sub.1 <- subset(ToothGrowth, dose.factor == "1")
+sub.2 <- subset(ToothGrowth, dose.factor == "2")
 # graphically
 qqnorm(sub.0.5$len)
 qqline(sub.0.5$len)
@@ -299,10 +322,10 @@ shapiro.test(sub.0.5$len)
 shapiro.test(sub.1$len)
 shapiro.test(sub.2$len)
 @
-\end{itemize}
+\end{enumerate}
 %
 \section*{Exercise 7}
-\begin{itemize}
+\begin{enumerate}[(a)]
 \item Import the data set \texttt{perulung\_ems.csv} (taken from Kirkwood and
 Sterne, 2nd edition) into R. \newline
 Data from a study of lung function among children living in a deprived suburb of
@@ -336,7 +359,6 @@ lung$sex <- factor(lung$sex, levels = c("0", "1"))
 # tapply(lung$fev1, lung$sex, mean)
 lung$respsymptoms <- factor(lung$respsymptoms, levels = c("0", "1"))
 @
-\end{itemize}
 %
 <<echo = FALSE, eval = FALSE>>=
 library(usdm)
@@ -349,13 +371,15 @@ pairs(try.vif)
 vif(try.vif)
 @
 %
-Check for heteroscedascity or homogeneity of variances
+\item Check for heteroscedascity or homogeneity of variances
 <<echo = FALSE, eval = FALSE>>=
 ?bartlett.test
 data("chickwts")
 bartlett.test(weight ~ feed, data = chickwts)
 @
 %
+\end{enumerate}
+
 \section*{Exercise 8}
 Apply the summary statistics to the \texttt{perulung\_ems} and \texttt{ToothGrowth}
 data set.
@@ -397,7 +421,7 @@ tapply(ToothGrowth$len, ToothGrowth$dose, sd)
 @
 %
 \section*{Exercise 9A: Plausibility Checks}
-\begin{itemize}
+\begin{enumerate}[(a)]
 \item What can go wrong?
 \item Identify different strategies for spotting these potential errors.
 \begin{itemize}
@@ -406,15 +430,6 @@ tapply(ToothGrowth$len, ToothGrowth$dose, sd)
 \end{itemize}
 \item Import the data set \texttt{bacteria\_plausibility\_check.csv} to R.
 <<echo = FALSE, eval = FALSE>>=
-# OPTION 1:
-# install.packages("readr")
-library("readr")
-bac <- read_delim("bacteria_plausibility_check.csv",
-                  ";", escape_double = FALSE, trim_ws = TRUE)
-bac <- data.frame(bac)
-# OPTION 2:
-# Import .csv file with the help of the read.csv function
-# Be sure to add sep = ";" so that we separate the columns.
 bac <- read.csv("bacteria_plausibility_check.csv", sep = ",")
 head(bac)
 str(bac)
@@ -447,6 +462,8 @@ bac <- bac[-which(bac$week == 20), ] # dim(bac)
 bac$trt[bac$trt == "drug++"] <- "drug+"
 bac$trt[bac$trt == "penicillin+"] <- "drug+"
 table(bac$trt) # We have wrong factor levels: drug++, penicillin+
+levels(bac$trt) <- c("drug", "drug+", "drug+", "drug", "placebo")
+table(bac$trt) # We only have three factor levels left.
 bac$child_weight[bac$child_weight == 302.8] <- 30.28
 summary(bac)
 @
@@ -458,10 +475,10 @@ bac$hilo[bac$hilo == "Hi"] <- "hi"
 bac$ID <- factor(bac$ID)
 bac$trt <- factor(bac$trt)
 @
-\end{itemize}
+\end{enumerate}
 %
 \section*{Exercise 9B: Missing Values}
-\begin{itemize}
+\begin{enumerate}[(a)]
 \item Check out the difference between the different missing values
 <<echo = FALSE, eval = FALSE>>=
 y1 <- c(2, 4, 3, NA, 6, 1)
@@ -544,10 +561,10 @@ is.na(x1)
 # or
 ifelse(is.na(x1),0,x1)
 @
-\end{itemize}
+\end{enumerate}
 %
 \section*{Exercise 10}
-\begin{itemize}
+\begin{enumerate}[(a)]
 \item Import the data set \texttt{water\_errors.csv} to R:
 A data frame with $61$ observations on the following $6$
 variables.
@@ -642,10 +659,10 @@ levels(H2O_err$num.of.cig) <- c("none", "1 to less than 5", "5 to 20", "more tha
 table(H2O_err$num.of.cig)
 levels(H2O_err$num.of.cig)
 @
-\end{itemize}
+\end{enumerate}
 %
 \section*{Exercise 11}
-\begin{itemize}
+\begin{enumerate}[(a)]
 \item Apply the two-sided two sample t-test to suitable variables of the data set \texttt{ToothGrowth}.
 <<echo = FALSE, eval = FALSE>>=
 ?t.test
@@ -713,11 +730,11 @@ coef(mod.fev.sex.1)
 anova(mod.fev.sex.0)
 anova(mod.fev.sex.1)
 @
-\end{itemize}
+\end{enumerate}
 %
 %
 \section*{Exercise 12}
-\begin{itemize}
+\begin{enumerate}[(a)]
 \item Apply the Chi-square Test and the fisher exact test to the whole
 \texttt{bacteria} data set.
 <<echo = FALSE, eval = FALSE>>=
@@ -788,10 +805,10 @@ anova(model.logreg)
 coef(model.logreg)
 exp(coef(model.logreg))
 @
-\end{itemize}
+\end{enumerate}
 %
 \section*{Exercise 13A: Outside plot frame}
-\begin{itemize}
+\begin{enumerate}[(a)]
 \item Type \texttt{demo(graphics)} in your console and press enter.
 This command shows you a nice demonstration of possible R graphics.
 <<echo = FALSE, eval = FALSE>>=
@@ -868,10 +885,10 @@ plot(ToothGrowth$dose, ToothGrowth$len,
      xlab = expression(paste("Vitamin C in ", mu, "g")))
 @
 \item Read \url{http://www.statmethods.net/advgraphs/parameters.html}.
-\end{itemize}
+\end{enumerate}
 
 \section*{Exercise 13B: Inside the square of the plot}
-\begin{itemize}
+\begin{enumerate}[(a)]
 \item Type \texttt{demo(graphics)} in your console and press enter.
 \item Add a legend to the following barplot. Are there several different solutions
 for this?
@@ -955,10 +972,10 @@ plot(ToothGrowth$len, ToothGrowth$dose,
      col = as.numeric(ToothGrowth$supp))
 @
 \item Read \url{http://www.statmethods.net/advgraphs/parameters.html}.
-\end{itemize}
+\end{enumerate}
 
 \section*{Exercise 14}
-\begin{itemize}
+\begin{enumerate}[(a)]
 \item Load the below data set and for further information check the command
 \texttt{?water}.
 <<echo = FALSE, eval = FALSE>>=
@@ -985,7 +1002,7 @@ plot(mortality ~ hardness, data = water,
      main = "Calcium concentration against mortality")
 @
 \item Change the ...
-\begin{enumerate}
+\begin{enumerate}[(a)]
 \item font size of the axis annotation
 \item font size of the x- and y-axis labels
 \item the point sizes within the plot
@@ -1071,35 +1088,35 @@ interaction.plot(ToothGrowth$dose,
                  ToothGrowth$len,
                  fixed = TRUE)
 @
-\end{itemize}
+\end{enumerate}
 
 \section*{Exercise 15}
-\begin{itemize}
+\begin{enumerate}[(a)]
 \item Download the .R file \texttt{ANOVA\_with\_chickwts.R} from the switch drive
 and have another look on how we applied the anova to the \texttt{chickwts}
 data set.
 \item Load the \texttt{ToothGrowth} data set into R and encode the numeric variable
 \texttt{dose} as a factor variable. Define the new factor variable as
-\texttt{dose.fac} with the three levels \texttt{low}, \texttt{med} and
+\texttt{dose.factor} with the three levels \texttt{low}, \texttt{med} and
 \texttt{high} and add it to the data frame of \texttt{ToothGrowth}.
 <<echo = FALSE, eval = FALSE>>=
 data(ToothGrowth)
 str(ToothGrowth)
 head(ToothGrowth)
-ToothGrowth$dose.fac <- factor(ToothGrowth$dose, levels = c(0.5, 1.0, 2.0),
+ToothGrowth$dose.factor <- factor(ToothGrowth$dose, levels = c(0.5, 1.0, 2.0),
                                labels = c("low", "med", "high"))
-table(ToothGrowth$dose.fac)
+table(ToothGrowth$dose.factor)
 @
 \item Visualize the variable \texttt{len} per \texttt{dose} level in a boxplot.
 <<echo = FALSE, eval = FALSE>>=
-boxplot(ToothGrowth$len ~ ToothGrowth$dose.fac)
+boxplot(ToothGrowth$len ~ ToothGrowth$dose.factor)
 @
 \item With the help of the R-commands written in the
 \texttt{ANOVA\_with\_chickwts.R}  file, apply a analysis of variance (ANOVA) to
 the data set \texttt{ToothGrowth}
 <<echo = FALSE, eval = FALSE>>=
-# aov.mod <- aov(ToothGrowth$len ~ ToothGrowth$dose.fac)
-aov.mod <- aov(len ~ dose.fac, data = ToothGrowth)
+# aov.mod <- aov(ToothGrowth$len ~ ToothGrowth$dose.factor)
+aov.mod <- aov(len ~ dose.factor, data = ToothGrowth)
 # What objects can we extract from a anova model?
 objects(aov.mod)
 #
@@ -1107,7 +1124,7 @@ summary(aov.mod)
 
 # What are residuals?
 ToothGrowth$residuals <- residuals(aov.mod)
-tapply(ToothGrowth$len, ToothGrowth$dose.fac, mean)
+tapply(ToothGrowth$len, ToothGrowth$dose.factor, mean)
 ToothGrowth[c(1:3),]
 # Save residuals to an objects and check mean of residuals
 aov.mod.resid <- residuals(aov.mod)
@@ -1125,12 +1142,12 @@ shapiro.test(aov.mod.resid)
 # shapiro.test(a)
 
 # Bartlett Test
-bartlett.test(ToothGrowth$len ~ ToothGrowth$dose.fac)
+bartlett.test(ToothGrowth$len ~ ToothGrowth$dose.factor)
 
 # Levene's Test
 # install.packages("Rcmdr")
 # library("Rcmdr")
-# levene.test(ToothGrowth$len ~ ToothGrowth$dose.fac)
+# levene.test(ToothGrowth$len ~ ToothGrowth$dose.factor)
 
 # Plot fitted against residual values
 objects(aov.mod)
@@ -1159,8 +1176,8 @@ plot(fitted.values(aov.mod), residuals(aov.mod))
 abline(h = 0, col = "red", lwd = 3, lty = 2)
 # Plot residuals against variables from the model
 plot(ToothGrowth$len, residuals(aov.mod), ylab = "residuals")
-plot(ToothGrowth$dose.fac, residuals(aov.mod),
-     xlab = "ToothGrowth$dose.fac", ylab = "residuals")
+plot(ToothGrowth$dose.factor, residuals(aov.mod),
+     xlab = "ToothGrowth$dose.factor", ylab = "residuals")
 
 par(mfrow=c(2, 2))
 plot(aov.mod)
@@ -1177,20 +1194,20 @@ plot(aov.mod)
 # chickwts$feed <- relevel(chickwts$feed, "casein")
 # levels(chickwts$feed)
 
-aov.mod <- aov(len ~ dose.fac, data = ToothGrowth)
+aov.mod <- aov(len ~ dose.factor, data = ToothGrowth)
 
-# aov.mod1 <- aov(len ~ dose.fac, data = ToothGrowth)
-# aov.mod2 <- aov(ToothGrowth$len ~ ToothGrowth$dose.fac)
+# aov.mod1 <- aov(len ~ dose.factor, data = ToothGrowth)
+# aov.mod2 <- aov(ToothGrowth$len ~ ToothGrowth$dose.factor)
 # summary(aov.mod1)
 # summary(aov.mod2)
 
 # DO NOT USE THIS COMMAND, OTHERWISE THE LINEAR FUNCTION WITHIN
 # DUNNETT AND TUKEY DOES NOT WORK!
 # --> specify the data at the end of the aov model
-# aov.mod <- aov(ToothGrowth$len ~ ToothGrowth$dose.fac)
+# aov.mod <- aov(ToothGrowth$len ~ ToothGrowth$dose.factor)
 summary(aov.mod)
-pairwise.t.test(ToothGrowth$len, ToothGrowth$dose.fac, p.adj = "none")
-pairwise.t.test(ToothGrowth$len, ToothGrowth$dose.fac, p.adj = "bonferroni")
+pairwise.t.test(ToothGrowth$len, ToothGrowth$dose.factor, p.adj = "none")
+pairwise.t.test(ToothGrowth$len, ToothGrowth$dose.factor, p.adj = "bonferroni")
 
 # install the package first (one time)
 # install.packages("multcomp") 
@@ -1198,13 +1215,13 @@ pairwise.t.test(ToothGrowth$len, ToothGrowth$dose.fac, p.adj = "bonferroni")
 library("multcomp")
 # compares always to baseline levels (here: casein) --> saves degrees of freedom
 # make sure you saved the aov.mod as:
-# aov.mod <- aov(len ~ dose.fac, data = ToothGrowth)
-dunnett <- glht(aov.mod, linfct = mcp(dose.fac = "Dunnett"))
+# aov.mod <- aov(len ~ dose.factor, data = ToothGrowth)
+dunnett <- glht(aov.mod, linfct = mcp(dose.factor = "Dunnett"))
 summary(dunnett)
 
 library("multcomp")
 # compares all factor levels
-tukey <- glht(aov.mod, linfct = mcp(dose.fac = "Tukey"))
+tukey <- glht(aov.mod, linfct = mcp(dose.factor = "Tukey"))
 summary(tukey)
 # summary(tukey)          # standard display
 tukey.cld <- cld(tukey)   # letter-based display
@@ -1213,10 +1230,10 @@ tukey.cld <- cld(tukey)   # letter-based display
 par(mfrow=c(1,1), mar=c(5,4,8,2))
 plot(tukey.cld)
 @
-\end{itemize}
+\end{enumerate}
 
 \section*{Exercise 16}
-\begin{itemize}
+\begin{enumerate}[(a)]
 \item Download the .R file \texttt{LM\_with\_water.R} from the switch drive
 and have another look on how we applied the linear model to the \texttt{water}
 data set.
@@ -1289,30 +1306,30 @@ round(AIC(mod1, mod2, mod3, mod4, mod5), 2)
 par(mfrow=c(2,2))
 plot(mod5)
 @
-\end{itemize}
+\end{enumerate}
 
 \section*{Exercise 17}
-\begin{itemize}
+\begin{enumerate}[(a)]
 \item Load the \texttt{ToothGrowth} data set and run the following four
 linear regression models.
 <<echo = FALSE, eval = TRUE>>=
 data(ToothGrowth)
-ToothGrowth$dose.fac <- factor(ToothGrowth$dose, levels = c(0.5, 1.0, 2.0),
+ToothGrowth$dose.factor <- factor(ToothGrowth$dose, levels = c(0.5, 1.0, 2.0),
                           labels = c("low", "med", "high"))
 @
 
 <<echo = FALSE, eval = FALSE>>=
-mod1 <- lm(len ~ dose.fac, data = ToothGrowth)
+mod1 <- lm(len ~ dose.factor, data = ToothGrowth)
 mod2 <- lm(len ~ supp, data = ToothGrowth)
-mod3 <- lm(len ~ dose.fac + supp, data = ToothGrowth)
+mod3 <- lm(len ~ dose.factor + supp, data = ToothGrowth)
 @
 \item Have a look at the summary of these models.
 <<echo = FALSE, eval = FALSE>>=
-mod1 <- lm(len ~ dose.fac, data = ToothGrowth)
+mod1 <- lm(len ~ dose.factor, data = ToothGrowth)
 mod2 <- lm(len ~ supp, data = ToothGrowth)
-mod3 <- lm(len ~ dose.fac + supp, data = ToothGrowth)
-# mod4 <- lm(len ~ dose.fac + supp + dose.fac:supp, data = ToothGrowth)
-mod4 <- lm(len ~ dose.fac*supp, data = ToothGrowth)
+mod3 <- lm(len ~ dose.factor + supp, data = ToothGrowth)
+# mod4 <- lm(len ~ dose.factor + supp + dose.factor:supp, data = ToothGrowth)
+mod4 <- lm(len ~ dose.factor*supp, data = ToothGrowth)
 summary(mod1)
 summary(mod2)
 summary(mod3)
@@ -1332,10 +1349,10 @@ AIC(mod1, mod2, mod3, mod4)
 # mod4 is the best model, because it has the smallest AIC.
 # THE SMALLER THE AIC, THE BETTER THE MODEL!
 @
-\end{itemize}
+\end{enumerate}
 
 \section*{Exercise 18}
-\begin{itemize}
+\begin{enumerate}[(a)]
 \item Load the \texttt{water} data set and fit a multiple linear regression model.
 Use \texttt{mortality} as your response variable and add \texttt{hardness} and
 \texttt{location} as an explanatory variable.
@@ -1383,12 +1400,12 @@ of \texttt{hardness} and \texttt{location}?
 <<echo = FALSE, eval = FALSE>>=
 confint(lm.mod)
 @
-\end{itemize}
+\end{enumerate}
 
 
 \section*{Exercise 19}
 {\bfseries Hypothetical example} - from Kirkwood and Sterne, Medical Statistics, 2nd ed., p. 177
-\begin{itemize}
+\begin{enumerate}[(a)]
 \item Read in the data set \texttt{lepto}. This study presents a serology survey of
 leptospira sero-prevalence in rural and urban areas of the west indies.
 <<echo = FALSE, eval = FALSE>>=
@@ -1472,12 +1489,7 @@ glm.exp.gen <- glm(exposure ~  gender, data = lepto,
                family = "binomial")
 summary(glm.exp.gen)
 @
-\item \textbf{SPECIAL FOR GUMA}: Is \texttt{exposure} being from an urban area
-a risk factor?
-<<>>=
 
-@
-
-\end{itemize}
+\end{enumerate}
 
 \end{document}
