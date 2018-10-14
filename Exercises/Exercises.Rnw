@@ -463,6 +463,7 @@ bac$trt[bac$trt == "drug++"] <- "drug+"
 bac$trt[bac$trt == "penicillin+"] <- "drug+"
 table(bac$trt) # We have wrong factor levels: drug++, penicillin+
 levels(bac$trt) <- c("drug", "drug+", "drug+", "drug", "placebo")
+# levels(bac$trt) <- droplevels(bac$trt)
 table(bac$trt) # We only have three factor levels left.
 bac$child_weight[bac$child_weight == 302.8] <- 30.28
 summary(bac)
@@ -470,21 +471,22 @@ summary(bac)
 \item Do all variables have the correct data type (numeric, integer, factor)?
 - If not, do correct / define them.
 <<echo = FALSE, eval = FALSE>>=
-bac$y <- factor(bac$y, levels = c("n", "y"))
-bac$hilo[bac$hilo == "Hi"] <- "hi"
-bac$ID <- factor(bac$ID)
-bac$trt <- factor(bac$trt)
+str(bac)
+# bac$y <- factor(bac$y, levels = c("n", "y"))
+# bac$hilo[bac$hilo == "Hi"] <- "hi"
+# bac$ID <- factor(bac$ID)
+# bac$trt <- factor(bac$trt)
 @
 \end{enumerate}
 %
 \section*{Exercise 9B: Missing Values}
 \begin{enumerate}[(a)]
-\item Check out the difference between the different missing values
+\item Check out the difference between the different missing values.
 <<echo = FALSE, eval = FALSE>>=
 y1 <- c(2, 4, 3, NA, 6, 1)
 y2 <- c("diseased", "healthy", NA, "NA")
 y3 <- c(1, "NA", 0, 1, NaN)
-%
+# 
 is.na(y1)
 which(is.na(y1))
 is.na(y2)
@@ -494,7 +496,7 @@ which(is.na(y3))
 is.nan(y3)
 @
 %
-\item Create a vector with missing values and determine the mean and median
+\item Create a vector with missing values and determine the mean and median.
 <<echo = FALSE, eval = FALSE>>=
 myvector <- c(1:3,NA,NA,1:3)
 mean(myvector)
@@ -510,7 +512,7 @@ length(x)
 @
 %
 \item If \texttt{x = c(NA,3,14,NA,33,17,NA,41)} which line of R code removes
-all occurrences of NA in x.
+all occurrences of NA in \texttt{x}.
 <<echo = FALSE, eval = FALSE>>=
 x <- c(NA,3,14,NA,33,17,NA,41)
 x[!is.na(x)]
@@ -536,7 +538,8 @@ sum(x == "NA", is.na(x))
 sum(is.na(x))
 @
 %
-\item Create a vector and find the number of missing values and their position
+\item Create a vector with some missing values. Then, find the number of missing
+values and their position.
 <<echo = FALSE, eval = FALSE>>=
 x1 <- c(rnorm(10,5,2),NA,5:12,NA,6,7.5,NA)
 is.na(x1)
@@ -590,7 +593,7 @@ head(H2O_err)
 \item Detect the errors in the imported data set \texttt{water\_errors.csv} in R.
 <<echo = FALSE, eval = FALSE>>=
 str(H2O_err)
-table(H2O_err$location) # Only one N and only one West observation.
+table(H2O_err$location) # Only 1 N and only 1 West observation.
 table(H2O_err$town) # LIVERPOOL is in capital letter.
 summary(H2O_err$mortality)
 summary(H2O_err$hardness) # hardness of -2 does not make sense, two NA's
@@ -701,7 +704,7 @@ t.test(sub.VC$len, sub.OJ$len)
 lm.mod0 <- lm(ToothGrowth$len ~ ToothGrowth$supp - 1)
 coef(lm.mod)
 @
-\item Apply the two-sided t-test to the \texttt{perulung\_ems} data set
+\item Apply the two-sided t-test to the \texttt{perulung\_ems} data set.
 <<echo = FALSE, eval = FALSE>>=
 # two-sided t-test of fev1 vs respsymptoms
 t.test(lung$fev1 ~ lung$respsymptoms)
