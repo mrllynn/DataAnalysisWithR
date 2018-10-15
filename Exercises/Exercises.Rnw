@@ -482,7 +482,7 @@ str(bac)
 \section*{Exercise 9B: Missing Values}
 \begin{enumerate}[(a)]
 \item Check out the difference between the different missing values.
-<<echo = FALSE, eval = FALSE>>=
+<<eval = FALSE>>=
 y1 <- c(2, 4, 3, NA, 6, 1)
 y2 <- c("diseased", "healthy", NA, "NA")
 y3 <- c(1, "NA", 0, 1, NaN)
@@ -498,20 +498,20 @@ is.nan(y3)
 %
 \item Create a vector with missing values and determine the mean and median.
 <<echo = FALSE, eval = FALSE>>=
-myvector <- c(1:3,NA,NA,1:3)
+myvector <- c(1:3, NA, NA, 1:3)
 mean(myvector)
-mean(myvector,na.rm=TRUE) # calculates c(1, 2, 3, 1, 2, 3)
-median(myvector,na.rm=TRUE)
+mean(myvector, na.rm=TRUE) # calculates c(1, 2, 3, 1, 2, 3)
+median(myvector, na.rm=TRUE)
 @
 %
 \item If \texttt{x = c(22,3,7,NA,NA,67)} what will be the output for the R
 statement \texttt{length(x)}?
 <<echo = FALSE, eval = FALSE>>=
-x <- c (22,3,7,NA,NA,67)
+x <- c (22, 3, 7, NA, NA, 67)
 length(x)
 @
 %
-\item If \texttt{x = c(NA,3,14,NA,33,17,NA,41)} which line of R code removes
+\item If \texttt{x = c(NA, 3, 14, NA, 33, 17, NA, 41)} which line of R code removes
 all occurrences of NA in \texttt{x}.
 <<echo = FALSE, eval = FALSE>>=
 x <- c(NA,3,14,NA,33,17,NA,41)
@@ -520,7 +520,7 @@ x[is.na(x)]
 x[which(is.na(x))] <- 0
 @
 %
-\item If \texttt{y = c(1,3,12,NA,33,7,NA,21)} what R statement will replace
+\item If \texttt{y = c(1, 3, 12, NA, 33, 7, NA, 21)} what R statement will replace
 all occurrences of NA with 11?
 <<echo = FALSE, eval = FALSE>>=
 y <- c(1,3,12,NA,33,7,NA,21)
@@ -529,7 +529,7 @@ y[is.na(y)] <- 11
 y[y==11] <- NA
 @
 %
-\item If \texttt{x = c(34,33,65,37,89,NA,43,NA,11,NA,23,NA)} then what will
+\item If \texttt{x = c(34, 33, 65, 37, 89, NA, 43, NA, 11, NA, 23, NA)} then what will
 count the number of occurrences of NA in \texttt{x}?
 <<echo = FALSE, eval = FALSE>>=
 x <- c(34,33,65,37,89,NA,43,NA,11,NA,23,NA)
@@ -538,10 +538,13 @@ sum(x == "NA", is.na(x))
 sum(is.na(x))
 @
 %
-\item Create a vector with some missing values. Then, find the number of missing
-values and their position.
+\item Create the vector \texttt{x1}. Then, find again the number of missing values
+and their position.
+<<eval = FALSE>>=
+x1 <- c(rnorm(10,5,2), NA, 5:12, NA, 6, 7.5, NA)
+@
 <<echo = FALSE, eval = FALSE>>=
-x1 <- c(rnorm(10,5,2),NA,5:12,NA,6,7.5,NA)
+x1 <- c(rnorm(10,5,2), NA, 5:12, NA, 6, 7.5, NA)
 is.na(x1)
 summary(x1)
 sum(is.na(x1))
@@ -549,20 +552,30 @@ which(is.na(x1))
 @
 %
 \item Now, create the vector \texttt{x2} and assess the difference to \texttt{x1}.
+<<eval = FALSE>>=
+x2 <- c(rnorm(10,5,2), NA, 5:12, NA, 6, 7.5, NA, log(-2))
+@
 <<echo = FALSE, eval = FALSE>>=
-x2 <- c(rnorm(10,5,2),NA,5:12,NA,6,7.5,NA,log(-2))
+x2 <- c(rnorm(10,5,2), NA, 5:12, NA, 6, 7.5, NA, log(-2))
 x2
+is.na(x2)
+summary(x2)
+sum(is.na(x2))
+which(is.na(x2))
 @
 %
 \item What is the meaning of "NA" versus "NaN"?
 %
-\item Replace the missing values in \texttt{x1} with a 0, and check that no NAs are present
-try two different commands to coerce the NAs into 0.
+\item Replace the missing values in \texttt{x1} with a 0. Check then that the NAs
+are no longer present. Try two different commands to coerce the NAs into 0.
 <<echo = FALSE, eval = FALSE>>=
+x1 <- c(rnorm(10,5,2), NA, 5:12, NA, 6, 7.5, NA)
 x1[is.na(x1)] <- 0
 is.na(x1)
-# or
-ifelse(is.na(x1),0,x1)
+# or with the ifelse statement
+x1 <- c(rnorm(10,5,2), NA, 5:12, NA, 6, 7.5, NA)
+ifelse(is.na(x1), 0, x1)
+is.na(x1)
 @
 \end{enumerate}
 %
@@ -704,8 +717,13 @@ t.test(sub.VC$len, sub.OJ$len)
 lm.mod0 <- lm(ToothGrowth$len ~ ToothGrowth$supp - 1)
 coef(lm.mod)
 @
-\item Apply the two-sided t-test to the \texttt{perulung\_ems} data set.
+\item Apply the two-sided t-test to suitable variables of the \texttt{perulung\_ems} data set.
+and interpret the results.
 <<echo = FALSE, eval = FALSE>>=
+lung <- read.csv("perulung_ems.csv", sep = ";")
+head(lung)
+str(lung)
+summary(lung)
 # two-sided t-test of fev1 vs respsymptoms
 t.test(lung$fev1 ~ lung$respsymptoms)
 t.test(fev1 ~ respsymptoms, data = lung)
@@ -764,7 +782,7 @@ chisq.test(table(bacteria$trt, bacteria$y))
 fisher.test(table(bacteria$trt, bacteria$y))
 @
 \item Apply the Chi-square Test and the fisher exact test to the subset of
-\texttt{bacteria} containing only the observations taken in week 2.
+\texttt{bacteria} containing only the observations taken in week 2 (cf. Exercise 3).
 Are there any issues?
 <<echo = FALSE, eval = FALSE>>=
 subbac <- subset(bacteria, week == 2)
@@ -775,7 +793,8 @@ chisq.test(table(subbac$trt, subbac$y))
 fisher.test(table(subbac$trt, subbac$y))
 @
 \item Repeat this exercise by using the (previously defined) combined
-\texttt{trt.new} variable with the two levels \texttt{treated} and \texttt{drug}.
+\texttt{trt.new} variable (cf. Exercise 5) with the two levels \texttt{treated}
+and \texttt{drug}.
 <<echo = FALSE, eval = FALSE>>=
 # WHOLE DATA SET
 # Chi-squared test with trt.new and y
@@ -981,7 +1000,7 @@ plot(ToothGrowth$len, ToothGrowth$dose,
 \begin{enumerate}[(a)]
 \item Load the below data set and for further information check the command
 \texttt{?water}.
-<<echo = FALSE, eval = FALSE>>=
+<<eval = FALSE>>=
 # install.packages("HSAUR3")
 library("HSAUR3")
 data("water")
@@ -1095,13 +1114,16 @@ interaction.plot(ToothGrowth$dose,
 
 \section*{Exercise 15}
 \begin{enumerate}[(a)]
-\item Download the .R file \texttt{ANOVA\_with\_chickwts.R} from the switch drive
+\item Open the .R file \texttt{ANOVA\_with\_chickwts.R} from your RCourse folder
 and have another look on how we applied the anova to the \texttt{chickwts}
-data set.
+data set. Check line for line.
 \item Load the \texttt{ToothGrowth} data set into R and encode the numeric variable
 \texttt{dose} as a factor variable. Define the new factor variable as
 \texttt{dose.factor} with the three levels \texttt{low}, \texttt{med} and
 \texttt{high} and add it to the data frame of \texttt{ToothGrowth}.
+<<eval = FALSE>>=
+data(ToothGrowth)
+@
 <<echo = FALSE, eval = FALSE>>=
 data(ToothGrowth)
 str(ToothGrowth)
