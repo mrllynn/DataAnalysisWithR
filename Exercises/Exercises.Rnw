@@ -679,9 +679,14 @@ levels(H2O_err$num.of.cig)
 %
 \section*{Exercise 11}
 \begin{enumerate}[(a)]
-\item Apply the two-sided two sample t-test to suitable variables of the data set \texttt{ToothGrowth}.
+\item Load the data set \texttt{ToothGrowth} within R and apply the two-sided two
+sample t-test to suitable variables of the data set.
+<<eval = FALSE>>=
+data(ToothGrowth)
+@
 <<echo = FALSE, eval = FALSE>>=
 ?t.test
+# SOLUTION WITH VECTORS:
 t.test(ToothGrowth$len ~ ToothGrowth$supp)
 t.test(len ~ supp, data = ToothGrowth)
 # p-value = 0.06039 (borderline) significant, close to 0.05
@@ -691,19 +696,13 @@ boxplot(ToothGrowth$len ~ ToothGrowth$supp)
 # change the default setting of var.equal
 t.test(ToothGrowth$len ~ ToothGrowth$supp, var.equal = TRUE)
 t.test(ToothGrowth$len ~ ToothGrowth$supp, var.equal = FALSE) # DEFAULT!
-%
+# SOLUTION WITH DATA FRAME:
 # Define subset
 sub.OJ <- subset(ToothGrowth, supp == "OJ")
 sub.VC <- subset(ToothGrowth, supp == "VC")
-# Drop (unused) levels for each subset
-sub.VC$supp <- droplevels(sub.VC$supp)
-levels(sub.VC$supp) # check that levels are dropped
-sub.OJ$supp <- droplevels(sub.OJ$supp)
-levels(sub.OJ$supp) # check that levels are dropped
 # Additional option for comparing lengths between the two groups:
 # Compare the two vectors of lengths
 t.test(sub.VC$len, sub.OJ$len)
-%
 @
 \item Interpret the results.
 <<echo = FALSE, eval = FALSE>>=
@@ -715,10 +714,12 @@ t.test(sub.VC$len, sub.OJ$len)
 # sample mean in group VC: 16.96333
 # Also with the lm(...) function  for "linear model" you get the same sample means:
 lm.mod0 <- lm(ToothGrowth$len ~ ToothGrowth$supp - 1)
-coef(lm.mod)
+coef(lm.mod0)
+lm.mod1 <- lm(len ~ supp + dose, data = ToothGrowth)
+summary(lm.mod1)
 @
-\item Apply the two-sided t-test to suitable variables of the \texttt{perulung\_ems} data set.
-and interpret the results.
+\item Read in the data set \texttt{perulung\_ems} and apply the two-sided t-test
+to suitable variables of the \texttt{perulung\_ems} data set and interpret the results.
 <<echo = FALSE, eval = FALSE>>=
 lung <- read.csv("perulung_ems.csv", sep = ";")
 head(lung)
