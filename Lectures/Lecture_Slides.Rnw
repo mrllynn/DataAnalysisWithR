@@ -10,6 +10,21 @@
 data_dir <- "../Exercises/data"
 @
 
+<<echo = FALSE, eval = TRUE, message = FALSE, cache = TRUE, warning = FALSE>>=
+install.packages("MASS")
+install.packages("readxl")
+install.packages("Rcmdr")
+install.packages("multcomp")
+install.packages("HSAUR3")
+install.packages("investr")
+install.packages("quantreg")
+install.packages("mi")
+install.packages("missForest")
+install.packages("mice")
+install.packages("partykit")
+install.packages("party")
+@
+
 % turn off navigation symbols
 \beamertemplatenavigationsymbolsempty
 
@@ -1556,12 +1571,49 @@ rpois(n, lambda = 7)             # Poisson distribution
 \item Other options
 <<echo=TRUE, eval=FALSE, size = "scriptsize">>=
 seq(from = 0, to = 100, by = 1)             # ID
-sample(3:30, size = 50, replace = TRUE)     # herd size
-rep(c(1, 2, 3), times = 5)
-rep(c(1, 2, 3), each = 5)
+sample(3:30, size = n, replace = TRUE)      # herd size
+c(rep(c(1, 2, 3), times = 33), 1)
+c(rep(c(1, 2, 3), each = 33), 1)
 @
 \item ...
 \end{itemize}
+\end{frame}
+
+
+% *****************************************************************************
+
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+% \usebackgroundtemplate{}
+\begin{frame}[fragile]
+\frametitle{Side remark: Conditional Inference Trees (1/2)}
+\begin{itemize}
+\setlength\itemsep{1.2em}
+\item \texttt{ctree(...)} is a non-parametric class of regression trees embedding
+tree structured regression models into a well defined theory of conditional inference
+procedures.
+\item \textbf{Recursive partitioning algorithm:}
+\begin{itemize}
+\item partition the observations by univariate splits in a recursive way
+\item fit a constant model in each cell of the resulting partition
+\item $\rightarrow$ uses an information measure of node impurityto select the variables
+showing the best split
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+% *****************************************************************************
+
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+% \usebackgroundtemplate{}
+\begin{frame}[fragile]
+\frametitle{Side remark: Conditional Inference Trees (2/2)}
+<<echo = TRUE, eval = TRUE, size = "scriptsize", out.width = "60%", fig.align="center", message = FALSE, warning = FALSE, cache = TRUE>>=
+library("partykit")
+library("party")
+data("ToothGrowth")
+my.tooth.tree <- ctree(len ~ ., data = ToothGrowth)
+plot(my.tooth.tree, tp_args = list(id = FALSE))
+@
 \end{frame}
 
 % *****************************************************************************
@@ -1627,8 +1679,8 @@ rep(c(1, 2, 3), each = 5)
 \item The simple linear regression model
 \item The multiple linear regression model
 \item Model selection: $R^2$ and AIC
-\item Two-way Interactions in R (Day 6)
-\item Confounding (Day 6)
+\item Two-way Interactions in R
+\item Confounding
 
 \end{itemize}
 \end{frame}
