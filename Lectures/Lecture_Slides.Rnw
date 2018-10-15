@@ -11,18 +11,11 @@ data_dir <- "../Exercises/data"
 @
 
 <<echo = FALSE, eval = TRUE, message = FALSE, cache = TRUE, warning = FALSE>>=
-install.packages("MASS")
-install.packages("readxl")
-install.packages("Rcmdr")
-install.packages("multcomp")
-install.packages("HSAUR3")
-install.packages("investr")
-install.packages("quantreg")
-install.packages("mi")
-install.packages("missForest")
-install.packages("mice")
-install.packages("partykit")
-install.packages("party")
+list.of.packages <- c("MASS", "readxl", "Rcmdr", "multcomp", "HSAUR3",
+                      "investr", "quantreg", "mi", "missForest", "mice",
+                      "partykit", "party")
+new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
+if(length(new.packages)) install.packages(new.packages)
 @
 
 % turn off navigation symbols
