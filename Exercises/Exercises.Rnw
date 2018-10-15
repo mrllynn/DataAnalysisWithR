@@ -754,35 +754,31 @@ anova(mod.fev.sex.1)
 @
 \end{enumerate}
 %
-%
 \section*{Exercise 12}
 \begin{enumerate}[(a)]
-\item Apply the Chi-square Test and the fisher exact test to the whole
+\item Apply the Chi-square test and the fisher exact test to the whole
 \texttt{bacteria} data set.
 <<echo = FALSE, eval = FALSE>>=
 library("MASS")
 data(bacteria)
 summary(bacteria)
-subbac <- subset(bacteria, week == 2)
-bacteria$trt.new <- bacteria$trt
-levels(bacteria$trt.new) <- c("placebo", "drug", "drug")
-bacteria$trt.new <- droplevels(bacteria$trt.new)
 # Ordering of the variables does not matter
+# apply test to table
 chisq.test(table(bacteria$trt, bacteria$y))
 chisq.test(table(bacteria$y, bacteria$trt))
+# apply test to two (factorial) vectors
 chisq.test(bacteria$trt, bacteria$y)
 my.table <- table(bacteria$trt, bacteria$y)
 chisq.test(my.table)
 table(subbac$trt, subbac$y)
 chisq.test(table(subbac$trt, subbac$y))
 fisher.test(table(subbac$trt, subbac$y))
-fisher.test(table(subbac$trt.new, subbac$y))
 # Chi-squared test with trt and y
 chisq.test(table(bacteria$trt, bacteria$y))
 # Fisher test with trt and y
 fisher.test(table(bacteria$trt, bacteria$y))
 @
-\item Apply the Chi-square Test and the fisher exact test to the subset of
+\item Apply the Chi-square test and the fisher exact test to the subset of
 \texttt{bacteria} containing only the observations taken in week 2 (cf. Exercise 3).
 Are there any issues?
 <<echo = FALSE, eval = FALSE>>=
@@ -797,6 +793,10 @@ fisher.test(table(subbac$trt, subbac$y))
 \texttt{trt.new} variable (cf. Exercise 5) with the two levels \texttt{treated}
 and \texttt{drug}.
 <<echo = FALSE, eval = FALSE>>=
+bacteria$trt.new <- bacteria$trt
+levels(bacteria$trt.new) <- c("placebo", "drug", "drug")
+bacteria$trt.new <- droplevels(bacteria$trt.new)
+levels(bacteria$trt.new) <- c("placebo", "treated")
 # WHOLE DATA SET
 # Chi-squared test with trt.new and y
 chisq.test(table(bacteria$trt.new, bacteria$y))
@@ -811,11 +811,10 @@ fisher.test(table(subbac$trt.new, subbac$y))
 @
 \item Could you also obtain the odds ratios?
 <<echo = FALSE, eval = FALSE>>=
-fisher.test(table(subbac$trt.new, subbac$y))
 fisher.test(bacteria$y, bacteria$ap)
 my.logreg <- glm(y ~ ap, data = bacteria, family = "binomial")
 summary(my.logreg)
-exp(0.8473 )
+exp(0.8473) # --> EXCACT SAME ESTIMATE AS FROM fisher.test
 coef(my.logreg)
 exp(coef(my.logreg))
 @
@@ -1167,10 +1166,10 @@ shapiro.test(aov.mod.resid)
 # qqplot(a)
 # shapiro.test(a)
 
-# Bartlett Test
+# Bartlett test
 bartlett.test(ToothGrowth$len ~ ToothGrowth$dose.factor)
 
-# Levene's Test
+# Levene's test
 # install.packages("Rcmdr")
 # library("Rcmdr")
 # levene.test(ToothGrowth$len ~ ToothGrowth$dose.factor)
