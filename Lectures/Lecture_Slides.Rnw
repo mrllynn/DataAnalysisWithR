@@ -1496,7 +1496,7 @@ expect a ``more powerful'' analyses (e.g. a lower $p$-value all else being equal
 \frametitle{Chi-square Test}
 There are two very commonly used statistical tests for testing
 dependence between two categorical variables: Chi-squared test
-\& Fisher’s exact test.
+\& Fisher's exact test.
 \begin{center}
 \includegraphics[width=0.7\paperwidth]{Chi_Squared_Test.png}
 \end{center}

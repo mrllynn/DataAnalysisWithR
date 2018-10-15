@@ -718,13 +718,8 @@ coef(lm.mod0)
 lm.mod1 <- lm(len ~ supp + dose, data = ToothGrowth)
 summary(lm.mod1)
 @
-<<<<<<< HEAD
-\item Apply the two-sided t-test to suitable variables of the \texttt{perulung\_ems} data set.
-and interpret the results.
-=======
 \item Read in the data set \texttt{perulung\_ems} and apply the two-sided t-test
 to suitable variables of the \texttt{perulung\_ems} data set and interpret the results.
->>>>>>> 9ce23cb11843fd06cd9012b065d0b28a0e4bac1e
 <<echo = FALSE, eval = FALSE>>=
 lung <- read.csv("perulung_ems.csv", sep = ";")
 head(lung)
