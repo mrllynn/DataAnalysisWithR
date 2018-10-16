@@ -19,4 +19,8 @@ package
 usage of (...) and [...]
 library
 $
-
+str(...)
+integer
+class(...)
+(un-)ordered factor
+numeric
