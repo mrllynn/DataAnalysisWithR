@@ -1605,6 +1605,7 @@ library("partykit")
 library("party")
 data("ToothGrowth")
 my.tooth.tree <- ctree(len ~ ., data = ToothGrowth)
+par(mfrow=c(1,1))
 plot(my.tooth.tree, tp_args = list(id = FALSE))
 @
 \end{frame}

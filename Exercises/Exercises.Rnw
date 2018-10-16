@@ -841,6 +841,7 @@ par(mfrow=c(1,1))
 \item Change the x-axis and y-axis labelling of a boxplot plotting the
 \texttt{len} variable of the \texttt{ToothGrowth} data set.
 <<eval = FALSE>>=
+data("ToothGrowth")
 boxplot(ToothGrowth$len)
 @
 <<echo = FALSE, eval = FALSE>>=
@@ -888,12 +889,15 @@ sub.horsebean <- subset(chickwts, feed == "horsebean")
 sub.horsebean <- droplevels(sub.horsebean)
 summary(sub.casein$weight)
 summary(sub.horsebean$weight)
+par(mfrow=c(1, 2))
 boxplot(sub.casein$weight ~ sub.casein$feed, ylim = c(100, 410))
 boxplot(sub.horsebean$weight ~ sub.horsebean$feed, ylim = c(100, 410))
 @
 \item How do you enlarge the font size of the axis as well as the axis labels
 of the following plot with the \texttt{perulung} data set?
 <<eval = FALSE>>=
+lung <- read.csv("perulung_ems.csv", sep=";")
+par(mfrow=c(1,1))
 plot(lung$fev1, lung$height)
 @
 <<echo = FALSE, eval = FALSE>>=
@@ -924,6 +928,8 @@ par(mfrow=c(1,1))
 \item Add a legend to the following barplot. Are there several different solutions
 for this?
 <<eval = FALSE>>=
+library("MASS")
+data("bacteria")
 barplot(prop.table(table(bacteria$y, bacteria$trt),margin=1),
         beside=FALSE, ylim = c(0,0.8))
 @
