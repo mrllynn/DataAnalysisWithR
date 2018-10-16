@@ -1,0 +1,69 @@
+
+% -----------------------------------------------------------------------------
+% IMPLEMENTING THE DOCUMENT AND ITS OPTIONS
+% -----------------------------------------------------------------------------
+
+\documentclass[11pt]{article}
+\usepackage[left=21mm, right=18mm, top=20mm, bottom=18mm]{geometry}
+\linespread{1.4}
+
+% Add information about the title section of the file
+\author{Sonja Hartnack, Terence Odoch \& Muriel Buri}
+\date{\today}
+\title{\vspace{-3ex}Practical Exam}
+\date{October 2018}
+
+\usepackage[round,sectionbib]{natbib} \bibliographystyle{ims}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{url}
+\usepackage{color}
+\usepackage{amsmath, amssymb}
+\usepackage{colortbl, xcolor} % enable colored rows in table
+\usepackage{color} % enable colored rows in table
+\usepackage{bibentry} % Include Full BibTeX Entry Inside Slides
+\usepackage{nicefrac}
+\usepackage{soul}
+\usepackage{enumerate}
+
+\graphicspath{{figures/}}
+
+% Adjusting font type
+\usepackage[sfdefault,lf]{carlito}
+\usepackage[T1]{fontenc}
+\renewcommand*\oldstylenums[1]{\carlitoOsF #1}
+
+% Add footer and header to the file
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+\renewcommand{\headrulewidth}{0.4pt}% Default \headrulewidth is 0.4pt
+\renewcommand{\footrulewidth}{0.4pt}% Default \footrulewidth is 0pt
+\pagestyle{fancy}
+\lhead{Data Analysis with R: Exam} % left header
+\rhead{\exercisetopic} % right header
+\lfoot{Sonja Hartnack, Terence Odoch \& Muriel Buri} % left footer
+\rfoot{\thepage\ of \pageref{LastPage}} % right footer
+\cfoot{} % get rid of the centered page number
+
+% -----------------------------------------------------------------------------
+% BEGINNING OF ACTUAL DOCUMENT
+% -----------------------------------------------------------------------------
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\section*{Exercise 1}
+\begin{enumerate}[(a)]
+\item Open R Studio
+\item Open a new R-Script
+\item Load data set \texttt{chickwts}.
+<<echo = TRUE, eval = FALSE>>=
+data(chickwts)
+@
+\item How many observations are in the data set?
+\item How many variables does the data set have?
+\end{enumerate}
+
+\end{document}
