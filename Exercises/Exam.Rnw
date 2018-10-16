@@ -5,12 +5,12 @@
 
 \documentclass[11pt]{article}
 \usepackage[left=21mm, right=18mm, top=20mm, bottom=18mm]{geometry}
-\linespread{1.4}
+\linespread{1.1}
 
 % Add information about the title section of the file
 \author{Sonja Hartnack, Terence Odoch \& Muriel Buri}
 \date{\today}
-\title{\vspace{-3ex}Practical Exam}
+\title{\vspace{-3ex}Exam: Data Analysis with R}
 \date{October 2018}
 
 \usepackage[round,sectionbib]{natbib} \bibliographystyle{ims}
@@ -54,11 +54,12 @@
 \maketitle
 \thispagestyle{fancy}
 
+\textbf{Please provide the solutions for the following two exercises 1 and 2 as an R-Script (.R).}
+
 \section*{Exercise 1}
 \begin{enumerate}[(a)]
-\setlength\itemsep{1.2em}
 \item Open a new R-Script and read in the \texttt{lepto\_exam.csv} data file.
-This study data present a serology survey of leptospira sero-prevalence in rural
+This study data presents a serology survey of leptospira sero-prevalence in rural
 and urban areas. Within the data set you find the following variables:
 \begin{itemize}
 \item \texttt{gender}: factor variabe with two levels "female" and "male"
@@ -67,20 +68,73 @@ and urban areas. Within the data set you find the following variables:
 \item \texttt{antibodies}: factor variabe with two levels "absent" and "presence"
 \item \texttt{num.rats}: integer variable (amount of rats seen in the last 3 months)
 \end{itemize}
+<<echo = FALSE, eval = FALSE>>=
+lepto_exam <- read.csv("lepto_exam.csv", sep = ";")
+@
 \item Save the \texttt{lepto\_exam} data frame as \texttt{lepto} data frame.
 <<eval = FALSE>>=
 lepto <- data.frame(lepto_exam)
-head(lepto)
-str(lepto)
 @
 \item Have a look at the \texttt{str(...)}, \texttt{summary(...)}, \texttt{head(...)}.
+<<echo = FALSE, eval = FALSE>>=
+str(lepto)
+summary(lepto)
+head(lepto)
+@
 \item How many observations are in the \texttt{lepto} data frame?
-\item Plot a boxplot of the \texttt{age} for each female and male (\texttt{gender}).
+<<echo = FALSE, eval = FALSE>>=
+dim(lepto)
+@
+\item What data type does each variable have? Is this appropriate?
+<<echo = FALSE, eval = FALSE>>=
+# gender: factor
+# age: integer
+# exposure: factor
+# antibodies: factor
+# num.rats: integer
+@
+\item Plot in one graph, two boxplots showing the distribution of \texttt{age}
+for both \texttt{gender}.
+<<echo = FALSE, eval = FALSE>>=
+boxplot(lepto$age ~ lepto$gender)
+@
 \item Make a 2-by-2 table for \texttt{exposure} and \texttt{antibodies}.
-\item Evaluate with the help of a Chi-square test (\texttt{chisq.test(...)}) if
-the two categorical variables \texttt{exposure} and \texttt{antibodies} are related
-in any way. What's your conclusion?
-% \item Save an additional variable \texttt{num.rats.fac} basedto a factor.Add an additional variable to the data frame called \texttt{num.rats.fac}.
+<<echo = FALSE, eval = FALSE>>=
+table(lepto$exposure, lepto$antibodies)
+@
+\item Quantify the effect of the two potential risk factors \texttt{exposure} and
+\texttt{gender} with an odds ratio (OR). What is the 95\%-confidence interval?
+Interpret the odds ratio as well as the 95\%-confidence interval.
+<<echo = FALSE, eval = FALSE>>=
+fisher.test(table(lepto$exposure, lepto$gender))
+@
 \end{enumerate}
 
+\section*{Exercise 2}
+\begin{enumerate}[(a)]
+\item Simulate a continuous vector with length $n = 100$ representing the body
+weight of adult goats. Before simulating, set the seed by \texttt{set.seed(2018)}.
+<<echo = FALSE, eval = FALSE>>=
+n <- 100
+gw <- rnorm(n, mean = 35, sd = 10)
+@
+\item Assess if the above simulated variable is normally distributed.
+<<echo = FALSE, eval = FALSE>>=
+qqnorm(gw)
+qqline(gw, col = "red", lwd = 4)
+shapiro.test(gw)
+@
+\item Replace the first 10 observations of your previously simulated vector with
+the values $200$.
+<<echo = FALSE, eval = FALSE>>=
+gw.200 <- gw
+gw.200[1:10] <- 200
+@
+\item Check again for normality.
+<<echo = FALSE, eval = FALSE>>=
+qqnorm(gw.200)
+qqline(gw.200, col = "red", lwd = 4)
+shapiro.test(gw.200)
+@
+\end{enumerate}
 \end{document}

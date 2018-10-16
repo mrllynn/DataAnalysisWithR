@@ -1274,12 +1274,14 @@ plot(tukey.cld)
 
 \section*{Exercise 16}
 \begin{enumerate}[(a)]
-\item Download the .R file \texttt{LM\_with\_water.R} from the switch drive
-and have another look on how we applied the linear model to the \texttt{water}
-data set.
-\item Reuse these commands to fit a simple as well as multiple linear regression
-model to the data set of \texttt{perulung\_ems}. Use \texttt{fev1} as your
-response variable $y$.
+% \item Download the .R file \texttt{LM\_with\_water.R} from the switch drive
+% and have another look on how we applied the linear model to the \texttt{water}
+% data set.
+\item Reuse the commands from the lecture slides to fit a simple as well as a
+multiple linear regression model to the data set of \texttt{perulung\_ems}.
+Use \texttt{fev1} as your response variable $y$.
+\item Check the model assumptions.
+\item Which model is best?
 <<echo = FALSE, eval = FALSE>>=
 lung <- read.csv("perulung_ems.csv", sep = ";")
 head(lung)
