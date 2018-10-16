@@ -833,13 +833,16 @@ exp(coef(model.logreg))
 \begin{enumerate}[(a)]
 \item Type \texttt{demo(graphics)} in your console and press enter.
 This command shows you a nice demonstration of possible R graphics.
-<<echo = FALSE, eval = FALSE>>=
+<<eval = FALSE>>=
 # After the demonstration us the following commands:
 dev.off()
 par(mfrow=c(1,1))
 @
 \item Change the x-axis and y-axis labelling of a boxplot plotting the
 \texttt{len} variable of the \texttt{ToothGrowth} data set.
+<<eval = FALSE>>=
+boxplot(ToothGrowth$len)
+@
 <<echo = FALSE, eval = FALSE>>=
 boxplot(ToothGrowth$len, xlab = "Length of Teeth",
         ylab = "Length in mm")
@@ -856,7 +859,7 @@ boxplot(ToothGrowth$len, xlab = "Length of Teeth",
 title("Boxplot of Tooth Length")
 @
 \item What does the following command do?
-<<echo = FALSE, eval = FALSE>>=
+<<eval = FALSE>>=
 par(mfrow=c(2,2))
 @
 <<echo = FALSE, eval = FALSE>>=
@@ -890,7 +893,7 @@ boxplot(sub.horsebean$weight ~ sub.horsebean$feed, ylim = c(100, 410))
 @
 \item How do you enlarge the font size of the axis as well as the axis labels
 of the following plot with the \texttt{perulung} data set?
-<<echo = FALSE, eval = FALSE>>=
+<<eval = FALSE>>=
 plot(lung$fev1, lung$height)
 @
 <<echo = FALSE, eval = FALSE>>=
@@ -899,7 +902,7 @@ plot(lung$fev1, lung$height, cex.axis = 1.5, cex.lab = 1.5, las = 1)
 @
 \item Label the x-axis of the following plot with ''Vitamin C in $\mu$g''. Use the
 greek letter for $\mu$.
-<<echo = FALSE, eval = FALSE>>=
+<<eval = FALSE>>=
 plot(ToothGrowth$dose, ToothGrowth$len)
 @
 <<echo = FALSE, eval = FALSE>>=
@@ -912,9 +915,15 @@ plot(ToothGrowth$dose, ToothGrowth$len,
 \section*{Exercise 13B: Inside the square of the plot}
 \begin{enumerate}[(a)]
 \item Type \texttt{demo(graphics)} in your console and press enter.
+This command shows you a nice demonstration of possible R graphics.
+<<eval = FALSE>>=
+# After the demonstration us the following commands:
+dev.off()
+par(mfrow=c(1,1))
+@
 \item Add a legend to the following barplot. Are there several different solutions
 for this?
-<<echo = FALSE, eval = FALSE>>=
+<<eval = FALSE>>=
 barplot(prop.table(table(bacteria$y, bacteria$trt),margin=1),
         beside=FALSE, ylim = c(0,0.8))
 @
@@ -929,7 +938,7 @@ barplot(prop.table(table(bacteria$y, bacteria$trt), margin=1),
 legend("topright", legend = c("yes", "no"), fill = topo.colors(2))
 @
 \item Add a density line to this histogram.
-<<echo = FALSE, eval = FALSE>>=
+<<eval = FALSE>>=
 hist(ToothGrowth$len, prob = TRUE, col = "grey", ylim = c(0, 0.05))
 @
 <<echo = FALSE, eval = FALSE>>=
@@ -941,7 +950,7 @@ lines(density(ToothGrowth$len, adjust=2), lty="dotted", col="darkgreen",
       lwd = 4)
 @
 \item Add a \textbf{dotted red} linear regression line to the following plot.
-<<echo = FALSE, eval = FALSE>>=
+<<eval = FALSE>>=
 plot(lung$height, lung$fev1)
 @
 <<echo = FALSE, eval = FALSE>>=
@@ -961,14 +970,14 @@ eq <- paste0("fev1 = ", cf[1],
 mtext(eq, 3, line=-2)
 @
 \item Color the points in the following plot according to the \texttt{sex} variable.
-<<echo = FALSE, eval = FALSE>>=
+<<eval = FALSE>>=
 plot(lung$height, lung$fev1)
 @
 <<echo = FALSE, eval = FALSE>>=
 plot(lung$height, lung$fev1, col = as.numeric(lung$sex))
 @
 \item Add two linear regression lines separately for \texttt{female} and \texttt{male}to the following plot.
-<<echo = FALSE, eval = FALSE>>=
+<<eval = FALSE>>=
 plot(lung$height, lung$fev1)
 @
 <<echo = FALSE, eval = FALSE>>=
@@ -985,7 +994,7 @@ abline(lm(lung$fev1 ~ lung$height,
 @
 \item Color the points in the following plot according to the \texttt{supp} variable.
 Use different point characters (\texttt{pch}) based on the \texttt{supp} variable.
-<<echo = FALSE, eval = FALSE>>=
+<<eval = FALSE>>=
 plot(ToothGrowth$len, ToothGrowth$dose)
 @
 <<echo = FALSE, eval = FALSE>>=
@@ -1132,7 +1141,7 @@ ToothGrowth$dose.factor <- factor(ToothGrowth$dose, levels = c(0.5, 1.0, 2.0),
                                labels = c("low", "med", "high"))
 table(ToothGrowth$dose.factor)
 @
-\item Visualize the variable \texttt{len} per \texttt{dose} level in a boxplot.
+\item Visualize the variable \texttt{len} per \texttt{dose.factor} level in a boxplot.
 <<echo = FALSE, eval = FALSE>>=
 boxplot(ToothGrowth$len ~ ToothGrowth$dose.factor)
 @
@@ -1337,16 +1346,14 @@ plot(mod5)
 \begin{enumerate}[(a)]
 \item Load the \texttt{ToothGrowth} data set and run the following four
 linear regression models.
-<<echo = FALSE, eval = TRUE>>=
+<<eval = FALSE>>=
 data(ToothGrowth)
 ToothGrowth$dose.factor <- factor(ToothGrowth$dose, levels = c(0.5, 1.0, 2.0),
                           labels = c("low", "med", "high"))
-@
-
-<<echo = FALSE, eval = FALSE>>=
 mod1 <- lm(len ~ dose.factor, data = ToothGrowth)
 mod2 <- lm(len ~ supp, data = ToothGrowth)
 mod3 <- lm(len ~ dose.factor + supp, data = ToothGrowth)
+mod4 <- lm(len ~ dose.factor*supp, data = ToothGrowth)
 @
 \item Have a look at the summary of these models.
 <<echo = FALSE, eval = FALSE>>=
@@ -1401,7 +1408,6 @@ to the above estimated multiple linear regression model.
 lm.mod.int <- lm(mortality ~ hardness + location + hardness:location,
              data = water)
 summary(lm.mod.int)
-
 mod1 <- lm(mortality ~ hardness + location,
              data = water)
 mod2 <- lm(mortality ~ hardness + location + hardness:location,
@@ -1451,9 +1457,6 @@ lepto$antibodies <- factor(lepto$antibodies, level = c(0, 1),
 # lepto$antibodies <- factor(lepto$antibodies,
 #                            levels = c(0, 1),
 #                            labels = c("NO", "YES"))
-# lepto$antibodies <- factor(lepto$antibodies,
-#                            levels = c(0, 1),
-#                            labels = c("Ugandian", "Kenian"))
 table(lepto$antibodies)
 class(lepto$antibodies)
 @
@@ -1478,8 +1481,8 @@ confint(glm.mod)
 lepto.fem <- subset(lepto, gender == "female")
 lepto.male <- subset(lepto, gender == "male")
 @
-\item Repeat the crosstable, Chi-squared test, Fisher's exact test and a logistic
-regression (\texttt{glm}) for the subsets \textbf{separately}.
+\item Repeat the crosstable (2-by-2 table), Chi-squared test, Fisher's exact test
+and a logistic regression (\texttt{glm}) for the subsets \textbf{separately}.
 <<echo = FALSE, eval = FALSE>>=
 # FEMALES
 lepto.fem <- subset(lepto, gender == "female")
