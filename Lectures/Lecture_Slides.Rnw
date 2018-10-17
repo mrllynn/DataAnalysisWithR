@@ -1,10 +1,8 @@
 \documentclass{beamer}
 
-
 % ADD HERE THE TOPIC OF THE LECTURE!
 % \newcommand{\lecturetopic}{ALL LECTURE SLIDES}
 \newcommand{\lecturetopic}{Lecture Slides (all)}
-
 
 <<echo = FALSE, eval = TRUE>>=
 data_dir <- "../Exercises/data"
@@ -34,7 +32,6 @@ Terence Odoch \& Muriel Buri \hfill \lecturetopic \hfill \insertpagenumber}}
 \usepackage{graphicx}
 \usepackage{float}
 \usepackage{animate}
-
 \usepackage{verbatim}
 \usepackage{url}
 \usepackage{lmodern}
@@ -45,9 +42,7 @@ Terence Odoch \& Muriel Buri \hfill \lecturetopic \hfill \insertpagenumber}}
 \usepackage{lscape}
 \usepackage{xspace}
 \usepackage[normalem]{ulem}
-% Use Palatino (URW Palladio) for most of the text\ldots
 \usepackage[sc]{mathpazo}
-% And Arial for the rest
 \usepackage[scaled]{helvet}
 \usepackage[latin1]{inputenc}
 \usepackage{multicol} % A flexible tool to handle multicolumn documents
@@ -1712,6 +1707,9 @@ A {\bfseries simple linear regression} fits a straight line through a set of
 data points. This straight line is fitted in a way that makes the sum of the
 squared residuals (the vertical distances between each data point and the fitted
 line) as small as possible.
+\begin{center}
+\includegraphics[width = 0.7\textwidth]{linear_regression.png}
+\end{center}
 \end{frame}
 
 \usebackgroundtemplate{}
@@ -1942,7 +1940,7 @@ round(AIC(mod1, mod2, mod3), 2)
 
 \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
 \begin{frame}[fragile]
-\frametitle{\texttt{mod.hard.loc} is the best!}
+\frametitle{\texttt{mod.hard.loc} (\texttt{mod3}) is the best!}
 <<echo=TRUE, eval=TRUE, size="scriptsize", out.width = "65%", fig.align="center">>=
 mod3 <- lm(mortality ~ hardness + location, data = water)
 par(mfrow=c(2,2))
@@ -2327,6 +2325,138 @@ with counts. Also the residuals being normally distributed is not relevant to th
 \item \textbf{As always explore the data first visually and with tables before
 doing any formal analyses.}
 \end{itemize}
+\end{frame}
+
+\usebackgroundtemplate{}
+\begin{frame}
+\frametitle{Short excursion to quantile regression}
+\begin{itemize}
+\setlength\itemsep{1.5em}
+\item When talking about regression, we almost exclusively model the conditional
+mean of a response given one or more explanatory variables.
+\item With the classical linear model we cannot skewed or otherwise non
+normal distribution as the corresponding quantiles from the linear model
+will be misleading. Therefore, we shift our attention to a completely
+distribution free approach that directly addresses conditional quantile
+modelling. \newline
+(Text taken from Hothorn, Torsten, and Brian S. Everitt. A handbook of
+statistical analyses using R. CRC press, 2014.)
+\end{itemize}
+\end{frame}
+
+\usebackgroundtemplate{}
+\begin{frame}[fragile]
+\frametitle{Short excursion to quantile regression}
+The data set \texttt{sambia.csv} (given on the switch drive) contains information
+on malnutrition of sambian children. The outcome variable is the \texttt{z-score},
+which gives information on the severity of malnutrition. \newline
+The following covariates are considered:
+\begin{center}
+\begin{tabular}{ll}
+\hline
+\texttt{zscore} & Z-score of the child\\
+\texttt{sex} & Sex of the child (0 = female, 1 = male)\\
+\texttt{age.child} & Age of the child\\
+\texttt{work} & Is the mother working (0 = no, 1 = yes)\\
+\texttt{age.mother.birth} & Age of the mother at birth of child\\
+\texttt{bmi} & BMI of the mother\\
+\hline
+\end{tabular}
+\end{center}
+A \texttt{z-score} indicates how many standard deviations an element is from the mean. A \texttt{z-score} can be calculated from the following formula. $z = (X - \mu) / \sigma$ where $z$ is the \texttt{z-score}, $X$ is the value of the element, $\mu$ is the population mean, and $\sigma$ is the standard deviation.
+\end{frame}
+
+<<echo = FALSE, eval = TRUE, size = "scriptsize">>=
+sambia <- read.csv("../Exercises/data/sambia.csv", sep = ",")
+# str(sambia)
+sambia$sex <- factor(sambia$sex, levels = c(0,1), labels = c("female", "male"))
+sambia$work <- factor(sambia$work, levels = c(0,1), labels = c("no", "yes"))
+# str(sambia)
+@
+
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+\begin{frame}[fragile]
+\frametitle{Quantile regression in R}
+<<echo = TRUE, eval = FALSE, size = "scriptsize">>=
+sambia <- read.csv("sambia.csv", sep = ",")
+str(sambia)
+sambia$sex <- factor(sambia$sex, levels = c(0,1),
+                     labels = c("female", "male"))
+sambia$work <- factor(sambia$work, levels = c(0,1),
+                      labels = c("no", "yes"))
+@
+<<echo = TRUE, eval = TRUE, size = "scriptsize">>=
+str(sambia)
+@
+\end{frame}
+
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+\begin{frame}[fragile]
+\frametitle{Quantile regression in R (cont'd)}
+<<echo = TRUE, eval = TRUE, size = "tiny">>=
+library("quantreg")
+# tau = 2.5 %
+rq.025 <- rq(zscore ~ sex + age.child + work + bmi + age.mother.birth, 
+             tau = 0.025,
+             data = sambia)
+# tau = 5 %
+rq.05 <- rq(zscore ~ sex + age.child + work + bmi + age.mother.birth, 
+            tau = 0.05, 
+            data = sambia)
+# tau = 50 %
+rq.5 <- rq(zscore ~ sex + age.child + work + bmi + age.mother.birth, 
+           tau = 0.5, 
+           data = sambia)
+@
+\end{frame}
+
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+\begin{frame}[fragile]
+\frametitle{Quantile regression in R (cont'd)}
+\framesubtitle{Comparison of the three models \texttt{rq.025}, \texttt{rq.05}, \texttt{rq.5}}
+<<echo = TRUE, eval = TRUE, size = "tiny">>=
+rq_coef <- cbind(coef(rq.025), coef(rq.05), coef(rq.5))
+rownames(rq_coef) <- rownames(summary(rq.5)$coefficients)
+colnames(rq_coef) <- paste0("tau = ", c("0.025", "0.05", "0.5"))
+round(rq_coef, 3)
+@
+\end{frame}
+
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+\begin{frame}[fragile]
+\frametitle{Quantile regression in R (cont'd)}
+\framesubtitle{Estimate \texttt{rq} for a grid of quantiles}
+<<echo = TRUE, eval = TRUE, size = "tiny">>=
+# Estimate rq for a single tau
+# rq.5 <- rq(zscore ~ sex + age.child + work + bmi + age.mother.birth, 
+#            tau = 0.5, 
+#            data = sambia)
+# Estimate rq for a grid of tau
+rq <- rq(zscore ~ sex + age.child + work + bmi + age.mother.birth, 
+         tau = seq(from = 0.025, to = 0.5, by = 0.025), 
+         data = sambia)
+@
+\end{frame}
+
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+\begin{frame}[fragile]
+\frametitle{Quantile regression in R (cont'd)}
+\framesubtitle{Plot results}
+<<echo = TRUE, eval = TRUE, size = "tiny", out.width = "60%", fig.align="center">>=
+plot(rq) # plot including line for the OLS coefficient (as estimated by lm)
+@
+\end{frame}
+
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+\begin{frame}[fragile]
+\frametitle{Quantile regression in R (cont'd)}
+\framesubtitle{Plot results in more details}
+<<echo = TRUE, eval = TRUE, size = "tiny", out.width = "60%", fig.align="center">>=
+# A sequence of coefficient estimates for quantile regressions with
+# varying tau parameters is visualized along with associated confidence bands.
+plot(summary(rq))
+
+@
 \end{frame}
 
 \end{document}
