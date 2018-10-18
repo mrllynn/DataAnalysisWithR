@@ -9,7 +9,9 @@ library("randomForest")
 
 data("bacteria")
 str(bacteria)
-bact <- data.frame(y = bacteria$y, hilo = bacteria$hilo, trt = bacteria$trt)
+bact <- data.frame(y = bacteria$y,
+                   hilo = bacteria$hilo,
+                   trt = bacteria$trt)
 tree.2 <- ctree(y ~ ., data = bact)
 plot(tree.2,tp_args = list(id = FALSE))
 
