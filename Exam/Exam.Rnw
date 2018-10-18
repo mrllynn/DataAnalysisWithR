@@ -69,6 +69,7 @@ and urban areas. Within the data set you find the following variables:
 \item \texttt{num.rats}: integer variable (amount of rats seen in the last 3 months)
 \end{itemize}
 <<echo = FALSE, eval = FALSE>>=
+rm(list = ls())
 lepto_exam <- read.csv("lepto_exam.csv", sep = ";")
 @
 \item Save the \texttt{lepto\_exam} data frame as \texttt{lepto} data frame.
@@ -87,6 +88,20 @@ dim(lepto)
 @
 \item What data type does each variable have? Is this appropriate?
 <<echo = FALSE, eval = FALSE>>=
+# typeof(lepto$X)
+# typeof(lepto$gender)
+# typeof(lepto$age)
+# typeof(lepto$exposure)
+# typeof(lepto$antibodies)
+# typeof(lepto$num.rats)
+ 
+# class(lepto$X)
+# class(lepto$gender)
+# class(lepto$age)
+# class(lepto$exposure)
+# class(lepto$antibodies)
+# class(lepto$num.rats)
+
 # gender: factor
 # age: integer
 # exposure: factor
@@ -106,7 +121,10 @@ table(lepto$exposure, lepto$antibodies)
 \texttt{gender} with an odds ratio (OR). What is the 95\%-confidence interval?
 Interpret the odds ratio as well as the 95\%-confidence interval.
 <<echo = FALSE, eval = FALSE>>=
+table(lepto$exposure, lepto$antibodies)
 fisher.test(table(lepto$exposure, lepto$gender))
+# CAREFUL WITH THE INTERPRETATION:
+# The development of antibodies by gender increases by 1.27 times for every unit increase in exposure
 @
 \end{enumerate}
 
@@ -115,6 +133,7 @@ fisher.test(table(lepto$exposure, lepto$gender))
 \item Simulate a continuous vector with length $n = 100$ representing the body
 weight of adult goats. Before simulating, set the seed by \texttt{set.seed(2018)}.
 <<echo = FALSE, eval = FALSE>>=
+rm(list = ls())
 n <- 100
 gw <- rnorm(n, mean = 35, sd = 10)
 @
@@ -128,6 +147,7 @@ shapiro.test(gw)
 the values $200$.
 <<echo = FALSE, eval = FALSE>>=
 gw.200 <- gw
+# gw.200 <- replace(gw, 1:10, 200)
 gw.200[1:10] <- 200
 @
 \item Check again for normality.
