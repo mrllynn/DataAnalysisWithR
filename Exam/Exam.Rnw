@@ -70,7 +70,7 @@ and urban areas. Within the data set you find the following variables:
 \end{itemize}
 <<echo = FALSE, eval = FALSE>>=
 rm(list = ls())
-lepto_exam <- read.csv("lepto_exam.csv", sep = ";")
+lepto_exam <- read.csv("lepto_exam.csv", sep = ",")
 @
 \item Save the \texttt{lepto\_exam} data frame as \texttt{lepto} data frame.
 <<eval = FALSE>>=
@@ -95,12 +95,14 @@ dim(lepto)
 # typeof(lepto$antibodies)
 # typeof(lepto$num.rats)
  
-# class(lepto$X)
-# class(lepto$gender)
-# class(lepto$age)
-# class(lepto$exposure)
-# class(lepto$antibodies)
-# class(lepto$num.rats)
+class(lepto$X)
+class(lepto$gender)
+class(lepto$age)
+class(lepto$exposure)
+class(lepto$antibodies)
+class(lepto$num.rats)
+
+sapply(lepto, class)
 
 # gender: factor
 # age: integer
@@ -123,6 +125,7 @@ Interpret the odds ratio as well as the 95\%-confidence interval.
 <<echo = FALSE, eval = FALSE>>=
 table(lepto$exposure, lepto$antibodies)
 fisher.test(table(lepto$exposure, lepto$gender))
+fisher.test(table(lepto$exposure, lepto$antibodies))
 # CAREFUL WITH THE INTERPRETATION:
 # The development of antibodies by gender increases by 1.27 times for every unit increase in exposure
 @
@@ -134,8 +137,14 @@ fisher.test(table(lepto$exposure, lepto$gender))
 weight of adult goats. Before simulating, set the seed by \texttt{set.seed(2018)}.
 <<echo = FALSE, eval = FALSE>>=
 rm(list = ls())
+set.seed(2018)
 n <- 100
 gw <- rnorm(n, mean = 35, sd = 10)
+hist(gw, prob = TRUE)
+lines(density(gw), lwd=2, col="red")
+abline(v=35, lwd=3, col="blue")
+abline(v=35+10, lwd=3, lty = 2, col="green")
+abline(v=35-10, lwd=3, lty = 2, col="green")
 @
 \item Assess if the above simulated variable is normally distributed.
 <<echo = FALSE, eval = FALSE>>=
@@ -147,8 +156,13 @@ shapiro.test(gw)
 the values $200$.
 <<echo = FALSE, eval = FALSE>>=
 gw.200 <- gw
-# gw.200 <- replace(gw, 1:10, 200)
 gw.200[1:10] <- 200
+# gw.200 <- replace(gw, 1:10, 200)
+hist(gw.200, prob = TRUE)
+lines(density(gw.200), lwd=2, col="red")
+abline(v=35, lwd=3, col="blue")
+abline(v=35+10, lwd=3, lty = 2, col="green")
+abline(v=35-10, lwd=3, lty = 2, col="green")
 @
 \item Check again for normality.
 <<echo = FALSE, eval = FALSE>>=
