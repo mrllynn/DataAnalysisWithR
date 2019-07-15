@@ -30,6 +30,7 @@
 \usepackage{nicefrac}
 \usepackage{soul}
 \usepackage{enumerate}
+\usepackage{multicol}
 
 \graphicspath{{figures/}}
 
@@ -50,6 +51,13 @@
 \rfoot{\thepage\ of \pageref{LastPage}} % right footer
 \cfoot{} % get rid of the centered page number
 
+% setcounter for exercise taks
+\renewcommand{\labelenumi}{\alph{enumi})}
+\renewcommand{\labelenumii}{(\roman{enumii})}
+\newcounter{ex}
+\setcounter{ex}{0}
+\newcommand{\ex}[1]{\item{\stepcounter{ex} \textbf{Exercise \arabic{ex}: #1}}\newline}
+
 % -----------------------------------------------------------------------------
 % BEGINNING OF ACTUAL DOCUMENT
 % -----------------------------------------------------------------------------
@@ -59,7 +67,97 @@
 \maketitle
 \thispagestyle{fancy}
 
-\section*{Exercise 1}
+\begin{description}
+
+\ex{}
+Group the following terminology items into the three categories:
+\begin{enumerate}[(1)]
+\item sample \& variables
+\item hypothesis testing \& statistical modelling
+\item descriptive statistics
+\end{enumerate}
+\begin{multicols}{5}
+\begin{itemize}
+\item alternative hypothesis
+\item anova
+\item barplot
+\item binary
+\item binomial
+\item Bonferroni
+\item boxplot
+\item categorical
+\item Chisquare test
+\item confounding
+\item contingency table
+\item continuous
+\item correlation coefficient
+\item count
+\item data format
+\item data point
+\item data type
+\item degree of freedom
+\item dependent variable
+\item effect size
+\item error
+\item explanatory variable
+\item factor
+\item Fisher's exact test
+\item histogram
+\item hypothesis testing
+\item hypothesis tests
+\item independent variable
+\item integer
+\item interaction
+\item intercept
+\item IQR 
+\item linear model
+\item linear regression
+\item logistic regression
+\item mean
+\item median
+\item multiple comparison
+\item nominal
+\item normal
+\item null hypothesis
+\item numeric
+\item observation
+\item odds ratio
+\item ordinal
+\item outcome
+\item paired samples
+\item poisson
+\item population
+\item predictor
+\item proportion
+\item $p$-value
+\item QQ-plot
+\item quantile
+\item range
+\item regression coefficient
+\item residuals
+\item response
+\item sample
+\item sampling variation
+\item scatter plot
+\item significance
+\item single-sided test
+\item skewed data
+\item slope
+\item standard deviation
+\item standard error
+\item student $t$-distribution
+\item treatment effect
+\item $t$-test
+\item two-sided test
+\item unpaired samples
+\item variable
+\item variance
+\item vector
+\end{itemize}
+\end{multicols}
+
+\ex{Getting to know R}
+\vspace*{-1cm}
 \begin{enumerate}[(a)]
 \item Open R Studio
 \item Open a new R-Script
@@ -100,8 +198,10 @@ par(mfrow=c(2,2))
 plot(lm.mod)
 @
 \end{enumerate}
-%
-\section*{Exercise 2}
+
+
+\ex{Defining a data frame}
+\vspace*{-1cm}
 \begin{enumerate}[(a)]
 \item Create a data frame with 3 columns.
 <<echo = FALSE, eval = FALSE>>=
@@ -122,8 +222,9 @@ dat
 
 @
 \end{enumerate}
-%
-\section*{Exercise 3}
+
+\ex{Get to know \texttt{bacteria} data set}
+\vspace*{-1cm}
 \begin{enumerate}[(a)]
 \item Install package \texttt{MASS}.
 <<echo = FALSE, eval = FALSE>>=
@@ -176,8 +277,8 @@ table(bacteria$week)
 table(ss$week)
 @
 \end{enumerate}
-%
-\section*{Exercise 4}
+
+\ex{Bracket types}
 What is conceptionally the difference between the bracket types [...] and (...)?
 <<echo=TRUE, eval=FALSE, size="scriptsize", message=FALSE, warning=FALSE>>=
 chickwts[, 2]
@@ -194,7 +295,8 @@ c(...) # to define a vector
 data.frame(...) # to define a data frame
 @
 %
-\section*{Exercise 5}
+\ex{Factor variables}
+\vspace*{-1cm}
 \begin{enumerate}[(a)]
 \item How many levels has the factor variable \texttt{trt} from \texttt{bacteria}?
 <<echo = FALSE, eval = FALSE>>=
@@ -239,7 +341,8 @@ chisq.test(table(bacteria$trt.new, bacteria$y))    # Chi-squared test
 @
 \end{enumerate}
 %
-\section*{Exercise 6}
+\ex{Get to know \texttt{ToothGrowth} data set}
+\vspace*{-1cm}
 \begin{enumerate}[(a)]
 \item Load data set \texttt{ToothGrowth}.
 <<echo = FALSE, eval = FALSE>>=
@@ -324,7 +427,8 @@ shapiro.test(sub.2$len)
 @
 \end{enumerate}
 %
-\section*{Exercise 7}
+\ex{Data import to R: \texttt{perulung\_ems.csv}}
+\vspace*{-1cm}
 \begin{enumerate}[(a)]
 \item Import the data set \texttt{perulung\_ems.csv} (taken from Kirkwood and
 Sterne, 2nd edition) into R. \newline
@@ -380,7 +484,7 @@ bartlett.test(weight ~ feed, data = chickwts)
 %
 \end{enumerate}
 
-\section*{Exercise 8}
+\ex{Summary Statistics}
 Apply the summary statistics to the \texttt{perulung\_ems} and \texttt{ToothGrowth}
 data set.
 <<echo = FALSE, eval = FALSE>>=
@@ -420,7 +524,8 @@ tapply(ToothGrowth$len, ToothGrowth$dose, median)
 tapply(ToothGrowth$len, ToothGrowth$dose, sd)
 @
 %
-\section*{Exercise 9A: Plausibility Checks}
+\ex{Data Plausibility Checks}
+\vspace*{-1cm}
 \begin{enumerate}[(a)]
 \item What can go wrong?
 \item Identify different strategies for spotting these potential errors.
@@ -479,7 +584,8 @@ str(bac)
 @
 \end{enumerate}
 %
-\section*{Exercise 9B: Missing Values}
+\ex{Missing Values}
+\vspace*{-1cm}
 \begin{enumerate}[(a)]
 \item Check out the difference between the different missing values.
 <<eval = FALSE>>=
@@ -579,7 +685,8 @@ is.na(x1)
 @
 \end{enumerate}
 %
-\section*{Exercise 10}
+\ex{Data import to R: \texttt{water\_errors.csv}}
+\vspace*{-1cm}
 \begin{enumerate}[(a)]
 \item Import the data set \texttt{water\_errors.csv} to R:
 A data frame with $61$ observations on the following $6$
@@ -677,7 +784,8 @@ levels(H2O_err$num.of.cig)
 @
 \end{enumerate}
 %
-\section*{Exercise 11}
+\ex{t-test in R}
+\vspace*{-1cm}
 \begin{enumerate}[(a)]
 \item Load the data set \texttt{ToothGrowth} within R and apply the two-sided two
 sample t-test to suitable variables of the data set.
@@ -754,7 +862,8 @@ anova(mod.fev.sex.1)
 @
 \end{enumerate}
 %
-\section*{Exercise 12}
+\ex{Chi-square test in R}
+\vspace*{-1cm}
 \begin{enumerate}[(a)]
 \item Apply the Chi-square test and the fisher exact test to the whole
 \texttt{bacteria} data set.
@@ -829,7 +938,8 @@ exp(coef(model.logreg))
 @
 \end{enumerate}
 %
-\section*{Exercise 13A: Outside plot frame}
+\ex{Outside plot frame}
+\vspace*{-1cm}
 \begin{enumerate}[(a)]
 \item Type \texttt{demo(graphics)} in your console and press enter.
 This command shows you a nice demonstration of possible R graphics.
@@ -916,7 +1026,8 @@ plot(ToothGrowth$dose, ToothGrowth$len,
 \item Read \url{http://www.statmethods.net/advgraphs/parameters.html}.
 \end{enumerate}
 
-\section*{Exercise 13B: Inside the square of the plot}
+\ex{Inside the square of the plot}
+\vspace*{-1cm}
 \begin{enumerate}[(a)]
 \item Type \texttt{demo(graphics)} in your console and press enter.
 This command shows you a nice demonstration of possible R graphics.
@@ -1011,7 +1122,8 @@ plot(ToothGrowth$len, ToothGrowth$dose,
 \item Read \url{http://www.statmethods.net/advgraphs/parameters.html}.
 \end{enumerate}
 
-\section*{Exercise 14}
+\ex
+\vspace*{-1cm}
 \begin{enumerate}[(a)]
 \item Load the below data set and for further information check the command
 \texttt{?water}.
@@ -1127,7 +1239,8 @@ interaction.plot(ToothGrowth$dose,
 @
 \end{enumerate}
 
-\section*{Exercise 15}
+\ex{Anova in R}
+\vspace*{-1cm}
 \begin{enumerate}[(a)]
 \item Open the .R file \texttt{ANOVA\_with\_chickwts.R} from your RCourse folder
 and have another look on how we applied the anova to the \texttt{chickwts}
@@ -1272,7 +1385,8 @@ plot(tukey.cld)
 @
 \end{enumerate}
 
-\section*{Exercise 16}
+\ex{Linear Regression Model I}
+\vspace*{-1cm}
 \begin{enumerate}[(a)]
 % \item Download the .R file \texttt{LM\_with\_water.R} from the switch drive
 % and have another look on how we applied the linear model to the \texttt{water}
@@ -1350,7 +1464,8 @@ plot(mod5)
 @
 \end{enumerate}
 
-\section*{Exercise 17}
+\ex{Linear Regression Model II}
+\vspace*{-1cm}
 \begin{enumerate}[(a)]
 \item Load the \texttt{ToothGrowth} data set and run the following four
 linear regression models.
@@ -1391,7 +1506,8 @@ AIC(mod1, mod2, mod3, mod4)
 @
 \end{enumerate}
 
-\section*{Exercise 18}
+\ex{Linear Regression Model III}
+\vspace*{-1cm}
 \begin{enumerate}[(a)]
 \item Load the \texttt{water} data set and fit a multiple linear regression model.
 Use \texttt{mortality} as your response variable and add \texttt{hardness} and
@@ -1442,8 +1558,8 @@ confint(lm.mod)
 \end{enumerate}
 
 
-\section*{Exercise 19}
-{\bfseries Hypothetical example} - from Kirkwood and Sterne, Medical Statistics, 2nd ed., p. 177
+\ex{Combining everthing we have learnt}
+Hypothetical example from Kirkwood and Sterne, Medical Statistics, 2nd ed., p. 177
 \begin{enumerate}[(a)]
 \item Read in the data set \texttt{lepto}. This study presents a serology survey of
 leptospira sero-prevalence in rural and urban areas of the west indies.
@@ -1525,7 +1641,8 @@ glm.exp.gen <- glm(exposure ~  gender, data = lepto,
                family = "binomial")
 summary(glm.exp.gen)
 @
-
 \end{enumerate}
+
+\end{description}
 
 \end{document}

@@ -22,7 +22,7 @@ if(length(new.packages)) install.packages(new.packages)
 \title{\textbf{Data Analysis with R:} \\ \lecturetopic}
 \author{Sonja Hartnack, Terence Odoch \& Muriel Buri}
 \footnotesize
-\institute{October 2018}
+\institute{July 2019}
 \date{ }
 
 \setbeamertemplate{footline}[text line]{%
@@ -778,13 +778,16 @@ designed study
 \frametitle{Putting Statistics in Context}
 \begin{itemize}
 \setlength\itemsep{1.5em}
-\item The vast majority of analyses can be done in a straightforward fashion -
-just remember and always use common sense as a guide - be skeptical!
-\item It is very easy to get ``lost'' in the statistical software and technical
-jargon, which differs markedly between different software packages. Terminology
-can also differ greatly between textbooks...
-\item Wikipedia is as good a resource as any for finding out about different
-statistical tests and terminology
+\item Use common sense as a guide - be skeptical!
+\item Terminology can also differ greatly between textbooks...
+\item Wikipedia as good a resource
+% \item The vast majority of analyses can be done in a straightforward fashion -
+% just remember and always use common sense as a guide - be skeptical!
+% \item It is very easy to get ``lost'' in the statistical software and technical
+% jargon, which differs markedly between different software packages. Terminology
+% can also differ greatly between textbooks...
+% \item Wikipedia is as good a resource as any for finding out about different
+% statistical tests and terminology
 \end{itemize}
 \end{frame}
 
@@ -793,16 +796,19 @@ statistical tests and terminology
 \begin{frame}[fragile]
 \frametitle{Exploratory Data Analysis}
 \begin{itemize}
-\item It is crucially important to explore your data fully before considering any
-``formal'' statistical analyses\pause
-\item What explorations are done depends on the objective of the study - the
-research question(s)\pause
-\item Helps to decide what kind of formal statistical analyses might be most
-appropriate for the data available\pause
-\item What a simple descriptive analysis {\bfseries does not} provide is evidence
-of whether the observed treatment effects are large enough to be notable once
-sampling variation has been accounted - that is the role of formal analyses,
-e.g. hypothesis testing
+\item get first impression and feeling of the data set
+\item detect outliers / mistake of data collection
+\item possibly recode variables
+% \item It is crucially important to explore your data fully before considering any
+% ``formal'' statistical analyses\pause
+% \item What explorations are done depends on the objective of the study - the
+% research question(s)\pause
+% \item Helps to decide what kind of formal statistical analyses might be most
+% appropriate for the data available\pause
+% \item What a simple descriptive analysis {\bfseries does not} provide is evidence
+% of whether the observed treatment effects are large enough to be notable once
+% sampling variation has been accounted - that is the role of formal analyses,
+% e.g. hypothesis testing
 \end{itemize}
 \end{frame}
 
