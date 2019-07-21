@@ -16,7 +16,7 @@
 \author{Sonja Hartnack, Terence Odoch \& Muriel Buri}
 \date{\today}
 \title{\vspace{-3ex}Practical Exercises for \textbf{\exercisetopic}}
-\date{October 2018}
+\date{July 2019}
 
 \usepackage[round,sectionbib]{natbib} \bibliographystyle{ims}
 \usepackage{graphicx}
@@ -69,7 +69,7 @@
 
 \begin{description}
 
-\ex{}
+\ex{Terminology}
 Group the following terminology items into the three categories:
 \begin{enumerate}[(1)]
 \item sample \& variables
@@ -156,28 +156,39 @@ Group the following terminology items into the three categories:
 \end{itemize}
 \end{multicols}
 
-\ex{Getting to know R}
+\ex{Getting to know R and \texttt{chickwts}}
 \vspace*{-1cm}
 \begin{enumerate}[(a)]
-\item Open R Studio
-\item Open a new R-Script
-\item Load data set \texttt{chickwts}
-<<echo = FALSE, eval = FALSE>>=
+\item Open R Studio.
+\item Open a new R-Script.
+\item Load data set \texttt{chickwts}.
+<<echo = TRUE, eval = FALSE>>=
+# ?chickwts
 data(chickwts)
 head(chickwts)
-# ?chickwts
 @
 %
-\item Do summary statistic (numerically and graphically)
+\end{enumerate}
+
+\ex{Summary Statistics with \texttt{chickwts}}
+\vspace*{-1cm}
+\begin{enumerate}[(a)]
+\item Do summary statistics (numerically and graphically).
 <<echo = FALSE, eval = FALSE>>=
+### Numerical Statistics
 summary(chickwts)
-tapply(chickwts$weight, chickwts$feed, mean)
-tapply(chickwts$weight, chickwts$feed, median)
-tapply(chickwts$weight, chickwts$feed, sd)
+mean(chickwts$weight)
+median(chickwts$weight)
+sd(chickwts$weight)
+# tapply(chickwts$weight, chickwts$feed, mean)
+# tapply(chickwts$weight, chickwts$feed, median)
+# tapply(chickwts$weight, chickwts$feed, sd)
+
+### Graphics
 table(chickwts$feed)
 barplot(table(chickwts$feed))
 boxplot(chickwts$weight ~ chickwts$feed)
-# boxplot(weight ~ feed, data = chickwts)
+boxplot(weight ~ feed, data = chickwts)
 hist(chickwts$weight)
 hist(chickwts$weight, freq = FALSE)
 lines(density(chickwts$weight), col = "red", lwd = 3)
@@ -199,8 +210,70 @@ plot(lm.mod)
 @
 \end{enumerate}
 
+\ex{Data import to R: \texttt{perulung\_ems.csv}}
+\vspace*{-1cm}
+\begin{enumerate}[(a)]
+\item Import the data set \texttt{perulung\_ems.csv} (taken from Kirkwood and
+Sterne, 2nd edition) into R. \newline
+Data from a study of lung function among children living in a deprived suburb of
+Lima, Peru. \newline
+Variables:
+\begin{itemize}
+\item \texttt{fev1}:  in liter, ''Forced Expiratory Volume in 1 second'' measured
+by a spirometer. This is the maximum volume of air which the children could breath
+out in 1 second
+\item \texttt{age}: in years
+\item \texttt{height}: in cm
+\item \texttt{sex}: 0 = girl, 1 = boy
+\item \texttt{respsymp}: respiratory symptoms experienced by the child over the
+previous 12 months
+\end{itemize}
+\item What \textit{delimiter} do you need to choose?
+<<echo = FALSE, eval = FALSE>>=
+lung <- read.csv("data/perulung_ems.csv", sep = ";")
+head(lung)
+str(lung)
+@
+\item Do summary statistics (numerically and graphically).
+\item Plot a boxplot.
+<<echo = FALSE, eval = FALSE>>=
+boxplot(lung$fev1)
+boxplot(lung$age)
+boxplot(lung$height)
+@
+% \item Do all variables have the correct data type (numeric, integer, factor)?
+% If not, do correct and / or define them.
+% <<echo = FALSE, eval = FALSE>>=
+% head(lung)
+% str(lung)
+% lung$sex <- factor(lung$sex, levels = c("0", "1"))
+% # levels(lung$sex) <- c("female", "male")
+% # levels(lung$sex)[levels(lung$sex)=="0"] <- "female"
+% # levels(lung$sex)[levels(lung$sex)=="1"] <- "male"
+% # tapply(lung$fev1, lung$sex, mean)
+% lung$respsymptoms <- factor(lung$respsymptoms, levels = c("0", "1"))
+% @
+% %
+% <<echo = FALSE, eval = FALSE>>=
+% library(usdm)
+% # check for multicollinearity by using variance inflation factors
+% # cerate a dataframe just with the three continuous/numeric variables fevs, age and height
+% try.vif <- lung[,c("fev1","height","age")];
+% # perform scatterplots for these three variables
+% pairs(try.vif)
+% # get the three VIF, as a rule of thumb they should be < 3
+% vif(try.vif)
+% @
+% %
+% \item Check for heteroscedascity or homogeneity of variances
+% <<echo = FALSE, eval = FALSE>>=
+% ?bartlett.test
+% data("chickwts")
+% bartlett.test(weight ~ feed, data = chickwts)
+% @
+\end{enumerate}
 
-\ex{Defining a data frame}
+\ex{Defining a new data frame}
 \vspace*{-1cm}
 \begin{enumerate}[(a)]
 \item Create a data frame with 3 columns.
@@ -427,63 +500,6 @@ shapiro.test(sub.2$len)
 @
 \end{enumerate}
 %
-\ex{Data import to R: \texttt{perulung\_ems.csv}}
-\vspace*{-1cm}
-\begin{enumerate}[(a)]
-\item Import the data set \texttt{perulung\_ems.csv} (taken from Kirkwood and
-Sterne, 2nd edition) into R. \newline
-Data from a study of lung function among children living in a deprived suburb of
-Lima, Peru. \newline
-Variables:
-\begin{itemize}
-\item \texttt{fev1}:  in liter, ''Forced Expiratory Volume in 1 second'' measured
-by a spirometer. This is the maximum volume of air which the children could breath
-out in 1 second
-\item \texttt{age}: in years
-\item \texttt{height}: in cm
-\item \texttt{sex}: 0 = girl, 1 = boy
-\item \texttt{respsymp}: respiratory symptoms experienced by the child over the
-previous 12 months
-\end{itemize}
-\item What \textit{delimiter} do you need to choose?
-<<echo = FALSE, eval = FALSE>>=
-lung <- read.csv("perulung_ems.csv", sep = ";")
-head(lung)
-str(lung)
-@
-\item Do all variables have the correct data type (numeric, integer, factor)?
-If not, do correct and / or define them.
-<<echo = FALSE, eval = FALSE>>=
-head(lung)
-str(lung)
-lung$sex <- factor(lung$sex, levels = c("0", "1"))
-# levels(lung$sex) <- c("female", "male")
-# levels(lung$sex)[levels(lung$sex)=="0"] <- "female"
-# levels(lung$sex)[levels(lung$sex)=="1"] <- "male"
-# tapply(lung$fev1, lung$sex, mean)
-lung$respsymptoms <- factor(lung$respsymptoms, levels = c("0", "1"))
-@
-%
-<<echo = FALSE, eval = FALSE>>=
-library(usdm)
-# check for multicollinearity by using variance inflation factors
-# cerate a dataframe just with the three continuous/numeric variables fevs, age and height
-try.vif <- lung[,c("fev1","height","age")];
-# perform scatterplots for these three variables
-pairs(try.vif)
-# get the three VIF, as a rule of thumb they should be < 3
-vif(try.vif)
-@
-%
-\item Check for heteroscedascity or homogeneity of variances
-<<echo = FALSE, eval = FALSE>>=
-?bartlett.test
-data("chickwts")
-bartlett.test(weight ~ feed, data = chickwts)
-@
-%
-\end{enumerate}
-
 \ex{Summary Statistics}
 Apply the summary statistics to the \texttt{perulung\_ems} and \texttt{ToothGrowth}
 data set.
@@ -1122,7 +1138,7 @@ plot(ToothGrowth$len, ToothGrowth$dose,
 \item Read \url{http://www.statmethods.net/advgraphs/parameters.html}.
 \end{enumerate}
 
-\ex
+\ex{}
 \vspace*{-1cm}
 \begin{enumerate}[(a)]
 \item Load the below data set and for further information check the command
