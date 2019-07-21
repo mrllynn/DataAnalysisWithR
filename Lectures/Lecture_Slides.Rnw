@@ -220,26 +220,26 @@ boxplot(weight ~ feed, data = chickwts)
 % @
 \end{frame}
 
-\begin{frame}[fragile]
-\frametitle{Ideas for analysing the data}
-\pause
-<<echo=TRUE, eval=TRUE, size="scriptsize">>=
-anova <- aov(weight ~ feed, data = chickwts)
-summary(anova)
-summary(aov(weight ~ feed, data = chickwts))
-@
-\end{frame}
+% \begin{frame}[fragile]
+% \frametitle{Ideas for analysing the data}
+% \pause
+% <<echo=TRUE, eval=TRUE, size="scriptsize">>=
+% anova <- aov(weight ~ feed, data = chickwts)
+% summary(anova)
+% summary(aov(weight ~ feed, data = chickwts))
+% @
+% \end{frame}
 
-{\usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
-\begin{frame}[fragile]
-\frametitle{Functionalities in R and RStudio}
-\framesubtitle{A hands on example}
-<<echo=TRUE, eval=FALSE, size="scriptsize">>=
-x <- c(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
-y <- c(20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30)
-plot(x, y)
-@
-\end{frame}
+% {\usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+% \begin{frame}[fragile]
+% \frametitle{Functionalities in R and RStudio}
+% \framesubtitle{A hands on example}
+% <<echo=TRUE, eval=FALSE, size="scriptsize">>=
+% x <- c(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+% y <- c(20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30)
+% plot(x, y)
+% @
+% \end{frame}
 
 {\usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
 \begin{frame}[fragile]
@@ -260,7 +260,7 @@ plot(x, y)
 \frametitle{Good housekeeping!}
 \begin{itemize}
 \setlength\itemsep{1.5em}
-\item Define manually a new folder called \textbf{RCourse} in your personal documents
+\item Define manually a new folder called \textbf{rcourse} in your personal documents
 on your personal computer
 \item Know in which directory you are
 <<echo=TRUE, eval=TRUE, size="scriptsize">>=
@@ -269,8 +269,8 @@ getwd()
 \item Set directory path
 <<echo=TRUE, eval=FALSE, size="scriptsize">>=
 # back- and forslash is dependent on the system
-setwd("C:/Users/muriel/Documents/RCourse/")
-setwd("C:\\Users\\muriel\\Documents\\RCourse\\")
+setwd("C:/Users/muriel/Documents/rcourse/")
+setwd("C:\\Users\\muriel\\Documents\\rcourse\\")
 @
 \item Always clean up before starting with new R-Script
 <<echo=TRUE, eval=TRUE, size="scriptsize">>=
@@ -293,34 +293,134 @@ Also, have a look at the examples at the end of the help pages.
 \end{frame}
 
 \begin{frame}[fragile]
-\frametitle{A data frame in R: \texttt{chickwts}}
+\frametitle{Rules for importing data into R}
+\begin{itemize}
+\item First row of excel sheet contains \textbf{variable names}: \newline
+\texttt{y, ap, hilo, week, ID, trt}.
+\item Columns of excel sheet represent \textbf{variables}.
+\item Rows of excel sheet represent \textbf{observations per individual}
+(except for the first row).
+\end{itemize}
 \begin{center}
-\includegraphics[width = 1.1\linewidth]{Printscreen_Data_Frame_in_R.png}
+\includegraphics[width = 0.7\linewidth]{Printscreen_ExcelSheet.png}
 \end{center}
 \end{frame}
 
 \begin{frame}[fragile]
-\frametitle{Rows and columns of a data frame: \texttt{chickwts}}
-Values of ...
+\frametitle{Rules for naming variables}
+Variable names should ...
+\begin{itemize}
+\item start with a letter (not a number): \newline
+\texttt{y, ap, hilo, week, ID, trt}
+\item longer variables names should be separated with dots: \texttt{time.in.weeks}
+\item do not use special characters, such as /, \#, $@$, \&, $\star$, ...
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{How to import external data files into R?}
+\begin{itemize}
+\item $>$ Import Dataset $>$ \textbf{From Text (base)...} $>$ CSV Files (.csv) \newline
+or
+% \item $>$ Import Dataset $>$ \textbf{From Excel...}
+\end{itemize}
+\begin{center}
+\includegraphics[width = 0.6\linewidth]{Import_data_to_R.png}
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{How to import .txt and .csv files into R? (1/3)}
+\begin{itemize}
+\item Environment (upper right corner)
+\item $>$ Import Dataset $>$ \textbf{From Text (base)...} $>$ CSV Files (.csv)
 <<echo=TRUE, eval=FALSE, size="scriptsize">>=
-# ... all columns of sixth observation:
-chickwts[6, ]
-
-# ... all columns of sixth to eleventh observation:
-chickwts[c(6:11), ]
-
-# ... all columns of sixth, eleventh and twentieth observation:
-chickwts[c(6, 11, 20), ]
-
-# ... all rows of first column (weight):
-chickwts[ , 1]
-
-# ... all rows of second column (feed):
-chickwts[ , 2]
-
-# or use the "$" sign as a reference to column "feed":
-chickwts$feed
+perulung_ems <- read.csv("perulung_ems.csv", row.names = 1,
+                         sep = ";")
+lung <- data.frame(perulung_ems)
 @
+\item $>$ Import Dataset $>$ \textbf{From Text (base)...} $>$ Text Files (.txt)
+% \item $>$ Import Dataset $>$ \textbf{From Excel...} $>$ Excel Files (.xlsx)
+% <<echo=TRUE, eval=FALSE, size="scriptsize">>=
+% install.packages("readxl")
+% library("readxl")
+% perulung_ems <- read_excel("perulung_ems.xlsx")
+% lung <- data.frame(perulung_ems)
+% head(lung)
+% @
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{How to import .txt and .csv files into R? (2/3)}
+\begin{itemize}
+\item Environment (upper right corner)
+\item $>$ Import Dataset $>$ From Text (base)... $>$ CSV Files (.csv)
+\end{itemize}
+\pause
+\begin{center}
+\includegraphics[width = 0.8\linewidth]{Import_csv_Perulung_1.png}
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{How to import .txt and .csv files into R? (3/3)}
+\begin{center}
+\includegraphics[width = 0.75\linewidth]{Import_csv_Perulung_2.png}
+\end{center}
+<<echo=TRUE, eval=FALSE, size="scriptsize">>=
+perulung_ems <- read.csv("perulung_ems.csv", row.names = 1,
+                         sep = ";")
+lung <- data.frame(perulung_ems)
+@
+\end{frame}
+
+% \begin{frame}[fragile]
+% \frametitle{How to import .xlsx files into R? (1/3)}
+% \begin{itemize}
+% \item Environment (upper right corner)
+% \item $>$ Import Dataset $>$ From Excel... $>$ Excel Files (.xlsx)
+% \end{itemize}
+% \pause
+% \begin{center}
+% \includegraphics[width = \linewidth]{Import_xlsx_Perulung_1.png}
+% \end{center}
+% \end{frame}
+
+% \begin{frame}[fragile]
+% \frametitle{How to import .xlsx files into R? (2/3)}
+% \begin{center}
+% \includegraphics[width = 0.85\linewidth]{Import_xlsx_Perulung_2.png}
+% \end{center}
+% \end{frame}
+
+% \begin{frame}[fragile]
+% \frametitle{How to import .xlsx files into R? (3/3)}
+% \begin{center}
+% \includegraphics[width = 0.9\linewidth]{Import_xlsx_Perulung_3.png}
+% \end{center}
+% <<echo=TRUE, eval=FALSE, size="scriptsize">>=
+% perulung_ems <- read_excel("perulung_ems.xlsx")
+% lung <- data.frame(perulung_ems)
+% head(lung)
+% @
+% \end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Exercise 7: perulung}
+Data from a study of lung function among children living in a deprived suburb of
+Lima, Peru. Data taken from Kirkwood and Sterne, 2nd edition. \newline
+Variables:
+\begin{itemize}
+\item \texttt{fev1}:  in liter, ''forced expiratory volume in 1 second'' measured
+by a spirometer. This is the maximum volume of air which the children could breath
+out in 1 second
+\item \texttt{age}: in years
+\item \texttt{height}: in cm
+\item \texttt{sex}: 0 = girl, 1 = boy
+\item \texttt{respsymp}: respiratory symptoms experienced by the child over the
+previous 12 months
+\end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -350,21 +450,56 @@ a <- c(1, 2, 3, 4)
 a
 data.frame(a)
 b <- c("d", "h", "h", "d")
-dat <- data.frame(a, b)
-dat
+mydat <- data.frame(a, b)
+mydat
 @
 \end{frame}
 
 \begin{frame}[fragile]
 \frametitle{Data frame in R: How to add a variable (var)}
 <<echo=TRUE, eval=TRUE, size="scriptsize">>=
-my.var <- c(1.3, 1.5, 1.8, 2.4)
+vartoadd <- c(1.3, 1.5, 1.8, 2.4)
 # use "$" to refer to the additional vector variable
-dat$my.var1 <- my.var
-dat$my.var2 <- my.var
-dat
+mydat$myvar1 <- vartoadd
+mydat$myvar2 <- vartoadd
+mydat
 # What is the dimension (number of rows and columns) of our data frame?
-dim(dat) # 4 rows and 4 columns
+dim(mydat) # 4 rows and 4 columns
+@
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{A data frame in R: \texttt{chickwts}}
+\begin{center}
+\includegraphics[width = 1.1\linewidth]{Printscreen_Data_Frame_in_R.png}
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Rows and columns of a data frame: \texttt{chickwts}}
+Values of ...
+<<echo=TRUE, eval=FALSE, size="scriptsize">>=
+
+# Load (internal) data set from R
+data("chickwts")
+
+# ... all columns of sixth observation:
+chickwts[6, ]
+
+# ... all columns of sixth to eleventh observation:
+chickwts[c(6:11), ]
+
+# ... all columns of sixth, eleventh and twentieth observation:
+chickwts[c(6, 11, 20), ]
+
+# ... all rows of first column (weight):
+chickwts[ , 1]
+
+# ... all rows of second column (feed):
+chickwts[ , 2]
+
+# or use the "$" sign as a reference to column "feed":
+chickwts$feed
 @
 \end{frame}
 
@@ -554,136 +689,7 @@ mood
 \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]
-\frametitle{Rules for importing data into R (from Excel)}
-\begin{itemize}
-\item First row of excel sheet contains \textbf{variable names}: \newline
-\texttt{y, ap, hilo, week, ID, trt}.
-\item Columns of excel sheet represent \textbf{variables}.
-\item Rows of excel sheet represent \textbf{observations per individual}
-(except for the first row).
-\end{itemize}
-\begin{center}
-\includegraphics[width = 0.7\linewidth]{Printscreen_ExcelSheet.png}
-\end{center}
-\end{frame}
 
-\begin{frame}[fragile]
-\frametitle{Rules for naming variables}
-Variable names should ...
-\begin{itemize}
-\item start with a letter (not a number): \newline
-\texttt{y, ap, hilo, week, ID, trt}
-\item longer variables names should be separated with dots: \texttt{time.in.weeks}
-\item do not use special characters, such as /, \#, $@$, \&, $\star$, ...
-\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]
-\frametitle{How to import external data files into R?}
-\begin{itemize}
-\item $>$ Import Dataset $>$ \textbf{From Text (base)...} $>$ CSV Files (.csv) \newline
-or
-\item $>$ Import Dataset $>$ \textbf{From Excel...}
-\end{itemize}
-\begin{center}
-\includegraphics[width = 0.6\linewidth]{Import_data_to_R.png}
-\end{center}
-\end{frame}
-
-\begin{frame}[fragile]
-\frametitle{How to import external data files into R?}
-\begin{itemize}
-\item Environment (upper right corner)
-\item $>$ Import Dataset $>$ \textbf{From Text (base)...} $>$ CSV Files (.csv)
-<<echo=TRUE, eval=FALSE, size="scriptsize">>=
-perulung_ems <- read.csv("perulung_ems.csv", row.names = 1,
-                         sep = ";")
-lung <- data.frame(perulung_ems)
-@
-\item $>$ Import Dataset $>$ \textbf{From Text (base)...} $>$ Text Files (.txt)
-\item $>$ Import Dataset $>$ \textbf{From Excel...} $>$ Excel Files (.xlsx)
-<<echo=TRUE, eval=FALSE, size="scriptsize">>=
-install.packages("readxl")
-library("readxl")
-perulung_ems <- read_excel("perulung_ems.xlsx")
-lung <- data.frame(perulung_ems)
-head(lung)
-@
-\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]
-\frametitle{How to import .txt and .csv files into R? (1/2)}
-\begin{itemize}
-\item Environment (upper right corner)
-\item $>$ Import Dataset $>$ From Text (base)... $>$ CSV Files (.csv)
-\end{itemize}
-\pause
-\begin{center}
-\includegraphics[width = 0.8\linewidth]{Import_csv_Perulung_1.png}
-\end{center}
-\end{frame}
-
-\begin{frame}[fragile]
-\frametitle{How to import .txt and .csv files into R? (2/2)}
-\begin{center}
-\includegraphics[width = 0.75\linewidth]{Import_csv_Perulung_2.png}
-\end{center}
-<<echo=TRUE, eval=FALSE, size="scriptsize">>=
-perulung_ems <- read.csv("perulung_ems.csv", row.names = 1,
-                         sep = ";")
-lung <- data.frame(perulung_ems)
-@
-\end{frame}
-
-\begin{frame}[fragile]
-\frametitle{How to import .xlsx files into R? (1/3)}
-\begin{itemize}
-\item Environment (upper right corner)
-\item $>$ Import Dataset $>$ From Excel... $>$ Excel Files (.xlsx)
-\end{itemize}
-\pause
-\begin{center}
-\includegraphics[width = \linewidth]{Import_xlsx_Perulung_1.png}
-\end{center}
-\end{frame}
-
-\begin{frame}[fragile]
-\frametitle{How to import .xlsx files into R? (2/3)}
-\begin{center}
-\includegraphics[width = 0.85\linewidth]{Import_xlsx_Perulung_2.png}
-\end{center}
-\end{frame}
-
-\begin{frame}[fragile]
-\frametitle{How to import .xlsx files into R? (3/3)}
-\begin{center}
-\includegraphics[width = 0.9\linewidth]{Import_xlsx_Perulung_3.png}
-\end{center}
-<<echo=TRUE, eval=FALSE, size="scriptsize">>=
-perulung_ems <- read_excel("perulung_ems.xlsx")
-lung <- data.frame(perulung_ems)
-head(lung)
-@
-\end{frame}
-
-\begin{frame}[fragile]
-\frametitle{Exercise 7: perulung}
-Data from a study of lung function among children living in a deprived suburb of
-Lima, Peru. Data taken from Kirkwood and Sterne, 2nd edition. \newline
-Variables:
-\begin{itemize}
-\item \texttt{fev1}:  in liter, ''forced expiratory volume in 1 second'' measured
-by a spirometer. This is the maximum volume of air which the children could breath
-out in 1 second
-\item \texttt{age}: in years
-\item \texttt{height}: in cm
-\item \texttt{sex}: 0 = girl, 1 = boy
-\item \texttt{respsymp}: respiratory symptoms experienced by the child over the
-previous 12 months
-\end{itemize}
-\end{frame}
 
 % 
 
