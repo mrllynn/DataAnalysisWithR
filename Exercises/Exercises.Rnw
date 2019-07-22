@@ -69,7 +69,7 @@
 
 \begin{description}
 
-\ex{Terminology}
+\ex{Statistical terminologies}
 Group the following terminology items into the three categories:
 \begin{enumerate}[(1)]
 \item sample \& variables
@@ -170,7 +170,7 @@ head(chickwts)
 %
 \end{enumerate}
 
-\ex{Summary Statistics with \texttt{chickwts}}
+\ex{Summary statistics for the \texttt{chickwts} data set}
 \vspace*{-1cm}
 \begin{enumerate}[(a)]
 \item Do summary statistics (numerically and graphically).
@@ -210,7 +210,7 @@ plot(lm.mod)
 @
 \end{enumerate}
 
-\ex{Data import to R: \texttt{perulung\_ems.csv}}
+\ex{Data import to R and summary statistics \texttt{perulung\_ems.csv}}
 \vspace*{-1cm}
 \begin{enumerate}[(a)]
 \item Import the data set \texttt{perulung\_ems.csv} (taken from Kirkwood and
@@ -235,8 +235,27 @@ head(lung)
 str(lung)
 @
 \item Do summary statistics (numerically and graphically).
+<<echo = TRUE, eval = FALSE>>=
+summary(lung)
+lung$sex <- factor(lung$sex, levels = c("0", "1"))
+levels(lung$sex) <- c("female", "male")
+lung$respsymptoms <- factor(lung$respsymptoms, levels = c("0", "1"))
+# Continuous and factor
+tapply(lung$height, lung$sex, mean)
+tapply(lung$height, lung$respsymptoms, mean)
+# Factor and factor
+table(lung$respsymptoms, lung$sex)
+prop.table(table(lung$respsymptoms, lung$sex))
+# Continuous and factor
+tapply(lung$age, lung$sex, mean)
+tapply(lung$age, lung$respsymptoms, mean)
+# Continuous and factor
+tapply(lung$fev1, lung$sex, mean)
+tapply(lung$fev1, lung$respsymptoms, mean)
+@
 \item Plot a boxplot.
 <<echo = FALSE, eval = FALSE>>=
+boxplot(lung$fev1 ~ lung$sex)
 boxplot(lung$fev1)
 boxplot(lung$age)
 boxplot(lung$height)
@@ -296,17 +315,68 @@ dat
 @
 \end{enumerate}
 
+\ex{Different bracket types within R}
+What is conceptionally the difference between the bracket types [...] and (...)?
+<<echo=TRUE, eval=FALSE, size="scriptsize", message=FALSE, warning=FALSE>>=
+chickwts[, 2]
+summary(aov(weight ~ feed, data = chickwts))
+@
+%
+<<echo=FALSE, eval=FALSE, size="scriptsize", message=FALSE, warning=FALSE>>=
+# SOLUTION: [...] the squared brackets we need to select rows and columns of a
+# data frame.
+# (...) the round brackets we need around function calls,
+# e. g.:
+subset(...) # to define a subset
+c(...) # to define a vector
+data.frame(...) # to define a data frame
+@
+%
+\ex{Data type of \texttt{perulung\_ems} data set}
+\vspace*{-1cm}
+\begin{enumerate}[(a)]
+\item Do all variables have the correct data type (numeric, integer, factor)?
+If not, do correct and / or define them.
+<<echo = FALSE, eval = FALSE>>=
+head(lung)
+str(lung)
+lung$sex <- factor(lung$sex, levels = c("0", "1"))
+# levels(lung$sex) <- c("female", "male")
+# levels(lung$sex)[levels(lung$sex)=="0"] <- "female"
+# levels(lung$sex)[levels(lung$sex)=="1"] <- "male"
+# tapply(lung$fev1, lung$sex, mean)
+lung$respsymptoms <- factor(lung$respsymptoms, levels = c("0", "1"))
+# summary(lung)
+# lung$sex <- factor(lung$sex, levels = c("0", "1"))
+# levels(lung$sex) <- c("female", "male")
+# lung$respsymptoms <- factor(lung$respsymptoms, levels = c("0", "1"))
+@
+%
+<<echo = FALSE, eval = FALSE>>=
+library(usdm)
+# check for multicollinearity by using variance inflation factors
+# cerate a dataframe just with the three continuous/numeric variables fevs, age and height
+try.vif <- lung[,c("fev1","height","age")];
+# perform scatterplots for these three variables
+pairs(try.vif)
+# get the three VIF, as a rule of thumb they should be < 3
+vif(try.vif)
+@
+%
+\item Check for heteroscedascity or homogeneity of variances
+<<echo = FALSE, eval = FALSE>>=
+data("chickwts")
+bartlett.test(weight ~ feed, data = chickwts)
+@
+\end{enumerate}
+
 \ex{Get to know \texttt{bacteria} data set}
 \vspace*{-1cm}
 \begin{enumerate}[(a)]
-\item Install package \texttt{MASS}.
+\item Install package \texttt{MASS}. Load data set \texttt{bacteria}.
 <<echo = FALSE, eval = FALSE>>=
 # install.packages("MASS")
 library("MASS")
-@
-%
-\item Load data set \texttt{bacteria}.
-<<echo = FALSE, eval = FALSE>>=
 data(bacteria)
 head(bacteria)
 str(bacteria)
@@ -349,28 +419,7 @@ summary(ss)
 table(bacteria$week)
 table(ss$week)
 @
-\end{enumerate}
 
-\ex{Bracket types}
-What is conceptionally the difference between the bracket types [...] and (...)?
-<<echo=TRUE, eval=FALSE, size="scriptsize", message=FALSE, warning=FALSE>>=
-chickwts[, 2]
-summary(aov(weight ~ feed, data = chickwts))
-@
-%
-<<echo=FALSE, eval=FALSE, size="scriptsize", message=FALSE, warning=FALSE>>=
-# SOLUTION: [...] the squared brackets we need to select rows and columns of a
-# data frame.
-# (...) the round brackets we need around function calls,
-# e. g.:
-subset(...) # to define a subset
-c(...) # to define a vector
-data.frame(...) # to define a data frame
-@
-%
-\ex{Factor variables}
-\vspace*{-1cm}
-\begin{enumerate}[(a)]
 \item How many levels has the factor variable \texttt{trt} from \texttt{bacteria}?
 <<echo = FALSE, eval = FALSE>>=
 str(bacteria)
@@ -413,7 +462,8 @@ chisq.test(table(bacteria$trt.new, bacteria$y))    # Chi-squared test
 (12*93)/(31*84)
 @
 \end{enumerate}
-%
+
+
 \ex{Get to know \texttt{ToothGrowth} data set}
 \vspace*{-1cm}
 \begin{enumerate}[(a)]
@@ -499,48 +549,9 @@ shapiro.test(sub.1$len)
 shapiro.test(sub.2$len)
 @
 \end{enumerate}
-%
-\ex{Summary Statistics}
-Apply the summary statistics to the \texttt{perulung\_ems} and \texttt{ToothGrowth}
-data set.
-<<echo = FALSE, eval = FALSE>>=
-# Read in .csv data
-lung <- read.csv("perulung_ems.csv", sep = ";")
-head(lung)
-str(lung)
-summary(lung)
-lung$sex <- factor(lung$sex, levels = c("0", "1"))
-levels(lung$sex) <- c("female", "male")
-lung$respsymptoms <- factor(lung$respsymptoms, levels = c("0", "1"))
-# Continuous and factor
-tapply(lung$height, lung$sex, mean)
-tapply(lung$height, lung$respsymptoms, mean)
-# Factor and factor
-table(lung$respsymptoms, lung$sex)
-prop.table(table(lung$respsymptoms, lung$sex))
-# Continuous and factor
-tapply(lung$age, lung$sex, mean)
-tapply(lung$age, lung$respsymptoms, mean)
-# Continuous and factor
-tapply(lung$fev1, lung$sex, mean)
-tapply(lung$fev1, lung$respsymptoms, mean)
-# Continuous and continuous
-pairs(lung)
-cor.test(lung$fev1, lung$age, method = "pearson")
-cor.test(lung$fev1, lung$height, method = "pearson")
-# ToothGrowth
-summary(ToothGrowth)
-table(ToothGrowth$supp)
-tapply(ToothGrowth$len, ToothGrowth$supp, mean)
-tapply(ToothGrowth$len, ToothGrowth$supp, median)
-tapply(ToothGrowth$len, ToothGrowth$supp, sd)
-table(ToothGrowth$dose)
-tapply(ToothGrowth$len, ToothGrowth$dose, mean)
-tapply(ToothGrowth$len, ToothGrowth$dose, median)
-tapply(ToothGrowth$len, ToothGrowth$dose, sd)
-@
-%
-\ex{Data Plausibility Checks}
+
+
+\ex{Data plausibility checks}
 \vspace*{-1cm}
 \begin{enumerate}[(a)]
 \item What can go wrong?
@@ -600,7 +611,7 @@ str(bac)
 @
 \end{enumerate}
 %
-\ex{Missing Values}
+\ex{Missing values}
 \vspace*{-1cm}
 \begin{enumerate}[(a)]
 \item Check out the difference between the different missing values.
