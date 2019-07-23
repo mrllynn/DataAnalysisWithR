@@ -232,6 +232,7 @@ previous 12 months
 <<echo = FALSE, eval = FALSE>>=
 lung <- read.csv("data/perulung_ems.csv", sep = ";")
 head(lung)
+tail(lung)
 str(lung)
 @
 \item Do summary statistics (numerically and graphically).
@@ -245,7 +246,7 @@ tapply(lung$height, lung$sex, mean)
 tapply(lung$height, lung$respsymptoms, mean)
 # Factor and factor
 table(lung$respsymptoms, lung$sex)
-prop.table(table(lung$respsymptoms, lung$sex))
+prop.table(table(lung$respsymptoms, lung$sex),2)
 # Continuous and factor
 tapply(lung$age, lung$sex, mean)
 tapply(lung$age, lung$respsymptoms, mean)
@@ -260,36 +261,6 @@ boxplot(lung$fev1)
 boxplot(lung$age)
 boxplot(lung$height)
 @
-% \item Do all variables have the correct data type (numeric, integer, factor)?
-% If not, do correct and / or define them.
-% <<echo = FALSE, eval = FALSE>>=
-% head(lung)
-% str(lung)
-% lung$sex <- factor(lung$sex, levels = c("0", "1"))
-% # levels(lung$sex) <- c("female", "male")
-% # levels(lung$sex)[levels(lung$sex)=="0"] <- "female"
-% # levels(lung$sex)[levels(lung$sex)=="1"] <- "male"
-% # tapply(lung$fev1, lung$sex, mean)
-% lung$respsymptoms <- factor(lung$respsymptoms, levels = c("0", "1"))
-% @
-% %
-% <<echo = FALSE, eval = FALSE>>=
-% library(usdm)
-% # check for multicollinearity by using variance inflation factors
-% # cerate a dataframe just with the three continuous/numeric variables fevs, age and height
-% try.vif <- lung[,c("fev1","height","age")];
-% # perform scatterplots for these three variables
-% pairs(try.vif)
-% # get the three VIF, as a rule of thumb they should be < 3
-% vif(try.vif)
-% @
-% %
-% \item Check for heteroscedascity or homogeneity of variances
-% <<echo = FALSE, eval = FALSE>>=
-% ?bartlett.test
-% data("chickwts")
-% bartlett.test(weight ~ feed, data = chickwts)
-% @
 \end{enumerate}
 
 \ex{Defining a new data frame}
@@ -340,7 +311,7 @@ If not, do correct and / or define them.
 <<echo = FALSE, eval = FALSE>>=
 head(lung)
 str(lung)
-lung$sex <- factor(lung$sex, levels = c("0", "1"))
+lung$sex <- factor(lung$sex, levels = c("0", "1"), labels = c("female", "male"))
 # levels(lung$sex) <- c("female", "male")
 # levels(lung$sex)[levels(lung$sex)=="0"] <- "female"
 # levels(lung$sex)[levels(lung$sex)=="1"] <- "male"
@@ -361,12 +332,6 @@ try.vif <- lung[,c("fev1","height","age")];
 pairs(try.vif)
 # get the three VIF, as a rule of thumb they should be < 3
 vif(try.vif)
-@
-%
-\item Check for heteroscedascity or homogeneity of variances
-<<echo = FALSE, eval = FALSE>>=
-data("chickwts")
-bartlett.test(weight ~ feed, data = chickwts)
 @
 \end{enumerate}
 

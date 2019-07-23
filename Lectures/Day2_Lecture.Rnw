@@ -1,0 +1,604 @@
+\documentclass{beamer}
+
+% ADD HERE THE TOPIC OF THE LECTURE!
+% \newcommand{\lecturetopic}{ALL LECTURE SLIDES}
+\newcommand{\lecturetopic}{Lecture Slides: Day 2 - Tuesday}
+
+<<echo = FALSE, eval = TRUE>>=
+data_dir <- "../Exercises/data"
+@
+
+<<echo = FALSE, eval = TRUE, message = FALSE, cache = TRUE, warning = FALSE>>=
+list.of.packages <- c("MASS", "readxl", "Rcmdr", "multcomp", "HSAUR3",
+                      "investr", "quantreg", "mi", "missForest", "mice",
+                      "partykit", "party")
+new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
+if(length(new.packages)) install.packages(new.packages)
+@
+
+% turn off navigation symbols
+\beamertemplatenavigationsymbolsempty
+
+\title{\textbf{Data Analysis with R:} \\ \lecturetopic}
+\author{Sonja Hartnack, Terence Odoch \& Muriel Buri}
+\footnotesize
+\institute{July 2019}
+\date{ }
+
+\setbeamertemplate{footline}[text line]{%
+\parbox{\linewidth}{\vspace*{-1pt} \fontsize{3.5}{5}\selectfont Sonja Hartnack,
+Terence Odoch \& Muriel Buri \hfill \lecturetopic \hfill \insertpagenumber}}
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{animate}
+\usepackage{verbatim}
+\usepackage{url}
+\usepackage{lmodern}
+\usepackage{fancyhdr}
+\usepackage{color}
+\usepackage{amsmath, amssymb}
+\usepackage{longtable}
+\usepackage{lscape}
+\usepackage{xspace}
+\usepackage[normalem]{ulem}
+\usepackage[sc]{mathpazo}
+\usepackage[scaled]{helvet}
+\usepackage[latin1]{inputenc}
+\usepackage{multicol} % A flexible tool to handle multicolumn documents
+\usepackage{colortbl, xcolor} % enable colored rows in table
+\usepackage{color} % enable colored rows in table
+\usepackage{bibentry} % Include Full BibTeX Entry Inside Slides
+\usepackage{nicefrac}
+\usepackage{soul}
+
+\setbeamertemplate{itemize items}[circle]
+
+\usepackage{array}
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\graphicspath{{slides_figures/}}
+\usepackage[export]{adjustbox} % figure alignment
+\usepackage{wrapfig} % allow for wrapfigure
+\usepackage[margin=1cm]{caption}
+\captionsetup{font=scriptsize, labelfont=scriptsize}
+
+% change font family in footnote
+\usepackage{footmisc}
+\renewcommand*{\footnotelayout}{\tiny\sffamily}
+% \renewcommand*{\footnotelayout}{\fontsize{3.5}{5}\selectfont\sffamily}
+
+% change footer symbol
+\usepackage{perpage}
+\MakePerPage{footnote}
+\renewcommand*{\thefootnote}{$\star$}
+
+% change font sizes of frametitles
+\setbeamerfont{frametitle}{size=\normalsize, series=\bfseries}
+\setbeamerfont{framesubtitle}{size=\small, series=\bfseries}
+
+% Settings for the references
+\usepackage{natbib}
+\usepackage{bibentry} % Include Full BibTeX Entry Inside Slides
+
+% Writting the whole reference in ONE line.
+% \def\newblock{\hskip .5em plus .33em minus .07em}
+
+\setbeamerfont{title}{size=\LARGE}
+
+\makeatletter
+\def\mathcolor#1#{\@mathcolor{#1}}
+\def\@mathcolor#1#2#3{%
+\protect\leavevmode
+\begingroup\color#1{#2}#3\endgroup
+}
+\makeatother
+
+{\usebackgroundtemplate{}}
+
+\begin{document}
+
+\bibliographystyle{plainnat}
+
+% TITLE PAGE:
+\begin{frame}[noframenumbering,plain]
+\begin{columns}
+\begin{column}{.3\linewidth}
+\begin{center}
+\includegraphics[height=.35\linewidth, width = 1.1\linewidth]{UZH_logo.png}
+\end{center}
+\end{column}
+\begin{column}{0.2\linewidth}
+\end{column}
+\begin{column}{.3\linewidth}
+\begin{center}
+\includegraphics[height=.45\linewidth, width = .65\linewidth]{Makerere_logo.jpeg}
+\end{center}
+\end{column}
+\end{columns}
+\titlepage
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{What is a data frame in R?}
+A data frame is used for storing a list of vectors of equal length.
+For example, the following variable \texttt{df} is a data frame containing
+three vectors \texttt{n}, \texttt{s}, \texttt{b}.
+<<echo=TRUE, eval=TRUE, size="scriptsize">>=
+n <- c(2, 3, 5)
+s <- c("aa", "bb", "cc")
+b <- c(TRUE, FALSE, TRUE)
+df <- data.frame(n, s, b) # df is a data frame
+@
+The characteristics of a data frame are:
+\begin{itemize}
+\item The column names should be non-empty.
+\item The row names should be unique.
+% \item The data stored in a data frame can be of numeric, factor or character type.
+\item Each column should contain same number of data items.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Data frame in R}
+<<echo=TRUE, eval=TRUE, size="scriptsize">>=
+a <- c(1, 2, 3, 4)
+a
+data.frame(a)
+b <- c("d", "h", "h", "d")
+mydat <- data.frame(a, b)
+mydat
+@
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Data frame in R: How to add a variable}
+<<echo=TRUE, eval=TRUE, size="scriptsize">>=
+vartoadd <- c(1.3, 1.5, 1.8, 2.4)
+# use "$" to refer to the additional vector variable
+mydat$myvar1 <- vartoadd
+mydat$myvar2 <- vartoadd
+mydat
+# What is the dimension (number of rows and columns) of our data frame?
+dim(mydat) # 4 rows and 4 columns
+@
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Exercise: Defining a new data frame}
+\end{frame}
+
+{\usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+\begin{frame}[fragile]
+\frametitle{Creating and assigning objects in R}
+\linespread{1.5}\selectfont
+Objects are assigned values using $<-$ , \newline
+an arrow formed out of $<$ and $-$.
+For example, the following command assigns the value 1 to the object \texttt{a}.
+<<echo=TRUE, eval=TRUE, size="scriptsize">>=
+a <- 1 # ALWAYS use "gets" assignment operator!
+# a = 1 # DO NOT USE the equal sign as the assignment operator!
+@
+After this assignment, the object \texttt{a} contains the value 1.
+Another assignment to the same object will change its value.
+<<echo=TRUE, eval=TRUE, size="scriptsize">>=
+a <- 5
+@
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Examples of assigned objects: single number}
+<<echo=TRUE, eval=TRUE, size="scriptsize">>=
+a <- 1
+b <- 2
+c <- a + b # c = 3
+c
+@
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Examples of assigned objects: vector}
+<<echo=TRUE, eval=TRUE, size="scriptsize">>=
+a <- c(1, 2, 3, 4, 5)
+b <- 1
+c <- a + b
+c
+@
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Examples of assigned objects: model}
+<<echo=TRUE, eval=TRUE, size="scriptsize">>=
+anova_model <- aov(weight ~ feed, data = chickwts)
+summary(anova_model)
+@
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Examples of assigned objects: data frame}
+<<echo=FALSE, eval=TRUE, size="scriptsize", message=FALSE, warning=FALSE>>=
+library("MASS")
+data(bacteria)
+@
+<<echo=TRUE, eval=TRUE, size="scriptsize">>=
+bac <- bacteria
+str(bac) # $ week: int  0 2 4 11 0 2 6 11 0 2 ...
+bac_sub <- subset(bac, week == 2)
+str(bac_sub) # $ week: int  2 2 2 2 2 2 2 2 2 2 ...
+@
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Structure of a R objects}
+\linespread{1.5}\selectfont
+The \texttt{str} function displays the structure of an R object. One line for
+each "basic" structure is displayed.
+<<echo=FALSE, eval=TRUE, size="scriptsize", message=FALSE, warning=FALSE>>=
+str(bac_sub)
+@
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Exercise: Different bracket types within R}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Data types in R}
+\begin{itemize}
+\item numeric
+<<echo=TRUE, eval=TRUE, size="scriptsize">>=
+data(ToothGrowth)
+ToothGrowth$len[1:6]
+class(ToothGrowth$len[1:6])
+@
+\item integers
+<<echo=TRUE, eval=TRUE, size="scriptsize">>=
+bacteria$week[1:6]
+class(bacteria$week[1:6])
+@
+\item (un/ordered) factor
+<<echo=TRUE, eval=TRUE, size="scriptsize">>=
+chickwts$feed[1:6]
+levels(chickwts$feed)[1:3]
+@
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Data types in R: Ordered Factors}
+Ordinal variables are represented as ordered factors:
+<<echo=TRUE, eval=TRUE, size="scriptsize">>=
+bac_growth <- c("none", "+", "++", "+", "+++", "+", "none") # vector
+bac_growth <- factor(bac_growth, levels = c("none", "+", "++", "+++"),
+                     order = TRUE)
+bac_growth
+#
+mood <- c("OK", "Well", "Super", "Super", "Don't ask", "OK") # vector
+mood <- factor(mood, levels = c("Don't ask", "Well", "OK", "Super"),
+               order = TRUE)
+mood
+@
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Examples of different data types}
+\begin{itemize}
+\setlength\itemsep{1.5em}
+\item numeric variable
+\item integer variable
+\item variable with two levels (binary factor)
+\item ordered variable with \textbf{more than} two levels (ordinal)
+\item unordered variable with \textbf{more than} two levels (nominal)
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Exercise: Data type of \texttt{perulung\_ems} data set}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Introduction to R packages}
+\scriptsize{\url{https://www.datacamp.com/community/tutorials/r-packages-guide}}
+\centering
+\includegraphics[width=\textwidth]{datacamp_Rpkg.png}
+\end{frame}
+
+\usebackgroundtemplate{}
+\begin{frame}[fragile]
+\frametitle{How to install a package (manually) in R}
+\begin{columns}[t]
+\column{.5\textwidth}
+\centering
+\includegraphics[width=1.25\textwidth]{Load_MASS_package1.png}
+\column{.5\textwidth}
+\includegraphics[width=0.8\textwidth]{Load_MASS_package2.png} 
+\end{columns}
+\vspace*{0.5cm}
+\begin{center}
+\includegraphics[width=0.5\textwidth]{Load_MASS_package3.png} 
+\end{center}
+\end{frame}
+
+\usebackgroundtemplate{}
+\begin{frame}[fragile]
+\frametitle{Using R is like cooking ...}
+\begin{center}
+\includegraphics[width=0.85\textwidth]{cooking_with_R.png} 
+\end{center}
+\end{frame}
+
+{\usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+\begin{frame}[fragile]
+\frametitle{How to install a package in R}
+<<echo=TRUE, eval=FALSE, size="scriptsize">>=
+# INSTALL package (only done ONCE!)
+install.packages("MASS")
+# LOAD package (whenever you use something from it!)
+library("MASS")
+data(bacteria)
+?bacteria
+@
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Exercise: Get to know \texttt{bacteria} data set}
+\end{frame}
+
+\usebackgroundtemplate{}
+\begin{frame}[fragile]
+\frametitle{How to google for getting help in R}
+\begin{itemize}
+\setlength\itemsep{1.5em}
+\item Google for \textbf{select observations in R}.
+\end{itemize}
+\end{frame}
+
+\usebackgroundtemplate{}
+\begin{frame}[fragile]{Why do we need Statistics?}
+\Large{\textbf{Repeatability of results:}} \newline
+\textbf{Statistical science} allows us to
+estimate what might happen if an experiment was repeated - but without having to
+actually repeat it!
+\end{frame}
+
+
+
+\begin{frame}[fragile]{Why do we need Statistics?}
+\vspace{0.5cm}
+\begin{itemize}
+\setlength\itemsep{1.5em}
+\item Study results must be shown to be robust, i.e. real and not due to random
+chance
+\item Best way to demonstrate this is to repeat the same experiment/study many
+times each with {\bfseries different} subjects (animals) drawn from the {\bfseries
+same study population} and show that the result is truly repeatable
+\item It is generally totally impractical, in terms of both time and resources,
+to repeat an experiment many times!
+\end{itemize}
+\vspace{0.5cm}
+\end{frame}
+
+
+
+\begin{frame}[fragile]
+\frametitle{Why do we need Statistics?}
+\begin{itemize}
+\setlength\itemsep{1.5em}
+\item Instead of repeating the experiment many times {\bfseries probability
+theory i.e. statistics} is used to {\bfseries estimate} what might have happened
+if the experiment had been repeated
+\item A mathematical model is used to fill this ``data gap''
+\item Generally the most difficult task in statistics is to decide what ``model''
+is most appropriate for a given experiment
+\end{itemize}
+\vspace{0.5cm}
+\end{frame}
+
+
+
+\begin{frame}[fragile]
+\frametitle{What is Statistics? - A definition}
+A set of analytical tools designed to quantify uncertainty
+\vspace{0.3cm}
+\begin{itemize}
+\setlength\itemsep{1.5em}
+\item If an experiment or procedure is repeated, how likely is it that the new
+results will be similar to those already observed?
+\item What is the likely variation in results if the experiment was repeated?
+\end{itemize}\vspace{0.5cm}
+\end{frame}
+
+
+
+\begin{frame}[fragile]
+\frametitle{What is Statistics? - A definition}
+The key scientific purpose of statistics
+\vspace{0.5cm}
+\begin{itemize}
+\setlength\itemsep{1.5em}
+\item to provide {\bfseries evidence} of the existence of some ``effect'' of
+scientific interest
+\item i.e. evidence based medicine
+\end{itemize}
+\vspace{0.5cm}
+\end{frame}
+
+
+
+\begin{frame}[fragile]
+\frametitle{As a reminder: The importance of study design}
+Even the most sophisticated statistical analyses cannot rescue a poorly
+designed study
+%
+\begin{itemize}
+\setlength\itemsep{1.5em}
+\item[$\rightarrow$] unreliable results
+\item[$\rightarrow$] inability to answer the main research question
+\end{itemize}
+\vspace{0.5cm}
+\end{frame}
+
+
+
+\begin{frame}[fragile]
+\frametitle{Putting Statistics in Context}
+\begin{itemize}
+\setlength\itemsep{1.5em}
+\item Use common sense as a guide - be skeptical!
+\item Terminology can also differ greatly between textbooks...
+\item Wikipedia as good a resource
+% \item The vast majority of analyses can be done in a straightforward fashion -
+% just remember and always use common sense as a guide - be skeptical!
+% \item It is very easy to get ``lost'' in the statistical software and technical
+% jargon, which differs markedly between different software packages. Terminology
+% can also differ greatly between textbooks...
+% \item Wikipedia is as good a resource as any for finding out about different
+% statistical tests and terminology
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}[fragile]
+\frametitle{Exploratory Data Analysis}
+\begin{itemize}
+\item get first impression and feeling of the data set
+\item detect outliers / mistake of data collection
+\item possibly recode variables
+% \item It is crucially important to explore your data fully before considering any
+% ``formal'' statistical analyses\pause
+% \item What explorations are done depends on the objective of the study - the
+% research question(s)\pause
+% \item Helps to decide what kind of formal statistical analyses might be most
+% appropriate for the data available\pause
+% \item What a simple descriptive analysis {\bfseries does not} provide is evidence
+% of whether the observed treatment effects are large enough to be notable once
+% sampling variation has been accounted - that is the role of formal analyses,
+% e.g. hypothesis testing
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Summary Statistics}
+\framesubtitle{Continuous (Integers / Numeric)}
+\begin{itemize}
+\item {\tt Mean} - a measure of location. Always examine the average value of
+the response variable(s) for the different ``treatment'' effects in your data
+\item {\tt Median} - a robust single value summary of a set of data (50\% quantile
+point) - most useful in highly skewed data or data with outliers
+\item {\tt Standard deviation (sd)} - a measure of spread, how variable the data
+are
+\item {\tt Standard error of the mean (se)} - an estimate of how far the sample
+mean is likely to be from the population mean
+\item and others:  {\tt min, max, range, IQR, ...}
+\end{itemize}
+\end{frame}
+
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+% \usebackgroundtemplate{}
+\begin{frame}[fragile]
+\frametitle{Continuous (Integers / Numeric) Summary Statistics}
+<<echo=TRUE, eval=FALSE>>=
+mean(x) # mean
+
+median(x) # median
+
+sd(x) # standard deviation
+
+min(x) # minimum
+
+max(x) # maximum
+
+range(x) # range
+
+IQR(x) # interquartile range
+@
+\end{frame}
+
+% \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+\usebackgroundtemplate{}
+\begin{frame}[fragile]
+\frametitle{Continuous Data Summaries}
+\begin{figure}
+\includegraphics[width=0.5\linewidth]{se_sd.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Correlation coefficient}
+\framesubtitle{Combination of continuous and continuous}
+Correlation coefficient a measure association between two continuous variables (common but somewhat limited)
+\begin{figure}
+\includegraphics[width=0.6\linewidth]{correlation.png}
+\end{figure}
+\end{frame}
+
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+\begin{frame}[fragile]
+\frametitle{Correlation of continuous and factor variables}
+<<echo=TRUE, eval=FALSE>>=
+# Test for Association/Correlation Between
+# Paired Samples
+cor.test(data$x, data$y, method = "pearson")
+cor.test(data$x, data$y, method = "spearman")
+
+# Scatterplot(s)
+pairs(data$x ~ data$y)
+pairs(data)
+@
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Summary Statistics}
+\framesubtitle{Continuous and factor variables}
+<<echo=TRUE, eval=FALSE>>=
+tapply(data$x.cont, data$y.fac, mean)
+
+tapply(data$x.cont, data$y.fac, median)
+
+tapply(data$x.cont, data$y.fac, sd)
+@
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Summary Statistics}
+\framesubtitle{Factor (1/2)}
+\begin{itemize}
+\setlength\itemsep{1.3em}
+\item {\tt Median} - a robust single value summary of a set of data
+(50\% quantile point) - most useful in highly skewed data or data with outliers
+\item {\tt e.g.10th and 90th percentile} - a measure of spread, how variable
+the data are
+<<echo=TRUE, eval=FALSE>>=
+quantile(x, probs = c(0.1, 0.9))
+@
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Summary Statistics}
+\framesubtitle{Factor (2/2)}
+\begin{itemize}
+\setlength\itemsep{1.3em}
+\item {\tt proportions} - e.g. percentage per grade
+<<echo=TRUE, eval=FALSE>>=
+prop.table(table(data$x.fac))
+prop.table(table(data$x.fac, data$y.fac))
+@
+\item {\tt contingency tables} e. g. 2 x 2
+<<echo=TRUE, eval=FALSE>>=
+table(data$x.fac)
+table(data$x.fac, data$y.fac)
+prop.table(table(data$x.fac))
+prop.table(table(data$x.fac, data$y.fac))
+@
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Exercise: Get to know \texttt{ToothGrowth} data set}
+\end{frame}
+
+\end{document}

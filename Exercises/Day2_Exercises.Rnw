@@ -1,0 +1,135 @@
+
+% -----------------------------------------------------------------------------
+% IMPLEMENTING THE DOCUMENT AND ITS OPTIONS
+% -----------------------------------------------------------------------------
+
+\documentclass[11pt]{article}
+\usepackage[left=21mm, right=18mm, top=20mm, bottom=18mm]{geometry}
+\linespread{1.4}
+
+% *****************************************************************************
+% ADD HERE THE TOPIC OF THE LECTURE!
+\newcommand{\exercisetopic}{Tuesday, July 23, 2019, Day 2}
+% *****************************************************************************
+
+% Add information about the title section of the file
+\author{Sonja Hartnack, Terence Odoch \& Muriel Buri}
+\date{\today}
+\title{\vspace{-3ex}Practical Exercises for \textbf{\exercisetopic}}
+\date{July 2019}
+
+\usepackage[round,sectionbib]{natbib} \bibliographystyle{ims}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{url}
+\usepackage{color}
+\usepackage{amsmath, amssymb}
+\usepackage{colortbl, xcolor} % enable colored rows in table
+\usepackage{color} % enable colored rows in table
+\usepackage{bibentry} % Include Full BibTeX Entry Inside Slides
+\usepackage{nicefrac}
+\usepackage{soul}
+\usepackage{enumerate}
+\usepackage{multicol}
+
+\graphicspath{{figures/}}
+
+% Adjusting font type
+\usepackage[sfdefault,lf]{carlito}
+\usepackage[T1]{fontenc}
+\renewcommand*\oldstylenums[1]{\carlitoOsF #1}
+
+% Add footer and header to the file
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+\renewcommand{\headrulewidth}{0.4pt}% Default \headrulewidth is 0.4pt
+\renewcommand{\footrulewidth}{0.4pt}% Default \footrulewidth is 0pt
+\pagestyle{fancy}
+\lhead{Data Analysis with R: Exercises} % left header
+\rhead{\exercisetopic} % right header
+\lfoot{Sonja Hartnack, Terence Odoch \& Muriel Buri} % left footer
+\rfoot{\thepage\ of \pageref{LastPage}} % right footer
+\cfoot{} % get rid of the centered page number
+
+% setcounter for exercise taks
+\renewcommand{\labelenumi}{\alph{enumi})}
+\renewcommand{\labelenumii}{(\roman{enumii})}
+\newcounter{ex}
+\setcounter{ex}{5}
+\newcommand{\ex}[1]{\item{\stepcounter{ex} \textbf{Exercise \arabic{ex}: #1}}\newline}
+
+% -----------------------------------------------------------------------------
+% BEGINNING OF ACTUAL DOCUMENT
+% -----------------------------------------------------------------------------
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\begin{description}
+
+\ex{Defining a new data frame}
+\vspace*{-1cm}
+\begin{enumerate}[(a)]
+\item Create a data frame with 3 columns.
+<<echo = FALSE, eval = FALSE>>=
+# Define single variables
+a <- c(1, 20, 3, 40, 5, 60, 7, 8, 92)
+b <- c("d", "h", "h", "d", "d", "h", "h", "d", "a")
+c <- factor(c("male", "female", "male", "female", "male",
+              "female", "male", "male", "female"),
+            levels = c("female", "male"))
+# Define data frame "dat"
+dat <- data.frame(a, b, c)
+dat
+# For the advanced users:
+# Generate dichotomized variable "a.dic" and add it to the data frame
+mean.a <- mean(dat$a)
+dat$a.dic <- ifelse(dat$a < mean.a, "smaller", "bigger")
+dat
+
+@
+\end{enumerate}
+
+\ex{Different bracket types within R}
+What is conceptionally the difference between the bracket types [...] and (...)?
+<<echo=TRUE, eval=FALSE, size="scriptsize", message=FALSE, warning=FALSE>>=
+chickwts[, 2]
+summary(aov(weight ~ feed, data = chickwts))
+@
+%
+<<echo=TRUE, eval=FALSE, size="scriptsize", message=FALSE, warning=FALSE>>=
+# SOLUTION: [...] the squared brackets we need to select rows and columns of a
+# data frame.
+# (...) the round brackets we need around function calls,
+# e. g.:
+subset(...) # to define a subset
+c(...) # to define a vector
+data.frame(...) # to define a data frame
+@
+%
+\ex{Data type of \texttt{perulung\_ems} data set}
+\vspace*{-1cm}
+\begin{enumerate}[(a)]
+\item Do all variables have the correct data type (numeric, integer, factor)?
+If not, do correct and / or define them.
+<<echo = TRUE, eval = FALSE>>=
+head(lung)
+str(lung)
+lung$sex <- factor(lung$sex, levels = c("0", "1"), labels = c("female", "male"))
+# levels(lung$sex) <- c("female", "male")
+# levels(lung$sex)[levels(lung$sex)=="0"] <- "female"
+# levels(lung$sex)[levels(lung$sex)=="1"] <- "male"
+# tapply(lung$fev1, lung$sex, mean)
+lung$respsymptoms <- factor(lung$respsymptoms, levels = c("0", "1"))
+# summary(lung)
+# lung$sex <- factor(lung$sex, levels = c("0", "1"))
+# levels(lung$sex) <- c("female", "male")
+# lung$respsymptoms <- factor(lung$respsymptoms, levels = c("0", "1"))
+@
+\end{enumerate}
+
+\end{description}
+
+\end{document}

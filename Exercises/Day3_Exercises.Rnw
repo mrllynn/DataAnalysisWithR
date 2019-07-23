@@ -1,0 +1,254 @@
+
+% -----------------------------------------------------------------------------
+% IMPLEMENTING THE DOCUMENT AND ITS OPTIONS
+% -----------------------------------------------------------------------------
+
+\documentclass[11pt]{article}
+\usepackage[left=21mm, right=18mm, top=20mm, bottom=18mm]{geometry}
+\linespread{1.4}
+
+% *****************************************************************************
+% ADD HERE THE TOPIC OF THE LECTURE!
+\newcommand{\exercisetopic}{Wednesday, July 24, 2019, Day 3}
+% *****************************************************************************
+
+% Add information about the title section of the file
+\author{Sonja Hartnack, Terence Odoch \& Muriel Buri}
+\date{\today}
+\title{\vspace{-3ex}Practical Exercises for \textbf{\exercisetopic}}
+\date{July 2019}
+
+\usepackage[round,sectionbib]{natbib} \bibliographystyle{ims}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{url}
+\usepackage{color}
+\usepackage{amsmath, amssymb}
+\usepackage{colortbl, xcolor} % enable colored rows in table
+\usepackage{color} % enable colored rows in table
+\usepackage{bibentry} % Include Full BibTeX Entry Inside Slides
+\usepackage{nicefrac}
+\usepackage{soul}
+\usepackage{enumerate}
+\usepackage{multicol}
+
+\graphicspath{{figures/}}
+
+% Adjusting font type
+\usepackage[sfdefault,lf]{carlito}
+\usepackage[T1]{fontenc}
+\renewcommand*\oldstylenums[1]{\carlitoOsF #1}
+
+% Add footer and header to the file
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+\renewcommand{\headrulewidth}{0.4pt}% Default \headrulewidth is 0.4pt
+\renewcommand{\footrulewidth}{0.4pt}% Default \footrulewidth is 0pt
+\pagestyle{fancy}
+\lhead{Data Analysis with R: Exercises} % left header
+\rhead{\exercisetopic} % right header
+\lfoot{Sonja Hartnack, Terence Odoch \& Muriel Buri} % left footer
+\rfoot{\thepage\ of \pageref{LastPage}} % right footer
+\cfoot{} % get rid of the centered page number
+
+% setcounter for exercise taks
+\renewcommand{\labelenumi}{\alph{enumi})}
+\renewcommand{\labelenumii}{(\roman{enumii})}
+\newcounter{ex}
+\setcounter{ex}{8}
+\newcommand{\ex}[1]{\item{\stepcounter{ex} \textbf{Exercise \arabic{ex}: #1}}\newline}
+
+% -----------------------------------------------------------------------------
+% BEGINNING OF ACTUAL DOCUMENT
+% -----------------------------------------------------------------------------
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\begin{description}
+
+\ex{Get to know \texttt{bacteria} data set}
+\vspace*{-1cm}
+\begin{enumerate}[(a)]
+\item Install package \texttt{MASS}. Load data set \texttt{bacteria}.
+<<echo = FALSE, eval = FALSE>>=
+# install.packages("MASS")
+library("MASS")
+data(bacteria)
+head(bacteria)
+str(bacteria)
+summary(bacteria)
+# ?bacteria
+@
+%
+\item Describe in your own words what the data set \texttt{bacteria} contains.
+%
+\item Do summary statistic (numerically and graphically).
+<<echo = FALSE, eval = FALSE>>=
+summary(bacteria)
+table(bacteria$week)
+barplot(table(bacteria$week))
+barplot(table(bacteria$trt))
+table(bacteria$trt, bacteria$ap)
+table(bacteria$trt, bacteria$y)
+%
+fisher.test(table(bacteria$trt, bacteria$y))
+%
+prop.table(table(bacteria$trt, bacteria$y))
+prop.table(table(bacteria$trt, bacteria$y), margin = 1)
+prop.table(table(bacteria$trt, bacteria$y), margin = 2)
+%
+plot(prop.table(table(bacteria$trt, bacteria$y)))
+mosaicplot(~trt + y, data = bacteria)
+barplot(prop.table(table(bacteria$y, bacteria$trt),margin=1), beside=TRUE)
+barplot(prop.table(table(bacteria$trt, bacteria$y),margin=1), beside=TRUE)
+barplot(prop.table(table(bacteria$y, bacteria$trt),margin=1), beside=FALSE)
+barplot(prop.table(table(bacteria$trt, bacteria$y),margin=1), beside=FALSE)
+?barplot
+@
+%
+\item Select only observations collected during the second week.
+<<echo = FALSE, eval = FALSE>>=
+subset(bacteria, week == 2)
+ss <- subset(bacteria, week == 2)
+summary(ss)
+# Check if we only have observations of week 2.
+table(bacteria$week)
+table(ss$week)
+@
+
+\item How many levels has the factor variable \texttt{trt} from \texttt{bacteria}?
+<<echo = FALSE, eval = FALSE>>=
+str(bacteria)
+head(bacteria$trt)
+table(bacteria$trt)
+levels(bacteria$trt)
+nlevels(bacteria$trt)
+@
+\item Define a new variable \texttt{trt.new} in which you combine the levels
+\texttt{drug} and \texttt{drug+} into one single level and label it as \texttt{treated}.
+The new variable \texttt{trt.new} should in the end have two levels: \texttt{placebo} and \texttt{treated}.
+<<echo = FALSE, eval = FALSE>>=
+table(bacteria$trt)
+# OPTION 1:
+# Test how many levels are in the variable "trt"?
+levels(bacteria$trt)
+bacteria$trt.new <- bacteria$trt
+# Overwrite the levels "placebo", "drug", "drug+" with new
+# levels called "placebo", "drug", "drug" --> combine "drug" and "drug+"
+levels(bacteria$trt.new) <- c("placebo", "drug", "drug")
+# Do table for variable "trt" and "trt.new" to see if you combined correctly
+table(bacteria$trt)
+table(bacteria$trt.new)
+# Rename the levels from "placebo", "drug" to "placebo", "treated"
+levels(bacteria$trt.new) <- c("placebo", "treated")
+# Do another table to check if you did everything correctly:
+table(bacteria$trt.new)
+@
+\item Do summary statistics for \texttt{placebo} and \texttt{treated} group.
+<<echo = FALSE, eval = FALSE>>=
+summary(bacteria)
+table(bacteria$trt.new)
+barplot(table(bacteria$trt.new))
+table(bacteria$trt.new, bacteria$ap)
+table(bacteria$trt.new, bacteria$y)
+plot(table(bacteria$trt.new, bacteria$y))
+fisher.test(table(bacteria$trt.new, bacteria$y))   # Fisher's exact test
+chisq.test(table(bacteria$trt.new, bacteria$y))    # Chi-squared test
+# odds ratio: (a*d)/(b*c)
+(12*93)/(31*84)
+@
+\end{enumerate}
+
+
+\ex{Get to know \texttt{ToothGrowth} data set}
+\vspace*{-1cm}
+\begin{enumerate}[(a)]
+\item Load data set \texttt{ToothGrowth}.
+<<echo = FALSE, eval = FALSE>>=
+data(ToothGrowth)
+str(ToothGrowth)
+head(ToothGrowth)
+summary(ToothGrowth)
+@
+\item Do summary statistic (numerically and graphically).
+<<echo = FALSE, eval = FALSE>>=
+# NUMERICAL statistics
+# supplement
+table(ToothGrowth$supp)
+tapply(ToothGrowth$len, ToothGrowth$supp, mean)
+tapply(ToothGrowth$len, ToothGrowth$supp, median)
+tapply(ToothGrowth$len, ToothGrowth$supp, sd)
+# dose
+tapply(ToothGrowth$len, ToothGrowth$dose, mean)
+tapply(ToothGrowth$len, ToothGrowth$dose, median)
+tapply(ToothGrowth$len, ToothGrowth$dose, sd)
+# GRAPHICAL exploration
+# length
+hist(ToothGrowth$len)
+boxplot(ToothGrowth$len, ylab = "tooth length",
+        main = "Boxplot of the tooth length")
+# supplement
+barplot(table(ToothGrowth$supp), legend.text = TRUE)
+boxplot(ToothGrowth$len ~ ToothGrowth$supp, , ylab = "tooth length",
+        main = "Boxplot of the tooth length separately plotted per supplement")
+# dose
+barplot(table(ToothGrowth$dose), legend.text = TRUE)
+# display tooth length increase in dosage
+boxplot(ToothGrowth$len ~ ToothGrowth$dose, , ylab = "tooth length",
+        main = "Boxplot of the tooth length separately plotted per dose")
+# install.packages("graphics")
+library("graphics")
+coplot(len ~ dose | supp, data = ToothGrowth, panel = panel.smooth,
+       xlab = "ToothGrowth data: length vs dose, given type of supplement")
+@
+\item Define additional column \texttt{dose.factor} by converting the numeric
+variable \texttt{dose} into a factor variable.
+<<echo = FALSE, eval = FALSE>>=
+class(ToothGrowth$dose)
+str(ToothGrowth$dose)
+table(ToothGrowth$dose)
+# ToothGrowth$dose.factor <- as.factor(ToothGrowth$dose)
+ToothGrowth$dose.factor <- factor(ToothGrowth$dose, levels = c("0.5", "1", "2"))
+class(ToothGrowth$dose.factor)
+table(ToothGrowth$dose.factor)
+@
+%
+\item Are the tooth length measurements normally distributed within the treatment
+(\texttt{supp}: VC or OJ) and within in the different doses (\texttt{dose}: 0.5, 1, 2)?
+<<echo = FALSE, eval = FALSE>>=
+# supp: VC, OJ
+sub.OJ <- subset(ToothGrowth, supp == "OJ")
+sub.VC <- subset(ToothGrowth, supp == "VC")
+# graphically
+par(mfrow = c(1,2))
+qqnorm(sub.OJ$len, main = "Normal Q-Q Plot for OJ")
+qqline(sub.OJ$len)
+qqnorm(sub.VC$len, main = "Normal Q-Q Plot for VC")
+qqline(sub.VC$len)
+# with a statistical test
+shapiro.test(sub.OJ$len)
+shapiro.test(sub.VC$len)
+# dose: 0.5, 1, 2
+sub.0.5 <- subset(ToothGrowth, dose.factor == "0.5")
+sub.1 <- subset(ToothGrowth, dose.factor == "1")
+sub.2 <- subset(ToothGrowth, dose.factor == "2")
+# graphically
+qqnorm(sub.0.5$len)
+qqline(sub.0.5$len)
+qqnorm(sub.1$len)
+qqline(sub.1$len)
+qqnorm(sub.2$len)
+qqline(sub.2$len)
+# with a statistical test
+shapiro.test(sub.0.5$len)
+shapiro.test(sub.1$len)
+shapiro.test(sub.2$len)
+@
+\end{enumerate}
+
+\end{description}
+
+\end{document}

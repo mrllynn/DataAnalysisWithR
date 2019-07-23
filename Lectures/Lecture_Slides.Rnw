@@ -894,7 +894,7 @@ Correlation coefficient a measure association between two continuous variables (
 
 \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
 \begin{frame}[fragile]
-\frametitle{Correlation of continuous and ordinal variables}
+\frametitle{Correlation of continuous and factor variables}
 <<echo=TRUE, eval=FALSE>>=
 # Test for Association/Correlation Between
 # Paired Samples
@@ -909,7 +909,7 @@ pairs(data)
 
 \begin{frame}[fragile]
 \frametitle{Summary Statistics}
-\framesubtitle{Continuous and ordinal variables}
+\framesubtitle{Continuous and factor variables}
 <<echo=TRUE, eval=FALSE>>=
 tapply(data$x.cont, data$y.fac, mean)
 
@@ -921,7 +921,7 @@ tapply(data$x.cont, data$y.fac, sd)
 
 \begin{frame}[fragile]
 \frametitle{Summary Statistics}
-\framesubtitle{Ordinal}
+\framesubtitle{Factor (1/2)}
 \begin{itemize}
 \setlength\itemsep{1.3em}
 \item {\tt Median} - a robust single value summary of a set of data
@@ -931,19 +931,19 @@ the data are
 <<echo=TRUE, eval=FALSE>>=
 quantile(x, probs = c(0.1, 0.9))
 @
-\item {\tt proportions} - e.g. percentage per grade
-<<echo=TRUE, eval=FALSE>>=
-prop.table(table(data$x.fac))
-prop.table(table(data$x.fac, data$y.fac))
-@
 \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
 \frametitle{Summary Statistics}
-\framesubtitle{Nominal}
+\framesubtitle{Factor (2/2)}
 \begin{itemize}
-\item {\tt proportions} - percentage within the different categories
+\setlength\itemsep{1.3em}
+\item {\tt proportions} - e.g. percentage per grade
+<<echo=TRUE, eval=FALSE>>=
+prop.table(table(data$x.fac))
+prop.table(table(data$x.fac, data$y.fac))
+@
 \item {\tt contingency tables} e. g. 2 x 2
 <<echo=TRUE, eval=FALSE>>=
 table(data$x.fac)
@@ -953,7 +953,6 @@ prop.table(table(data$x.fac, data$y.fac))
 @
 \end{itemize}
 \end{frame}
-
 
 \begin{frame}[fragile]
 \frametitle{Exercise: Get to know \texttt{ToothGrowth} data set}
