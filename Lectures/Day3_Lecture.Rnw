@@ -1,0 +1,211 @@
+\documentclass{beamer}
+
+% ADD HERE THE TOPIC OF THE LECTURE!
+% \newcommand{\lecturetopic}{ALL LECTURE SLIDES}
+\newcommand{\lecturetopic}{Lecture Slides: Day 3 - Wednesday}
+
+<<echo = FALSE, eval = TRUE>>=
+data_dir <- "../Exercises/data"
+@
+
+<<echo = FALSE, eval = TRUE, message = FALSE, cache = TRUE, warning = FALSE>>=
+list.of.packages <- c("MASS", "readxl", "Rcmdr", "multcomp", "HSAUR3",
+                      "investr", "quantreg", "mi", "missForest", "mice",
+                      "partykit", "party")
+new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
+if(length(new.packages)) install.packages(new.packages)
+@
+
+% turn off navigation symbols
+\beamertemplatenavigationsymbolsempty
+
+\title{\textbf{Data Analysis with R:} \\ \lecturetopic}
+\author{Sonja Hartnack, Terence Odoch \& Muriel Buri}
+\footnotesize
+\institute{July 2019}
+\date{ }
+
+\setbeamertemplate{footline}[text line]{%
+\parbox{\linewidth}{\vspace*{-1pt} \fontsize{3.5}{5}\selectfont Sonja Hartnack,
+Terence Odoch \& Muriel Buri \hfill \lecturetopic \hfill \insertpagenumber}}
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{animate}
+\usepackage{verbatim}
+\usepackage{url}
+\usepackage{lmodern}
+\usepackage{fancyhdr}
+\usepackage{color}
+\usepackage{amsmath, amssymb}
+\usepackage{longtable}
+\usepackage{lscape}
+\usepackage{xspace}
+\usepackage[normalem]{ulem}
+\usepackage[sc]{mathpazo}
+\usepackage[scaled]{helvet}
+\usepackage[latin1]{inputenc}
+\usepackage{multicol} % A flexible tool to handle multicolumn documents
+\usepackage{colortbl, xcolor} % enable colored rows in table
+\usepackage{color} % enable colored rows in table
+\usepackage{bibentry} % Include Full BibTeX Entry Inside Slides
+\usepackage{nicefrac}
+\usepackage{soul}
+
+\setbeamertemplate{itemize items}[circle]
+
+\usepackage{array}
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\graphicspath{{slides_figures/}}
+\usepackage[export]{adjustbox} % figure alignment
+\usepackage{wrapfig} % allow for wrapfigure
+\usepackage[margin=1cm]{caption}
+\captionsetup{font=scriptsize, labelfont=scriptsize}
+
+% change font family in footnote
+\usepackage{footmisc}
+\renewcommand*{\footnotelayout}{\tiny\sffamily}
+% \renewcommand*{\footnotelayout}{\fontsize{3.5}{5}\selectfont\sffamily}
+
+% change footer symbol
+\usepackage{perpage}
+\MakePerPage{footnote}
+\renewcommand*{\thefootnote}{$\star$}
+
+% change font sizes of frametitles
+\setbeamerfont{frametitle}{size=\normalsize, series=\bfseries}
+\setbeamerfont{framesubtitle}{size=\small, series=\bfseries}
+
+% Settings for the references
+\usepackage{natbib}
+\usepackage{bibentry} % Include Full BibTeX Entry Inside Slides
+
+% Writting the whole reference in ONE line.
+% \def\newblock{\hskip .5em plus .33em minus .07em}
+
+\setbeamerfont{title}{size=\LARGE}
+
+\makeatletter
+\def\mathcolor#1#{\@mathcolor{#1}}
+\def\@mathcolor#1#2#3{%
+\protect\leavevmode
+\begingroup\color#1{#2}#3\endgroup
+}
+\makeatother
+
+{\usebackgroundtemplate{}}
+
+\begin{document}
+
+\bibliographystyle{plainnat}
+
+% TITLE PAGE:
+\begin{frame}[noframenumbering,plain]
+\begin{columns}
+\begin{column}{.3\linewidth}
+\begin{center}
+\includegraphics[height=.35\linewidth, width = 1.1\linewidth]{UZH_logo.png}
+\end{center}
+\end{column}
+\begin{column}{0.2\linewidth}
+\end{column}
+\begin{column}{.3\linewidth}
+\begin{center}
+\includegraphics[height=.45\linewidth, width = .65\linewidth]{Makerere_logo.jpeg}
+\end{center}
+\end{column}
+\end{columns}
+\titlepage
+\end{frame}
+
+
+
+\usebackgroundtemplate{}
+\begin{frame}[fragile]
+\frametitle{How to deal with missing values in R? (1/3)}
+\begin{itemize}
+\setlength\itemsep{1.3em}
+\item In R, missing values are represented by the symbol \textbf{NA}
+(not available).
+\item Impossible values (e. g., dividing by zero) are represented by the symbol
+\textbf{NaN} (not a number).
+\item Ask yourself why a \textbf{NA} and / or \textbf{NaN} occurs!
+\end{itemize}
+\end{frame}
+
+
+
+\usebackgroundtemplate{}
+\begin{frame}[fragile]
+\frametitle{How to deal with missing values in R? (2/3)}
+\begin{itemize}
+\setlength\itemsep{1.3em}
+\item Testing for Missing Values
+<<echo=TRUE, eval=FALSE, size="scriptsize">>=
+vec1 <- c(1, 2, 3, NA)
+is.na(vec1) # returns a vector (FALSE, FALSE, FALSE, TRUE)
+# The TRUE indicates the position of the NA in vec1.
+@
+\item Recoding Values to Missing
+<<echo=TRUE, eval=FALSE, size="scriptsize">>=
+# recode specific values (e. g. 0.001) to missing for variable x
+# select rows where x is 0.001 and recode value in column x with NA
+tmp.row <- which(dat$x == 0.001)
+dat$x[tmp.row] <- NA
+@
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}[fragile]
+\frametitle{How to deal with missing values in R? (3/3)}
+\begin{itemize}
+\setlength\itemsep{1.3em}
+\item Excluding Missing Values from specific function calls
+<<echo=TRUE, eval=FALSE, size="scriptsize">>=
+a <- c(1, 2, NA, 3)
+mean(a) # returns NA
+mean(a, na.rm=TRUE) # returns 2
+@
+\item Check for complete cases with function \texttt{complete.cases(...)}
+<<echo=TRUE, eval=FALSE, size="scriptsize">>=
+# list rows of data that have missing values
+dat[!complete.cases(dat),]
+subdat <- dat[complete.cases(dat),]
+@
+\item Create new dataset without missing data with function \texttt{na.omit(...)}
+<<echo=TRUE, eval=FALSE, size="scriptsize">>=
+new.dat <- na.omit(dat)
+@
+\end{itemize}
+\end{frame}
+
+
+
+\usebackgroundtemplate{}
+\begin{frame}[fragile]
+\frametitle{How to check your data for plausibility?}
+\begin{itemize}
+\setlength\itemsep{1.3em}
+\item Ask yourself what can go wrong?
+\item Implausible values?
+\item Impossible values?
+\item Logical errors?
+\end{itemize}
+\end{frame}
+
+
+
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
+\usebackgroundtemplate{}
+\begin{frame}[fragile]
+\frametitle{Data plausibility checks \& Missing values}
+\end{frame}
+
+
+
+\end{document}

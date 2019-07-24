@@ -55,7 +55,7 @@
 \renewcommand{\labelenumi}{\alph{enumi})}
 \renewcommand{\labelenumii}{(\roman{enumii})}
 \newcounter{ex}
-\setcounter{ex}{8}
+\setcounter{ex}{0}
 \newcommand{\ex}[1]{\item{\stepcounter{ex} \textbf{Exercise \arabic{ex}: #1}}\newline}
 
 % -----------------------------------------------------------------------------
@@ -69,11 +69,13 @@
 
 \begin{description}
 
+
+
 \ex{Get to know \texttt{bacteria} data set}
 \vspace*{-1cm}
 \begin{enumerate}[(a)]
 \item Install package \texttt{MASS}. Load data set \texttt{bacteria}.
-<<echo = FALSE, eval = FALSE>>=
+<<echo = TRUE, eval = FALSE>>=
 # install.packages("MASS")
 library("MASS")
 data(bacteria)
@@ -86,7 +88,7 @@ summary(bacteria)
 \item Describe in your own words what the data set \texttt{bacteria} contains.
 %
 \item Do summary statistic (numerically and graphically).
-<<echo = FALSE, eval = FALSE>>=
+<<echo = TRUE, eval = FALSE>>=
 summary(bacteria)
 table(bacteria$week)
 barplot(table(bacteria$week))
@@ -110,7 +112,7 @@ barplot(prop.table(table(bacteria$trt, bacteria$y),margin=1), beside=FALSE)
 @
 %
 \item Select only observations collected during the second week.
-<<echo = FALSE, eval = FALSE>>=
+<<echo = TRUE, eval = FALSE>>=
 subset(bacteria, week == 2)
 ss <- subset(bacteria, week == 2)
 summary(ss)
@@ -120,7 +122,7 @@ table(ss$week)
 @
 
 \item How many levels has the factor variable \texttt{trt} from \texttt{bacteria}?
-<<echo = FALSE, eval = FALSE>>=
+<<echo = TRUE, eval = FALSE>>=
 str(bacteria)
 head(bacteria$trt)
 table(bacteria$trt)
@@ -130,7 +132,7 @@ nlevels(bacteria$trt)
 \item Define a new variable \texttt{trt.new} in which you combine the levels
 \texttt{drug} and \texttt{drug+} into one single level and label it as \texttt{treated}.
 The new variable \texttt{trt.new} should in the end have two levels: \texttt{placebo} and \texttt{treated}.
-<<echo = FALSE, eval = FALSE>>=
+<<echo = TRUE, eval = FALSE>>=
 table(bacteria$trt)
 # OPTION 1:
 # Test how many levels are in the variable "trt"?
@@ -146,9 +148,39 @@ table(bacteria$trt.new)
 levels(bacteria$trt.new) <- c("placebo", "treated")
 # Do another table to check if you did everything correctly:
 table(bacteria$trt.new)
+
+### Easiest solution:
+bacteria$trt.new <- bacteria$trt
+summary(bacteria)
+levels(bacteria$trt.new) <- c("placebo", "treated", "treated")
+summary(bacteria)
+
+## OPTION 1:
+bacteria$trt.new <- bacteria$trt
+summary(bacteria)
+# "drug"
+levels(bacteria$trt.new)[2] <- "treated"
+levels(bacteria$trt.new)
+# "drug+"
+levels(bacteria$trt.new)[3] <- "treated"
+levels(bacteria$trt.new)
+
+## OPTION 2:
+bacteria$trt.new <- bacteria$trt
+summary(bacteria)
+bacteria$trt.new <- as.character(bacteria$trt.new)
+summary(bacteria)
+# change the levels
+bacteria$trt.new[bacteria$trt.new == "drug"] <- "treated"
+bacteria$trt.new[bacteria$trt.new == "drug+"] <- "treated"
+bacteria$trt.new[bacteria$trt.new == "placebo"] <- "placebo"
+summary(bacteria)
+# change it back to factor
+bacteria$trt.new <- as.factor(bacteria$trt.new)
+summary(bacteria)
 @
 \item Do summary statistics for \texttt{placebo} and \texttt{treated} group.
-<<echo = FALSE, eval = FALSE>>=
+<<echo = TRUE, eval = FALSE>>=
 summary(bacteria)
 table(bacteria$trt.new)
 barplot(table(bacteria$trt.new))
@@ -163,89 +195,267 @@ chisq.test(table(bacteria$trt.new, bacteria$y))    # Chi-squared test
 \end{enumerate}
 
 
-\ex{Get to know \texttt{ToothGrowth} data set}
+
+% \ex{Get to know \texttt{ToothGrowth} data set}
+% \vspace*{-1cm}
+% \begin{enumerate}[(a)]
+% \item Load data set \texttt{ToothGrowth}.
+% <<echo = TRUE, eval = FALSE>>=
+% data(ToothGrowth)
+% str(ToothGrowth)
+% head(ToothGrowth)
+% summary(ToothGrowth)
+% @
+% \item Do summary statistic (numerically and graphically).
+% <<echo = TRUE, eval = FALSE>>=
+% # NUMERICAL statistics
+% # supplement
+% table(ToothGrowth$supp)
+% tapply(ToothGrowth$len, ToothGrowth$supp, mean)
+% tapply(ToothGrowth$len, ToothGrowth$supp, median)
+% tapply(ToothGrowth$len, ToothGrowth$supp, sd)
+% # dose
+% tapply(ToothGrowth$len, ToothGrowth$dose, mean)
+% tapply(ToothGrowth$len, ToothGrowth$dose, median)
+% tapply(ToothGrowth$len, ToothGrowth$dose, sd)
+% # GRAPHICAL exploration
+% # length
+% hist(ToothGrowth$len)
+% boxplot(ToothGrowth$len, ylab = "tooth length",
+%         main = "Boxplot of the tooth length")
+% # supplement
+% barplot(table(ToothGrowth$supp), legend.text = TRUE)
+% boxplot(ToothGrowth$len ~ ToothGrowth$supp, , ylab = "tooth length",
+%         main = "Boxplot of the tooth length separately plotted per supplement")
+% # dose
+% barplot(table(ToothGrowth$dose), legend.text = TRUE)
+% # display tooth length increase in dosage
+% boxplot(ToothGrowth$len ~ ToothGrowth$dose, , ylab = "tooth length",
+%         main = "Boxplot of the tooth length separately plotted per dose")
+% # install.packages("graphics")
+% library("graphics")
+% coplot(len ~ dose | supp, data = ToothGrowth, panel = panel.smooth,
+%        xlab = "ToothGrowth data: length vs dose, given type of supplement")
+% @
+% \item Define additional column \texttt{dose.factor} by converting the numeric
+% variable \texttt{dose} into a factor variable.
+% <<echo = TRUE, eval = FALSE>>=
+% class(ToothGrowth$dose)
+% str(ToothGrowth$dose)
+% table(ToothGrowth$dose)
+% # ToothGrowth$dose.factor <- as.factor(ToothGrowth$dose)
+% ToothGrowth$dose.factor <- factor(ToothGrowth$dose, levels = c("0.5", "1", "2"))
+% class(ToothGrowth$dose.factor)
+% table(ToothGrowth$dose.factor)
+% @
+% %
+% \item Are the tooth length measurements normally distributed within the treatment
+% (\texttt{supp}: VC or OJ) and within in the different doses (\texttt{dose}: 0.5, 1, 2)?
+% <<echo = TRUE, eval = FALSE>>=
+% # supp: VC, OJ
+% sub.OJ <- subset(ToothGrowth, supp == "OJ")
+% sub.VC <- subset(ToothGrowth, supp == "VC")
+% # graphically
+% par(mfrow = c(1,2))
+% qqnorm(sub.OJ$len, main = "Normal Q-Q Plot for OJ")
+% qqline(sub.OJ$len)
+% qqnorm(sub.VC$len, main = "Normal Q-Q Plot for VC")
+% qqline(sub.VC$len)
+% # with a statistical test
+% shapiro.test(sub.OJ$len)
+% shapiro.test(sub.VC$len)
+% # dose: 0.5, 1, 2
+% sub.0.5 <- subset(ToothGrowth, dose.factor == "0.5")
+% sub.1 <- subset(ToothGrowth, dose.factor == "1")
+% sub.2 <- subset(ToothGrowth, dose.factor == "2")
+% # graphically
+% qqnorm(sub.0.5$len)
+% qqline(sub.0.5$len)
+% qqnorm(sub.1$len)
+% qqline(sub.1$len)
+% qqnorm(sub.2$len)
+% qqline(sub.2$len)
+% # with a statistical test
+% shapiro.test(sub.0.5$len)
+% shapiro.test(sub.1$len)
+% shapiro.test(sub.2$len)
+% @
+% \end{enumerate}
+
+
+
+\ex{Data plausibility checks}
 \vspace*{-1cm}
 \begin{enumerate}[(a)]
-\item Load data set \texttt{ToothGrowth}.
-<<echo = FALSE, eval = FALSE>>=
-data(ToothGrowth)
-str(ToothGrowth)
-head(ToothGrowth)
-summary(ToothGrowth)
+\item What can go wrong?
+\item Identify different strategies for spotting these potential errors.
+\begin{itemize}
+\item Logical errors
+\item Spelling mistakes
+\end{itemize}
+\item Import the data set \texttt{bacteria\_plausibility\_check.csv} to R.
+<<echo = TRUE, eval = FALSE>>=
+bac <- read.csv("data/bacteria_plausibility_check.csv", sep = ",")
+head(bac)
+str(bac)
+summary(bac)
 @
-\item Do summary statistic (numerically and graphically).
-<<echo = FALSE, eval = FALSE>>=
-# NUMERICAL statistics
-# supplement
-table(ToothGrowth$supp)
-tapply(ToothGrowth$len, ToothGrowth$supp, mean)
-tapply(ToothGrowth$len, ToothGrowth$supp, median)
-tapply(ToothGrowth$len, ToothGrowth$supp, sd)
-# dose
-tapply(ToothGrowth$len, ToothGrowth$dose, mean)
-tapply(ToothGrowth$len, ToothGrowth$dose, median)
-tapply(ToothGrowth$len, ToothGrowth$dose, sd)
-# GRAPHICAL exploration
-# length
-hist(ToothGrowth$len)
-boxplot(ToothGrowth$len, ylab = "tooth length",
-        main = "Boxplot of the tooth length")
-# supplement
-barplot(table(ToothGrowth$supp), legend.text = TRUE)
-boxplot(ToothGrowth$len ~ ToothGrowth$supp, , ylab = "tooth length",
-        main = "Boxplot of the tooth length separately plotted per supplement")
-# dose
-barplot(table(ToothGrowth$dose), legend.text = TRUE)
-# display tooth length increase in dosage
-boxplot(ToothGrowth$len ~ ToothGrowth$dose, , ylab = "tooth length",
-        main = "Boxplot of the tooth length separately plotted per dose")
-# install.packages("graphics")
-library("graphics")
-coplot(len ~ dose | supp, data = ToothGrowth, panel = panel.smooth,
-       xlab = "ToothGrowth data: length vs dose, given type of supplement")
+\item Detect the \textbf{six} errors in the imported data set
+\texttt{bacteria\_plausibility\_check.csv} in R.
+<<echo = TRUE, eval = FALSE>>=
+str(bac)
+table(bac$y) # We have wrong factor levels: 0, 1
+table(bac$ap)
+table(bac$hilo) # We have a spelling mistake: Hi.
+table(bac$week) # There's only ONE observation in week 20.
+table(bac$ID)
+table(bac$trt) # We have wrong factor levels: drug++, penicillin+
+summary(bac$child_weight) # child weight of 302.8 kg is impossible --> comma
 @
-\item Define additional column \texttt{dose.factor} by converting the numeric
-variable \texttt{dose} into a factor variable.
-<<echo = FALSE, eval = FALSE>>=
-class(ToothGrowth$dose)
-str(ToothGrowth$dose)
-table(ToothGrowth$dose)
-# ToothGrowth$dose.factor <- as.factor(ToothGrowth$dose)
-ToothGrowth$dose.factor <- factor(ToothGrowth$dose, levels = c("0.5", "1", "2"))
-class(ToothGrowth$dose.factor)
-table(ToothGrowth$dose.factor)
+\item Find possible solutions in R how to handle these challenges.
+<<echo = TRUE, eval = FALSE>>=
+levels(bac$y) <- c("n", "y", "n", "y")
+bac$y[which(bac$y == 0)] <- "n"
+# bac$y[bac$y == 0] <- "n"
+bac$y[which(bac$y == 1)] <- "y"
+# Delete the unused levels with the function droplevels(...)
+bac$y <- droplevels(bac$y)
+bac$hilo[bac$hilo == "Hi"] <- "hi"
+bac$hilo[which(bac$hilo == "Hi")] <- "hi"
+levels(bac$hilo) <- c("hi", "hi", "lo")
+summary(bac)
+bac <- bac[-which(bac$week == 20), ] # dim(bac)
+bac$trt[bac$trt == "drug++"] <- "drug+"
+bac$trt[bac$trt == "penicillin+"] <- "drug+"
+table(bac$trt) # We have wrong factor levels: drug++, penicillin+
+levels(bac$trt) <- c("drug", "drug+", "drug+", "drug", "placebo")
+# levels(bac$trt) <- droplevels(bac$trt)
+table(bac$trt) # We only have three factor levels left.
+bac$child_weight[bac$child_weight == 302.8] <- 30.28
+summary(bac)
+@
+\item Do all variables have the correct data type (numeric, integer, factor)?
+- If not, do correct / define them.
+<<echo = TRUE, eval = FALSE>>=
+str(bac)
+# bac$y <- factor(bac$y, levels = c("n", "y"))
+# bac$hilo[bac$hilo == "Hi"] <- "hi"
+# bac$ID <- factor(bac$ID)
+# bac$trt <- factor(bac$trt)
+@
+\end{enumerate}
+
+
+
+\ex{Missing values}
+\vspace*{-1cm}
+\begin{enumerate}[(a)]
+\item Check out the difference between the different missing values.
+<<eval = FALSE>>=
+y1 <- c(2, 4, 3, NA, 6, 1)
+y2 <- c("diseased", "healthy", NA, "NA")
+y3 <- c(1, "NA", 0, 1, NaN)
+# 
+is.na(y1)
+which(is.na(y1))
+is.na(y2)
+which(is.na(y2))
+is.na(y3)
+which(is.na(y3))
+is.nan(y3)
+@
+
+<<echo = TRUE, eval = FALSE>>=
+y4 <- c(1, NA, 0, 1, NaN)
+# finds the NaN
+is.nan(y4)
+# finds the NA and the NaN
+is.na(y4)
+# this vector is a character and NA as well as NaN cannot be detected
+y5 <- c(1, "NA", 0, 1, NaN)
 @
 %
-\item Are the tooth length measurements normally distributed within the treatment
-(\texttt{supp}: VC or OJ) and within in the different doses (\texttt{dose}: 0.5, 1, 2)?
-<<echo = FALSE, eval = FALSE>>=
-# supp: VC, OJ
-sub.OJ <- subset(ToothGrowth, supp == "OJ")
-sub.VC <- subset(ToothGrowth, supp == "VC")
-# graphically
-par(mfrow = c(1,2))
-qqnorm(sub.OJ$len, main = "Normal Q-Q Plot for OJ")
-qqline(sub.OJ$len)
-qqnorm(sub.VC$len, main = "Normal Q-Q Plot for VC")
-qqline(sub.VC$len)
-# with a statistical test
-shapiro.test(sub.OJ$len)
-shapiro.test(sub.VC$len)
-# dose: 0.5, 1, 2
-sub.0.5 <- subset(ToothGrowth, dose.factor == "0.5")
-sub.1 <- subset(ToothGrowth, dose.factor == "1")
-sub.2 <- subset(ToothGrowth, dose.factor == "2")
-# graphically
-qqnorm(sub.0.5$len)
-qqline(sub.0.5$len)
-qqnorm(sub.1$len)
-qqline(sub.1$len)
-qqnorm(sub.2$len)
-qqline(sub.2$len)
-# with a statistical test
-shapiro.test(sub.0.5$len)
-shapiro.test(sub.1$len)
-shapiro.test(sub.2$len)
+\item Create a vector with missing values and determine the mean and median.
+<<echo = TRUE, eval = FALSE>>=
+myvector <- c(1:3, NA, NA, 1:3)
+mean(myvector)
+mean(myvector, na.rm=TRUE) # calculates c(1, 2, 3, 1, 2, 3)
+median(myvector, na.rm=TRUE)
+@
+%
+\item If \texttt{x <- c(22,3,7,NA,NA,67)} what will be the output for the R
+statement \texttt{length(x)}?
+<<echo = TRUE, eval = FALSE>>=
+x <- c (22, 3, 7, NA, NA, 67)
+length(x)
+@
+%
+\item If \texttt{x <- c(NA, 3, 14, NA, 33, 17, NA, 41)} which line of R code removes
+all occurrences of NA in \texttt{x}.
+<<echo = TRUE, eval = FALSE>>=
+x <- c(NA,3,14,NA,33,17,NA,41)
+x[!is.na(x)]
+x[is.na(x)]
+x[which(is.na(x))] <- 0
+@
+%
+\item If \texttt{y <- c(1, 3, 12, NA, 33, 7, NA, 21)} what R statement will replace
+all occurrences of NA with 11?
+<<echo = TRUE, eval = FALSE>>=
+y <- c(1,3,12,NA,33,7,NA,21)
+y[y=="NA"] <- 11
+y[is.na(y)] <- 11
+y[y==11] <- NA
+@
+%
+\item If \texttt{x <- c(34, 33, 65, 37, 89, NA, 43, NA, 11, NA, 23, NA)} then what will
+count the number of occurrences of NA in \texttt{x}?
+<<echo = TRUE, eval = FALSE>>=
+x <- c(34,33,65,37,89,NA,43,NA,11,NA,23,NA)
+sum(x=="NA")
+sum(x == "NA", is.na(x))
+sum(is.na(x))
+mean(is.na(x))
+@
+%
+\item Create the vector \texttt{x1}. Then, find again the number of missing values
+and their position.
+<<eval = FALSE>>=
+x1 <- c(rnorm(10,5,2), NA, 5:12, NA, 6, 7.5, NA)
+@
+<<echo = TRUE, eval = FALSE>>=
+x1 <- c(rnorm(10,5,2), NA, 5:12, NA, 6, 7.5, NA)
+is.na(x1)
+summary(x1)
+sum(is.na(x1))
+which(is.na(x1))
+@
+%
+\item Now, create the vector \texttt{x2} and assess the difference to \texttt{x1}.
+<<eval = FALSE>>=
+x2 <- c(rnorm(10,5,2), NA, 5:12, NA, 6, 7.5, NA, log(-2))
+@
+<<echo = TRUE, eval = FALSE>>=
+x2 <- c(rnorm(10,5,2), NA, 5:12, NA, 6, 7.5, NA, log(-2))
+x2
+is.na(x2)
+summary(x2)
+sum(is.na(x2))
+which(is.na(x2))
+@
+%
+\item What is the meaning of "NA" versus "NaN"?
+%
+\item Replace the missing values in \texttt{x1} with a 0. Check then that the NAs
+are no longer present. Try two different commands to coerce the NAs into 0.
+<<echo = TRUE, eval = FALSE>>=
+x1 <- c(rnorm(10,5,2), NA, 5:12, NA, 6, 7.5, NA)
+x1[is.na(x1)] <- 0
+is.na(x1)
+# or with the ifelse statement
+x1 <- c(rnorm(10,5,2), NA, 5:12, NA, 6, 7.5, NA)
+ifelse(is.na(x1), 0, x1)
+is.na(x1)
 @
 \end{enumerate}
 
