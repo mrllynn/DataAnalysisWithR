@@ -997,313 +997,313 @@ coef(model.logreg)
 exp(coef(model.logreg))
 @
 \end{enumerate}
+
+
+
+\ex{Outside plot frame}
+\vspace*{-1cm}
+\begin{enumerate}[(a)]
+\item Type \texttt{demo(graphics)} in your console and press enter.
+This command shows you a nice demonstration of possible R graphics.
+<<eval = FALSE>>=
+# After the demonstration us the following commands:
+dev.off()
+par(mfrow=c(1,1))
+@
+\item Change the x-axis and y-axis labelling of a boxplot plotting the
+\texttt{len} variable of the \texttt{ToothGrowth} data set.
+<<eval = FALSE>>=
+data("ToothGrowth")
+boxplot(ToothGrowth$len)
+@
+<<echo = FALSE, eval = FALSE>>=
+boxplot(ToothGrowth$len, xlab = "Length of Teeth",
+        ylab = "Length in mm")
+@
+\item How do you set a main title for your above plot?
+<<echo = FALSE, eval = FALSE>>=
+# OPTION 1:
+boxplot(ToothGrowth$len, xlab = "Length of Teeth",
+        ylab = "Length in mm",
+        main = "Boxplot of Tooth Length")
+# OPTION 2:
+boxplot(ToothGrowth$len, xlab = "Length of Teeth",
+        ylab = "Length in mm")
+title("Boxplot of Tooth Length")
+@
+\item What does the following command do?
+<<eval = FALSE>>=
+par(mfrow=c(2,2))
+@
+<<echo = FALSE, eval = FALSE>>=
+# With the par(...) function, you can include the option
+# mfrow=c(nrows, ncols) to create a matrix of nrows x ncols plots
+# that are filled in by row.
+par(mfrow=c(2,2)) # 2 rows, 2 columns
+par(mfrow=c(4,3)) # 4 rows, 3 columns
+# DO NOT FORGET TO CHANGE IT BACK TO:
+par(mfrow=c(1, 1)) # the default
+@
 %
-%
-%
-% \ex{Outside plot frame}
-% \vspace*{-1cm}
-% \begin{enumerate}[(a)]
-% \item Type \texttt{demo(graphics)} in your console and press enter.
-% This command shows you a nice demonstration of possible R graphics.
-% <<eval = FALSE>>=
-% # After the demonstration us the following commands:
-% dev.off()
-% par(mfrow=c(1,1))
-% @
-% \item Change the x-axis and y-axis labelling of a boxplot plotting the
-% \texttt{len} variable of the \texttt{ToothGrowth} data set.
-% <<eval = FALSE>>=
-% data("ToothGrowth")
-% boxplot(ToothGrowth$len)
-% @
-% <<echo = FALSE, eval = FALSE>>=
-% boxplot(ToothGrowth$len, xlab = "Length of Teeth",
-%         ylab = "Length in mm")
-% @
-% \item How do you set a main title for your above plot?
-% <<echo = FALSE, eval = FALSE>>=
-% # OPTION 1:
-% boxplot(ToothGrowth$len, xlab = "Length of Teeth",
-%         ylab = "Length in mm",
-%         main = "Boxplot of Tooth Length")
-% # OPTION 2:
-% boxplot(ToothGrowth$len, xlab = "Length of Teeth",
-%         ylab = "Length in mm")
-% title("Boxplot of Tooth Length")
-% @
-% \item What does the following command do?
-% <<eval = FALSE>>=
-% par(mfrow=c(2,2))
-% @
-% <<echo = FALSE, eval = FALSE>>=
-% # With the par(...) function, you can include the option
-% # mfrow=c(nrows, ncols) to create a matrix of nrows x ncols plots
-% # that are filled in by row.
-% par(mfrow=c(2,2)) # 2 rows, 2 columns
-% par(mfrow=c(4,3)) # 4 rows, 3 columns
-% # DO NOT FORGET TO CHANGE IT BACK TO:
-% par(mfrow=c(1, 1)) # the default
-% @
-% %
-% \item We have six different feed types in \texttt{chickwts}. Try to plot two
-% separate boxplots for \texttt{casein} and \texttt{horsebean} and set the same
-% minimum and maximum for the y-axis. Use the function \texttt{subset} for doing so.
-% <<echo = FALSE, eval = FALSE>>=
-% sub.casein <- subset(chickwts, feed == "casein")
-% sub.casein <- droplevels(sub.casein)
-% sub.horsebean <- subset(chickwts, feed == "horsebean")
-% sub.horsebean <- droplevels(sub.horsebean)
-% @
-% <<echo = FALSE, eval = FALSE>>=
-% sub.casein <- subset(chickwts, feed == "casein")
-% sub.casein <- droplevels(sub.casein)
-% sub.horsebean <- subset(chickwts, feed == "horsebean")
-% sub.horsebean <- droplevels(sub.horsebean)
-% summary(sub.casein$weight)
-% summary(sub.horsebean$weight)
-% par(mfrow=c(1, 2))
-% boxplot(sub.casein$weight ~ sub.casein$feed, ylim = c(100, 410))
-% boxplot(sub.horsebean$weight ~ sub.horsebean$feed, ylim = c(100, 410))
-% @
-% \item How do you enlarge the font size of the axis as well as the axis labels
-% of the following plot with the \texttt{perulung} data set?
-% <<eval = FALSE>>=
-% lung <- read.csv("perulung_ems.csv", sep=";")
-% par(mfrow=c(1,1))
-% plot(lung$fev1, lung$height)
-% @
-% <<echo = FALSE, eval = FALSE>>=
-% plot(lung$fev1, lung$height, cex.axis = 1.5, cex.lab = 1.5)
-% plot(lung$fev1, lung$height, cex.axis = 1.5, cex.lab = 1.5, las = 1)
-% @
-% \item Label the x-axis of the following plot with ''Vitamin C in $\mu$g''. Use the
-% greek letter for $\mu$.
-% <<eval = FALSE>>=
-% plot(ToothGrowth$dose, ToothGrowth$len)
-% @
-% <<echo = FALSE, eval = FALSE>>=
-% plot(ToothGrowth$dose, ToothGrowth$len,
-%      xlab = expression(paste("Vitamin C in ", mu, "g")))
-% @
-% \item Read \url{http://www.statmethods.net/advgraphs/parameters.html}.
-% \end{enumerate}
-% 
-% 
-% 
-% \ex{Inside the square of the plot}
-% \vspace*{-1cm}
-% \begin{enumerate}[(a)]
-% \item Type \texttt{demo(graphics)} in your console and press enter.
-% This command shows you a nice demonstration of possible R graphics.
-% <<eval = FALSE>>=
-% # After the demonstration us the following commands:
-% dev.off()
-% par(mfrow=c(1,1))
-% @
-% \item Add a legend to the following barplot. Are there several different solutions
-% for this?
-% <<eval = FALSE>>=
-% library("MASS")
-% data("bacteria")
-% barplot(prop.table(table(bacteria$y, bacteria$trt),margin=1),
-%         beside=FALSE, ylim = c(0,0.8))
-% @
-% <<echo = FALSE, eval = FALSE>>=
-% barplot(prop.table(table(bacteria$y, bacteria$trt),margin=1), beside=FALSE,
-%         ylim = c(0,0.8), legend.text = levels(bacteria$y))
-% # Helen's solution (THANK YOU!):
-% barplot(prop.table(table(bacteria$y, bacteria$trt), margin=1),
-%         beside=FALSE, ylim = c(0,0.8), col = topo.colors(2),
-%         ylab = "y", xlab = "treatments",
-%         main = "bacteria")
-% legend("topright", legend = c("yes", "no"), fill = topo.colors(2))
-% @
-% \item Add a density line to this histogram.
-% <<eval = FALSE>>=
-% hist(ToothGrowth$len, prob = TRUE, col = "grey", ylim = c(0, 0.05))
-% @
-% <<echo = FALSE, eval = FALSE>>=
-% hist(ToothGrowth$len, prob = TRUE, col = "grey", ylim = c(0, 0.05))
-% # add a density estimate with defaults
-% lines(density(ToothGrowth$len), col="blue", lwd = 4)
-% # add a density estimate with adjustments
-% lines(density(ToothGrowth$len, adjust=2), lty="dotted", col="darkgreen",
-%       lwd = 4)
-% @
-% \item Add a \textbf{dotted red} linear regression line to the following plot.
-% <<eval = FALSE>>=
-% plot(lung$height, lung$fev1)
-% @
-% <<echo = FALSE, eval = FALSE>>=
-% plot(lung$height, lung$fev1)
-% abline(lm(lung$fev1 ~ lung$height), col = "red",
-%        lwd = 3, lty = 2)
-% # See
-% # https://stackoverflow.com/questions/24173468/r-print-equation-of-linear-regression-on-the-plot-itself
-% # to learn how to print equation of linear regression on the plot
-% ## rounded coefficients for better output
-% lm.mod <- lm(lung$fev1 ~ lung$height)
-% cf <- round(coef(lm.mod), 2)
-% ## sign check to avoid having plus followed by minus for negative coefficients
-% eq <- paste0("fev1 = ", cf[1],
-%              ifelse(sign(cf[2])==1, " + ", " - "), abs(cf[2]), " height ")
-% ## printing of the equation
-% mtext(eq, 3, line=-2)
-% @
-% \item Color the points in the following plot according to the \texttt{sex} variable.
-% <<eval = FALSE>>=
-% plot(lung$height, lung$fev1)
-% @
-% <<echo = FALSE, eval = FALSE>>=
-% plot(lung$height, lung$fev1, col = as.numeric(lung$sex))
-% @
-% \item Add two linear regression lines separately for \texttt{female} and \texttt{male}to the following plot.
-% <<eval = FALSE>>=
-% plot(lung$height, lung$fev1)
-% @
-% <<echo = FALSE, eval = FALSE>>=
-% plot(lung$height, lung$fev1, col = as.numeric(lung$respsymptoms))
-% abline(lm(lung$fev1 ~ lung$height,
-%           data = subset(lung, sex == "female")),
-%        col  = "black")
-% abline(lm(lung$fev1 ~ lung$height,
-%           data = subset(lung, sex == "male")),
-%        col  = "red")
-% # library("graphics")
-% # coplot(fev1 ~ height | sex, data = lung, panel = panel.smooth)
-% # coplot(fev1 ~ height | respsymptoms, data = lung, panel = panel.smooth)
-% @
-% \item Color the points in the following plot according to the \texttt{supp} variable.
-% Use different point characters (\texttt{pch}) based on the \texttt{supp} variable.
-% <<eval = FALSE>>=
-% plot(ToothGrowth$len, ToothGrowth$dose)
-% @
-% <<echo = FALSE, eval = FALSE>>=
-% plot(ToothGrowth$len, ToothGrowth$dose,
-%      pch = levels(ToothGrowth$supp),
-%      col = as.numeric(ToothGrowth$supp))
-% @
-% \item Read \url{http://www.statmethods.net/advgraphs/parameters.html}.
-% \end{enumerate}
-% 
-% 
-% 
-% \ex{}
-% \vspace*{-1cm}
-% \begin{enumerate}[(a)]
-% \item Load the below data set and for further information check the command
-% \texttt{?water}.
-% <<eval = FALSE>>=
-% # install.packages("HSAUR3")
-% library("HSAUR3")
-% data("water")
-% str(water)
-% head(water)
-% summary(water)
-% @
-% \item Try to plot the variables \texttt{mortality} against \texttt{hardness} from
-% the \texttt{water} data set.
-% <<echo = FALSE, eval = FALSE>>=
-% par(mfrow=c(1,1))
-% plot(x = water$hardness, y = water$mortality)
-% plot(mortality ~ hardness, data = water)
-% @
-% \item Add a main title to the above plot (\texttt{mortality} against
-% \texttt{hardness}).
-% <<echo = FALSE, eval = FALSE>>=
-% plot(x = water$hardness, y = water$mortality, 
-%      main = "Calcium concentration against mortality")
-% plot(mortality ~ hardness, data = water,
-%      main = "Calcium concentration against mortality")
-% @
-% \item Change the ...
-% \begin{enumerate}[(a)]
-% \item font size of the axis annotation
-% \item font size of the x- and y-axis labels
-% \item the point sizes within the plot
-% \end{enumerate}
-% ... of the above plot (\texttt{mortality} against \texttt{hardness}).
-% <<echo = FALSE, eval = FALSE>>=
-% # cex: number indicating the amount by which plotting text and symbols
-% # should be scaled
-% # cex.axis:	magnification of axis annotation relative to cex
-% plot(x = water$hardness, y = water$mortality,
-%      cex.axis = 1.5, # (1) enlarge number of the axis
-%      cex.lab = 1.5, # (2) enlarge font size of axis labels
-%      cex = 1.5, # (3) enlarge point size within plot
-%      main = "Calcium concentration vs. mortality")
-% plot(mortality ~ hardness, data = water,
-%      cex.axis = 1.5, # enlarge number of the axis
-%      cex = 1.5, # enlarge point size within plot
-%      cex.lab = 1.5, # enlarge font size of axis labels
-%      main = "Calcium concentration vs. mortality")
-% @
-% \item Looking at the above plot: Do you think the two variables \texttt{hardness}
-% and \texttt{mortality} correlate? What function do you use to find out the correlation
-% coefficient? Do they have a positive or a negative correlation coefficient? How
-% do you interpret the correlation coefficient in your own words?
-% <<echo = FALSE, eval = FALSE>>=
-% cor(x = water$hardness, y = water$mortality) # -0.6548486
-% cor.test(x = water$hardness, y = water$mortality)
-% # negative correlation of -0.65 with confidence interval of [-0.78, -0.48]:
-% # the higher the calcium concentration (hardness),
-% # the smaller the averaged annual mortality per 100.000 male
-% # inhabitants (mortality)
-% @
-% \item In the \texttt{water} data set, can you graphically find out if there is a
-% difference between the the two variables \texttt{hardness} and \texttt{mortality}
-% conditional on the \texttt{location} (\texttt{North}, \texttt{South}).
-% <<echo = FALSE, eval = FALSE>>=
-% plot(x = water$hardness, y = water$mortality,
-%      col = as.numeric(water$location),
-%      pch = 16, cex.axis = 1.5,
-%      cex = 1.5, cex.lab = 1.5)
-% library("graphics")
-% coplot(mortality ~ hardness | location, data = water, panel = panel.smooth)
-% @
-% \item Add a legend to the above plot so that you can easily differentiate the
-% locations (\texttt{North} or \texttt{South}) of the observations.
-% <<echo = FALSE, eval = FALSE>>=
-% plot(x = water$hardness, y = water$mortality,
-%      col = as.numeric(water$location),
-%      pch = 16, cex.axis = 1.5,
-%      cex = 1.5, cex.lab = 1.5)
-% legend("topright", legend = levels(water$location),
-%        col = c("black", "red"), pch = 16, cex = 1.5)
-% @
-% \item Do a barplot of the variable \texttt{location} from the \texttt{water} data
-% set.
-% <<echo = FALSE, eval = FALSE>>=
-% barplot(table(water$location))
-% @
-% \item ADDITIONAL: Try if any of these following plotting functions can be
-% applied to the data sets \texttt{perulung} or \texttt{ToothGrowth}.
-% <<echo = FALSE, eval = FALSE>>=
-% install.packages("graphics")
-% library("graphics")
-% ?coplot
-% #
-% # install.packages("lattice")
-% library("lattice")
-% ?xyplot
-% #
-% ?interaction.plot
-% @
-% <<echo = FALSE, eval = FALSE>>=
-% # PERULUNG DATA SET
-% coplot(fev1 ~ height | sex, data = lung, panel = panel.smooth)
-% coplot(fev1 ~ height | respsymptoms, data = lung, panel = panel.smooth)
-% 
-% xyplot(fev1 ~ height | sex, data = lung)
-% xyplot(fev1 ~ height | respsymptoms, data = lung)
-% 
-% # ToothGrowth DATA SET
-% interaction.plot(ToothGrowth$dose,
-%                  ToothGrowth$supp,
-%                  ToothGrowth$len,
-%                  fixed = TRUE)
-% @
-% \end{enumerate}
+\item We have six different feed types in \texttt{chickwts}. Try to plot two
+separate boxplots for \texttt{casein} and \texttt{horsebean} and set the same
+minimum and maximum for the y-axis. Use the function \texttt{subset} for doing so.
+<<echo = FALSE, eval = FALSE>>=
+sub.casein <- subset(chickwts, feed == "casein")
+sub.casein <- droplevels(sub.casein)
+sub.horsebean <- subset(chickwts, feed == "horsebean")
+sub.horsebean <- droplevels(sub.horsebean)
+@
+<<echo = FALSE, eval = FALSE>>=
+sub.casein <- subset(chickwts, feed == "casein")
+sub.casein <- droplevels(sub.casein)
+sub.horsebean <- subset(chickwts, feed == "horsebean")
+sub.horsebean <- droplevels(sub.horsebean)
+summary(sub.casein$weight)
+summary(sub.horsebean$weight)
+par(mfrow=c(1, 2))
+boxplot(sub.casein$weight ~ sub.casein$feed, ylim = c(100, 410))
+boxplot(sub.horsebean$weight ~ sub.horsebean$feed, ylim = c(100, 410))
+@
+\item How do you enlarge the font size of the axis as well as the axis labels
+of the following plot with the \texttt{perulung} data set?
+<<eval = FALSE>>=
+lung <- read.csv("perulung_ems.csv", sep=";")
+par(mfrow=c(1,1))
+plot(lung$fev1, lung$height)
+@
+<<echo = FALSE, eval = FALSE>>=
+plot(lung$fev1, lung$height, cex.axis = 1.5, cex.lab = 1.5)
+plot(lung$fev1, lung$height, cex.axis = 1.5, cex.lab = 1.5, las = 1)
+@
+\item Label the x-axis of the following plot with ''Vitamin C in $\mu$g''. Use the
+greek letter for $\mu$.
+<<eval = FALSE>>=
+plot(ToothGrowth$dose, ToothGrowth$len)
+@
+<<echo = FALSE, eval = FALSE>>=
+plot(ToothGrowth$dose, ToothGrowth$len,
+     xlab = expression(paste("Vitamin C in ", mu, "g")))
+@
+\item Read \url{http://www.statmethods.net/advgraphs/parameters.html}.
+\end{enumerate}
+
+
+
+\ex{Inside the square of the plot}
+\vspace*{-1cm}
+\begin{enumerate}[(a)]
+\item Type \texttt{demo(graphics)} in your console and press enter.
+This command shows you a nice demonstration of possible R graphics.
+<<eval = FALSE>>=
+# After the demonstration us the following commands:
+dev.off()
+par(mfrow=c(1,1))
+@
+\item Add a legend to the following barplot. Are there several different solutions
+for this?
+<<eval = FALSE>>=
+library("MASS")
+data("bacteria")
+barplot(prop.table(table(bacteria$y, bacteria$trt),margin=1),
+        beside=FALSE, ylim = c(0,0.8))
+@
+<<echo = FALSE, eval = FALSE>>=
+barplot(prop.table(table(bacteria$y, bacteria$trt),margin=1), beside=FALSE,
+        ylim = c(0,0.8), legend.text = levels(bacteria$y))
+# Helen's solution (THANK YOU!):
+barplot(prop.table(table(bacteria$y, bacteria$trt), margin=1),
+        beside=FALSE, ylim = c(0,0.8), col = topo.colors(2),
+        ylab = "y", xlab = "treatments",
+        main = "bacteria")
+legend("topright", legend = c("yes", "no"), fill = topo.colors(2))
+@
+\item Add a density line to this histogram.
+<<eval = FALSE>>=
+hist(ToothGrowth$len, prob = TRUE, col = "grey", ylim = c(0, 0.05))
+@
+<<echo = FALSE, eval = FALSE>>=
+hist(ToothGrowth$len, prob = TRUE, col = "grey", ylim = c(0, 0.05))
+# add a density estimate with defaults
+lines(density(ToothGrowth$len), col="blue", lwd = 4)
+# add a density estimate with adjustments
+lines(density(ToothGrowth$len, adjust=2), lty="dotted", col="darkgreen",
+      lwd = 4)
+@
+\item Add a \textbf{dotted red} linear regression line to the following plot.
+<<eval = FALSE>>=
+plot(lung$height, lung$fev1)
+@
+<<echo = FALSE, eval = FALSE>>=
+plot(lung$height, lung$fev1)
+abline(lm(lung$fev1 ~ lung$height), col = "red",
+       lwd = 3, lty = 2)
+# See
+# https://stackoverflow.com/questions/24173468/r-print-equation-of-linear-regression-on-the-plot-itself
+# to learn how to print equation of linear regression on the plot
+## rounded coefficients for better output
+lm.mod <- lm(lung$fev1 ~ lung$height)
+cf <- round(coef(lm.mod), 2)
+## sign check to avoid having plus followed by minus for negative coefficients
+eq <- paste0("fev1 = ", cf[1],
+             ifelse(sign(cf[2])==1, " + ", " - "), abs(cf[2]), " height ")
+## printing of the equation
+mtext(eq, 3, line=-2)
+@
+\item Color the points in the following plot according to the \texttt{sex} variable.
+<<eval = FALSE>>=
+plot(lung$height, lung$fev1)
+@
+<<echo = FALSE, eval = FALSE>>=
+plot(lung$height, lung$fev1, col = as.numeric(lung$sex))
+@
+\item Add two linear regression lines separately for \texttt{female} and \texttt{male}to the following plot.
+<<eval = FALSE>>=
+plot(lung$height, lung$fev1)
+@
+<<echo = FALSE, eval = FALSE>>=
+plot(lung$height, lung$fev1, col = as.numeric(lung$respsymptoms))
+abline(lm(lung$fev1 ~ lung$height,
+          data = subset(lung, sex == "female")),
+       col  = "black")
+abline(lm(lung$fev1 ~ lung$height,
+          data = subset(lung, sex == "male")),
+       col  = "red")
+# library("graphics")
+# coplot(fev1 ~ height | sex, data = lung, panel = panel.smooth)
+# coplot(fev1 ~ height | respsymptoms, data = lung, panel = panel.smooth)
+@
+\item Color the points in the following plot according to the \texttt{supp} variable.
+Use different point characters (\texttt{pch}) based on the \texttt{supp} variable.
+<<eval = FALSE>>=
+plot(ToothGrowth$len, ToothGrowth$dose)
+@
+<<echo = FALSE, eval = FALSE>>=
+plot(ToothGrowth$len, ToothGrowth$dose,
+     pch = levels(ToothGrowth$supp),
+     col = as.numeric(ToothGrowth$supp))
+@
+\item Read \url{http://www.statmethods.net/advgraphs/parameters.html}.
+\end{enumerate}
+
+
+
+\ex{}
+\vspace*{-1cm}
+\begin{enumerate}[(a)]
+\item Load the below data set and for further information check the command
+\texttt{?water}.
+<<eval = FALSE>>=
+# install.packages("HSAUR3")
+library("HSAUR3")
+data("water")
+str(water)
+head(water)
+summary(water)
+@
+\item Try to plot the variables \texttt{mortality} against \texttt{hardness} from
+the \texttt{water} data set.
+<<echo = FALSE, eval = FALSE>>=
+par(mfrow=c(1,1))
+plot(x = water$hardness, y = water$mortality)
+plot(mortality ~ hardness, data = water)
+@
+\item Add a main title to the above plot (\texttt{mortality} against
+\texttt{hardness}).
+<<echo = FALSE, eval = FALSE>>=
+plot(x = water$hardness, y = water$mortality,
+     main = "Calcium concentration against mortality")
+plot(mortality ~ hardness, data = water,
+     main = "Calcium concentration against mortality")
+@
+\item Change the ...
+\begin{enumerate}[(a)]
+\item font size of the axis annotation
+\item font size of the x- and y-axis labels
+\item the point sizes within the plot
+\end{enumerate}
+... of the above plot (\texttt{mortality} against \texttt{hardness}).
+<<echo = FALSE, eval = FALSE>>=
+# cex: number indicating the amount by which plotting text and symbols
+# should be scaled
+# cex.axis:	magnification of axis annotation relative to cex
+plot(x = water$hardness, y = water$mortality,
+     cex.axis = 1.5, # (1) enlarge number of the axis
+     cex.lab = 1.5, # (2) enlarge font size of axis labels
+     cex = 1.5, # (3) enlarge point size within plot
+     main = "Calcium concentration vs. mortality")
+plot(mortality ~ hardness, data = water,
+     cex.axis = 1.5, # enlarge number of the axis
+     cex = 1.5, # enlarge point size within plot
+     cex.lab = 1.5, # enlarge font size of axis labels
+     main = "Calcium concentration vs. mortality")
+@
+\item Looking at the above plot: Do you think the two variables \texttt{hardness}
+and \texttt{mortality} correlate? What function do you use to find out the correlation
+coefficient? Do they have a positive or a negative correlation coefficient? How
+do you interpret the correlation coefficient in your own words?
+<<echo = FALSE, eval = FALSE>>=
+cor(x = water$hardness, y = water$mortality) # -0.6548486
+cor.test(x = water$hardness, y = water$mortality)
+# negative correlation of -0.65 with confidence interval of [-0.78, -0.48]:
+# the higher the calcium concentration (hardness),
+# the smaller the averaged annual mortality per 100.000 male
+# inhabitants (mortality)
+@
+\item In the \texttt{water} data set, can you graphically find out if there is a
+difference between the the two variables \texttt{hardness} and \texttt{mortality}
+conditional on the \texttt{location} (\texttt{North}, \texttt{South}).
+<<echo = FALSE, eval = FALSE>>=
+plot(x = water$hardness, y = water$mortality,
+     col = as.numeric(water$location),
+     pch = 16, cex.axis = 1.5,
+     cex = 1.5, cex.lab = 1.5)
+library("graphics")
+coplot(mortality ~ hardness | location, data = water, panel = panel.smooth)
+@
+\item Add a legend to the above plot so that you can easily differentiate the
+locations (\texttt{North} or \texttt{South}) of the observations.
+<<echo = FALSE, eval = FALSE>>=
+plot(x = water$hardness, y = water$mortality,
+     col = as.numeric(water$location),
+     pch = 16, cex.axis = 1.5,
+     cex = 1.5, cex.lab = 1.5)
+legend("topright", legend = levels(water$location),
+       col = c("black", "red"), pch = 16, cex = 1.5)
+@
+\item Do a barplot of the variable \texttt{location} from the \texttt{water} data
+set.
+<<echo = FALSE, eval = FALSE>>=
+barplot(table(water$location))
+@
+\item ADDITIONAL: Try if any of these following plotting functions can be
+applied to the data sets \texttt{perulung} or \texttt{ToothGrowth}.
+<<echo = FALSE, eval = FALSE>>=
+install.packages("graphics")
+library("graphics")
+?coplot
+#
+# install.packages("lattice")
+library("lattice")
+?xyplot
+#
+?interaction.plot
+@
+<<echo = FALSE, eval = FALSE>>=
+# PERULUNG DATA SET
+coplot(fev1 ~ height | sex, data = lung, panel = panel.smooth)
+coplot(fev1 ~ height | respsymptoms, data = lung, panel = panel.smooth)
+
+xyplot(fev1 ~ height | sex, data = lung)
+xyplot(fev1 ~ height | respsymptoms, data = lung)
+
+# ToothGrowth DATA SET
+interaction.plot(ToothGrowth$dose,
+                 ToothGrowth$supp,
+                 ToothGrowth$len,
+                 fixed = TRUE)
+@
+\end{enumerate}
 
 
 

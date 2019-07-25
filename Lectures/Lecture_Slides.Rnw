@@ -1258,6 +1258,8 @@ the alternative hypothesis $H_A$.
 \end{itemize}
 \end{frame}
 
+
+
 \begin{frame}[fragile]
 \frametitle{Simple Example - One Population}
 {\bfseries After six weeks will the mean weight of a chicken be at least 250 grams?}
@@ -1272,10 +1274,14 @@ probability of observing a t-statistic which is $>1.22$
 \\\vspace{0.2cm}
 \end{frame}
 
+
+
 \begin{frame}[fragile]\frametitle{One Sample, one-sided, t-test}
 \centering
 \includegraphics[width=0.9\textwidth]{onesample_onesided_ttest_2.png}
 \end{frame}
+
+
 
 \begin{frame}[fragile]
 \frametitle{Research Question}
@@ -1290,6 +1296,8 @@ in the population is likely to be greater than 250 grams or else we can
 {\bfseries \large accept} $H_0$ where the mean chicken weight is less than 250 grams.
 \\\vspace{0.3cm}
 \end{frame}
+
+
 
 \begin{frame}[fragile]
 \frametitle{Research Question - be pragmatic with $p$-values}
@@ -1308,6 +1316,8 @@ simply claiming statistically significant findings!
 \vspace{0.2cm}
 \end{frame}
 
+
+
 \begin{frame}[fragile]
 \frametitle{Communicating Results of Hypothesis Tests}
 Transparency is essential - the devil can be in the detail - which at the very
@@ -1323,6 +1333,8 @@ This is particularly crucial if the analyses are to be given to someone
 \emph{else} to then make a judgment on the scientific significance.
 \end{frame}
 
+
+
 \begin{frame}[fragile]
 \frametitle{Two-sided Tests: One Population}
 {\bfseries After six weeks will the mean weight of a chicken {\bfseries be equal}
@@ -1337,6 +1349,8 @@ data to conclude that in the population of all chickens the mean weight is not
 equal to 250 grams.
 \end{frame}
 
+
+
 \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
 % \usebackgroundtemplate{}
 \begin{frame}[fragile]
@@ -1349,6 +1363,8 @@ data(chickwts)
 t.test(chickwts$weight, mu = 250)
 @
 \end{frame}
+
+
 
 \usebackgroundtemplate{}
 \begin{frame}[fragile]
@@ -1363,11 +1379,15 @@ $T_{obs}>1.22$ or $T_{obs}<-1.22$ which we can again look up in reference tables
 \vspace{0.2cm}
 \end{frame}
 
+
+
 \begin{frame}[fragile]
 \frametitle{One Sample, two-sided, t-test}
 \centering
 \includegraphics[width=0.9\textwidth]{onesample_twosided_ttest_1.png}
 \end{frame}
+
+
 
 \begin{frame}[fragile]
 \frametitle{Two-sided Tests}
@@ -1385,10 +1405,14 @@ expect a ``more powerful'' analyses (e.g. a lower $p$-value all else being equal
 \end{itemize}
 \end{frame}
 
+
+
 \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
 \begin{frame}[fragile]
 \frametitle{Exercise: $t$-test in R}
 \end{frame}
+
+
 
 \usebackgroundtemplate{}
 \begin{frame}[fragile]
@@ -1401,6 +1425,8 @@ dependence between two categorical variables: Chi-squared test
 \end{center}
 \end{frame}
 
+
+
 \usebackgroundtemplate{}
 \begin{frame}[fragile]
 \frametitle{The Chi-square Distribution}
@@ -1408,6 +1434,8 @@ dependence between two categorical variables: Chi-squared test
 \includegraphics[width=0.7\paperwidth]{Chi_Squared_Distr.png}
 \end{center}
 \end{frame}
+
+
 
 \usebackgroundtemplate{}
 \begin{frame}[fragile]
@@ -1417,10 +1445,14 @@ dependence between two categorical variables: Chi-squared test
 \end{center}
 \end{frame}
 
+
+
 \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
 \begin{frame}[fragile]
 \frametitle{Exercise: Chi-square test in R}
 \end{frame}
+
+
 
 % \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
 % \begin{frame}[fragile]
@@ -1486,6 +1518,8 @@ dependence between two categorical variables: Chi-squared test
 % @
 % \end{frame}
 
+
+
 \usebackgroundtemplate{\includegraphics[width=\paperwidth]{Printscreen_RLogo.png}}
 \begin{frame}[fragile]
 \frametitle{Plotting in R}
@@ -1525,6 +1559,8 @@ dependence between two categorical variables: Chi-squared test
 \end{itemize}
 \end{frame}
 
+
+
 \usebackgroundtemplate{}
 \begin{frame}[fragile]
 \frametitle{Hypothesis Testing - One Way ANOVA}
@@ -1541,6 +1577,8 @@ H_A&:&\quad \mbox{at least one pair of }\mu_1,\dots,\mu_k \quad \text{are differ
 \end{eqnarray}
 where $\mu_1,\dots,\mu_k$ denote the mean effect of treatment levels 1 through $k$.
 \end{frame}
+
+
 
 \usebackgroundtemplate{}
 \begin{frame}[fragile]
