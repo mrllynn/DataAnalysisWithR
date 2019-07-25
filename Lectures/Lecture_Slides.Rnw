@@ -1124,7 +1124,7 @@ scientific questions. The classical way to perform a formal statistical
 analyses of these data is to formulate these research questions into
 statistical {\bfseries hypothesis tests}. \\
 \vspace{0.5cm}
-In this section we will go through a simple example in detail to highlight
+In this section, we will go through a simple example in detail to highlight
 some of the important concepts - the general approach for more complex
 analyses is exactly same. \emph{Note: the precise technical details are
 much less important than the concepts!}
@@ -1192,9 +1192,9 @@ For the chicken weights data an appropriate formal analyses is to use a
 simple summary statistic - called a $t$-statistic - which we do entirely
 from the observed data.
 \begin{equation}
-T_{obs}=\frac{\bar{x}-\mu}{s/\sqrt{n}} \nonumber
+T_{obs}=\frac{ \overline{x}-\mu}{s/\sqrt{n}} \nonumber
 \end{equation}
-where $\bar{x}$ is the sample mean, $s$ the sample standard deviation and $\mu$
+where $ \overline{x}$ is the sample mean, $s$ the sample standard deviation and $\mu$
 is the population mean in the null hypothesis which we wish to test for. We then
 look up the value of $T_{obs}$ in a set of statistical tables/computer to see
 what the answer is to our research question.
@@ -1205,11 +1205,11 @@ what the answer is to our research question.
 \begin{frame}[fragile]
 \frametitle{Important concept - sampling }
 \begin{center}
-Why is $T_{obs}=\frac{\bar{x}-\mu}{s/\sqrt(n)}$ called a $t$-statistic?
+Why is $T_{obs}=\frac{ \overline{x}-\mu}{s/\sqrt(n)}$ called a $t$-statistic?
 \end{center}
 \vspace{0.2cm}
 If another sample of 71 chickens from the same population were weighed then the
-values for $\bar{x}$ and $s$ would be different, and hence the value for $T_{obs}$.
+values for $ \overline{x}$ and $s$ would be different, and hence the value for $T_{obs}$.
 If this was repeated many times and a histogram/Q-Q/P-P plot produced of the
 values for $T_{obs}$ then this would follow the shape of a known distribution
 - {\bfseries student-$t$ probability distribution}. It is this piece of
@@ -1294,13 +1294,17 @@ in the population is likely to be greater than 250 grams or else we can
 \begin{frame}[fragile]
 \frametitle{Research Question - be pragmatic with $p$-values}
 \vspace{0.2cm}
-By convention a $p$-value of less than 0.05 is considered to provide \textbf{reasonable
-evidence} for rejecting $H_0$. A $p$-value of between 0.05 and 0.1 might be
-considered as \textbf{weak evidence} against $H_0$. Values of less that 0.01 are generally
-considered as \textbf{very strong evidence} for rejecting $H_0$. It is {\bfseries always}
-best to provide a $p$-value in any analyses to let the reviewer/client see the
-strength of evidence rather than simply claiming statistically significant
-findings!
+\begin{itemize}
+\itemsep2em
+\item A $p$-value of less than 0.05 is considered to provide \textbf{reasonable
+evidence} for rejecting $H_0$.
+\item A $p$-value of between 0.05 and 0.1 might be considered as \textbf{weak evidence}
+against $H_0$.
+\item Values of less that 0.01 are generally considered as \textbf{very strong evidence} for rejecting $H_0$.
+\item Note that, it is {\bfseries always} best to provide a $p$-value in any
+analyses to let the reviewer/client see the strength of evidence rather than
+simply claiming statistically significant findings!
+\end{itemize}
 \vspace{0.2cm}
 \end{frame}
 
@@ -1353,7 +1357,7 @@ t.test(chickwts$weight, mu = 250)
 A two-sided test is similar to a one-sided test - the key difference is in what
 is now defined as {\bfseries at least as extreme} in the definition of the $p$-value.
 This time the alternative hypothesis refers to observing a value of
-{\bfseries either} $\bar{x}>250$ or $\bar{x}< -250$ {\bfseries assuming that $H_0$ is true},
+{\bfseries either} $ \overline{x}>250$ or $ \overline{x}< -250$ {\bfseries assuming that $H_0$ is true},
 which using the t-test approach is equivalent to the probability of observing
 $T_{obs}>1.22$ or $T_{obs}<-1.22$ which we can again look up in reference tables.
 \vspace{0.2cm}
